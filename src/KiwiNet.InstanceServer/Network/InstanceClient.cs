@@ -17,6 +17,8 @@ namespace KiwiNet.InstanceServer.Network
 
         public override void OnDataReceived(byte[] buffer, int length)
         {
+            //Logger.Debug($"OnDataReceived(): {Convert.ToHexString(buffer.AsSpan(0, length))}");
+
             Packet packet = Packet.ParseFrom(buffer, length);
             if (packet == null)
                 return;
@@ -58,6 +60,14 @@ namespace KiwiNet.InstanceServer.Network
 
         private void OnLoginAttempt(Packet packet)
         {
+            if (packet is not ClientInstanceLoginAttemptPacket loginAttempt)
+            {
+                Logger.Warn("OnLoginAttempt(): Invalid packet");
+                return;
+            }
+
+            Logger.Debug($"OnLoginAttempt(): {loginAttempt}");
+
             var reply = PacketFactory.Get<InstanceClientLoginAttemptReplyPacket>();
             reply.Field0 = 1;
             reply.Field1 = "";
@@ -78,6 +88,16 @@ namespace KiwiNet.InstanceServer.Network
 
         private void OnTerrainGenerationResult(Packet packet)
         {
+            if (packet is not ClientInstanceTerrainGenerationResult terrainGenerationResult)
+            {
+                Logger.Warn("OnTerrainGenerationResult(): Invalid packet");
+                return;
+            }
+
+            Logger.Debug($"OnTerrainGenerationResult(): {packet}");
+            // this is where the server disconnects the client if the hashes don't match
+            // InstanceClientForcedDisconnectionWarningPacketId -> BackendError.TerrainGenerationOutOfSync
+
             /*
             var objAdd = PacketFactory.Get<InstanceClientObjectAddPacket>();
             objAdd.ObjectTemplate = HashUtility.MurmurHash2("Metadata/Characters/Str/Str");

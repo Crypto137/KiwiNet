@@ -19,6 +19,10 @@ namespace KiwiNet.Protocols
 
             switch (packetId)
             {
+                case PacketId.ClientInstanceLoginAttemptPacketId:
+                    packet = new ClientInstanceLoginAttemptPacket();
+                    break;
+
                 case PacketId.InstanceClientLoginAttemptReplyPacketId:
                     packet = new InstanceClientLoginAttemptReplyPacket();
                     break;
@@ -29,6 +33,10 @@ namespace KiwiNet.Protocols
 
                 case PacketId.InstanceClientInstanceDetailsPacketId:
                     packet = new InstanceClientInstanceDetailsPacket();
+                    break;
+
+                case PacketId.ClientInstanceTerrainGenerationResultId:
+                    packet = new ClientInstanceTerrainGenerationResult();
                     break;
 
                 case PacketId.InstanceClientServerFrameDurationPacketId:

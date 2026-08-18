@@ -6,7 +6,7 @@ namespace KiwiNet.Protocols.Packets.Login
 {
     public sealed class LoginClientInstanceDetailsPacket : Packet
     {
-        public uint Field0 { get; set; }                            // connection id / access key?
+        public uint SessionId { get; set; }                         // used to authenticate with the instance server
         public string WorldAreaId { get; set; } = string.Empty;     // id column in the WorldAreas table
         public List<InstanceDetailsEntry> Entries { get; } = new();
 
@@ -21,7 +21,7 @@ namespace KiwiNet.Protocols.Packets.Login
 
         protected override void SerializeData(Stream stream)
         {
-            stream.Write(BinaryPrimitives.ReverseEndianness(Field0));
+            stream.Write(BinaryPrimitives.ReverseEndianness(SessionId));
             stream.WriteNetworkUtf16String(WorldAreaId);
 
             stream.Write((byte)Entries.Count);
