@@ -159,6 +159,7 @@ namespace KiwiNet.LoginServer.Jobs
 
             LoginServerConfig config = ConfigManager.Get<LoginServerConfig>();
 
+            Logger.Info($"Sending instance details for {chooseCharacter.Value}");
             LoginClientInstanceDetailsPacket instanceDetails = PacketFactory.Get<LoginClientInstanceDetailsPacket>();
             instanceDetails.SessionId = 0xDEADBEEF;
             instanceDetails.WorldAreaId = "1_1_1";

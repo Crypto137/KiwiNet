@@ -22,20 +22,33 @@ namespace KiwiNet.Protocols
             // TODO: pooling?
         }
 
-        public static Packet ParseFrom(byte[] buffer, int length)
+        /// <summary>
+        /// Parses <see cref="Packet"/> instances from a buffer and adds them to the provided list.
+        /// </summary>
+        /// <returns>
+        /// The number of bytes consumed.
+        /// </returns>
+        public static int ParseFrom(byte[] buffer, int length, List<Packet> parsedPackets)
         {
+            // TODO: replace this with a proper buffered reader to handle partial packets
             MemoryStream input = new(buffer, 0, length);
-            input.Read(out PacketId pid);
 
-            Packet packet = PacketFactory.Get<Packet>(pid);
-            if (packet == null)
+            while (input.Position < input.Length)
             {
-                Logger.Warn($"Unable to allocate packet for pid {pid}");
-                return null;
+                input.Read(out PacketId pid);
+
+                Packet packet = PacketFactory.Get<Packet>(pid);
+                if (packet == null)
+                {
+                    Logger.Warn($"Unable to allocate packet for pid {pid}");
+                    continue;
+                }
+
+                packet.DeserializeData(input);
+                parsedPackets.Add(packet);
             }
 
-            packet.DeserializeData(input);
-            return packet;
+            return (int)input.Position;
         }
 
         public int Serialize(byte[] buffer, int offset)

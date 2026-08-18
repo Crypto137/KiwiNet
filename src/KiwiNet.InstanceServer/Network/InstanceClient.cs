@@ -19,13 +19,14 @@ namespace KiwiNet.InstanceServer.Network
         {
             //Logger.Debug($"OnDataReceived(): {Convert.ToHexString(buffer.AsSpan(0, length))}");
 
-            Packet packet = Packet.ParseFrom(buffer, length);
-            if (packet == null)
-                return;
+            List<Packet> packets = new();   // todo: pool this
+            Packet.ParseFrom(buffer, length, packets);
 
-            Logger.Trace($" IN < {packet.Id}");
-
-            ReceivePacket(packet);
+            foreach (Packet packet in packets)
+            {
+                Logger.Trace($" IN < {packet.Id}");
+                ReceivePacket(packet);
+            }
         }
 
         public void Send(Packet packet)
