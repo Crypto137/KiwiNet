@@ -1,4 +1,5 @@
 ﻿using KiwiNet.Core.Logging;
+using KiwiNet.LoginServer.Leagues;
 using KiwiNet.Protocols.Packets.Common;
 using KiwiNet.Protocols.Packets.Login;
 using System.Security.Cryptography;
@@ -90,20 +91,20 @@ namespace KiwiNet.LoginServer.Accounts
             return BackendError.Success;
         }
 
-        public BackendError CreateCharacter(Account account, string name, string league, CharacterClass @class)
+        public BackendError CreateCharacter(Account account, string characterName, string leagueName, CharacterClass @class)
         {
             if (account == null || _accounts.ContainsKey(account.Id) == false)
                 return BackendError.AccountDoesNotExist;
 
-            BackendError nameResult = ValidateCharacterName(name);
-            if (nameResult != BackendError.Success)
-                return nameResult;
+            BackendError characterNameResult = ValidateCharacterName(characterName);
+            if (characterNameResult != BackendError.Success)
+                return characterNameResult;
 
-            Character existingCharacter = account.GetCharacter(name);
+            Character existingCharacter = account.GetCharacter(characterName);
             if (existingCharacter != null)
                 return BackendError.CharacterNameAlreadyExists;
 
-            BackendError leagueResult = ValidateLeague(league);
+            BackendError leagueResult = ValidateLeague(ref leagueName);
             if (leagueResult != BackendError.Success)
                 return leagueResult;
 
@@ -121,7 +122,7 @@ namespace KiwiNet.LoginServer.Accounts
                     return BackendError.CharacterInvalidClass;
             }
 
-            Character character = new(++_currentCharacterId, name, league, @class);
+            Character character = new(++_currentCharacterId, characterName, leagueName, @class);
             account.Characters.Add(character);
 
             SaveAccounts(); // FIXME: use a database
@@ -175,20 +176,20 @@ namespace KiwiNet.LoginServer.Accounts
             JsonSerializer.Serialize(fs, _accounts.Values);
         }
 
-        private static BackendError ValidateCharacterName(string name)
+        private static BackendError ValidateCharacterName(string characterName)
         {
             // GGG post from 2016: There is a maximum of number of 23 characters in a character name, also no spaces or numbers can be used in these :)
             // https://www.pathofexile.com/forum/view-thread/1714189
-            if (string.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(characterName))
                 return BackendError.CharacterNameInvalid;
 
-            if (name.Length < 3)    // just a random guess for now
+            if (characterName.Length < 3)    // just a random guess for now
                 return BackendError.CharacterNameTooShort;
 
-            if (name.Length > 23)
+            if (characterName.Length > 23)
                 return BackendError.CharacterNameTooLong;
 
-            if (name.Contains(' '))
+            if (characterName.Contains(' '))
                 return BackendError.CharacterNameInvalid;
 
             // todo: number check, allow underscore (only one?)
@@ -196,15 +197,17 @@ namespace KiwiNet.LoginServer.Accounts
             return BackendError.Success;
         }
 
-        private static BackendError ValidateLeague(string league)
+        private static BackendError ValidateLeague(ref string leagueName)
         {
-            if (string.IsNullOrWhiteSpace(league))
+            if (string.IsNullOrWhiteSpace(leagueName))
                 return BackendError.LeagueNameInvalid;
 
-            // TODO: get these from league manager
-            if (league != "Default" && league != "Hardcore")
+            League league = LoginServerApp.Instance.LeagueManager.GetLeague(leagueName);
+            if (league == null)
                 return BackendError.LeagueDoesNotExist;
 
+            // Make sure the league name saved to character uses correct case.
+            leagueName = league.Name;
             return BackendError.Success;
         }
     }
