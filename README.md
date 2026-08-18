@@ -18,4 +18,4 @@ This is still very far from being "playable".
 
 - Launch `Client.exe` with the `--nopatch` argument to bypass the patcher.
 
-- The archived client's GGPK is missing the `Art\Textures\Interface` folder. The missing files can be added to the game folder with modifying the GGPK. `.mat` placeholders can be extracted from the GGPK with [VisualGGPK2](https://github.com/aianlinb/VisualGGPK2) and other tools, `.dds` and `.png` files can be substituted with arbitrary images.
+- The archived client's GGPK file is missing the `Art\Textures\Interface` folder. The missing files can be added to the client directory without modifying the GGPK. `.mat` placeholders can be extracted from the GGPK with [VisualGGPK2](https://github.com/aianlinb/VisualGGPK2) and other tools, `.dds` and `.png` files can be substituted with arbitrary images.
