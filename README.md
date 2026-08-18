@@ -1,2 +1,21 @@
 # KiwiNet
-Experimental server emulator for Path of Exile beta
+
+KiwiNet is an experimental server emulator for pre-release versions of Path of Exile (0.x). The only currently supported version is 0.8.8 (beta).
+
+This project is intended for educational and archival purposes only. Support for "modern" versions (3.x+) is not planned.
+
+## Features
+
+This is still very far from being "playable".
+
+- Basic login server functionality works: authentication, creating accounts, changing password, creating and deleting characters, sending instance server details.
+
+- Very very early and rudimentary instance server functionality: handling client connections, accepting credentials, sending terrain generation information.
+
+## Notes
+
+- The 0.8.8 client ISO is available on Archive.org as "Path Of Exile PAX 2011 Closed Beta".
+
+- Launch `Client.exe` with the `--nopatch` argument to bypass the patcher.
+
+- The archived client's GGPK is missing the `Art\Textures\Interface` folder. The missing files can be added to the game folder with modifying the GGPK. `.mat` placeholders can be extracted from the GGPK with [VisualGGPK2](https://github.com/aianlinb/VisualGGPK2) and other tools, `.dds` and `.png` files can be substituted with arbitrary images.
