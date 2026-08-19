@@ -25,10 +25,10 @@
         {
             PacketIO.WriteString(stream, Name);
             PacketIO.WriteString(stream, League);
-            PacketIO.WriteUInt8(stream, Field2);
+            PacketIO.WriteByte(stream, Field2);
             PacketIO.WriteInt32(stream, Level);
             PacketIO.WriteInt32(stream, Field4);
-            PacketIO.WriteUInt8(stream, (byte)Class);
+            PacketIO.WriteByte(stream, (byte)Class);
         }
     }
 

@@ -12,13 +12,13 @@ namespace KiwiNet.Protocols
     public static class PacketIO
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static byte ReadUInt8(Stream stream)
+        public static byte ReadByte(Stream stream)
         {
             return (byte)stream.ReadByte();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void WriteUInt8(Stream stream, byte value)
+        public static void WriteByte(Stream stream, byte value)
         {
             stream.WriteByte(value);
         }
@@ -72,7 +72,7 @@ namespace KiwiNet.Protocols
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static string ReadStringUtf16(Stream stream)
+        public static string ReadString(Stream stream)
         {
             short length = ReadInt16(stream);
             if (length == 0)

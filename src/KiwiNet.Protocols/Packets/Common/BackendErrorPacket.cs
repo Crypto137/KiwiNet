@@ -69,12 +69,12 @@ namespace KiwiNet.Protocols.Packets.Common
 
         protected override void DeserializeData(Stream stream)
         {
-            Value = (BackendError)PacketIO.ReadUInt8(stream);
+            Value = (BackendError)PacketIO.ReadByte(stream);
         }
 
         protected override void SerializeData(Stream stream)
         {
-            PacketIO.WriteUInt8(stream, (byte)Value);
+            PacketIO.WriteByte(stream, (byte)Value);
         }
     }
 }

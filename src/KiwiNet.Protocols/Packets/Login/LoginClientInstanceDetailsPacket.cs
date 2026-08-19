@@ -17,7 +17,7 @@ namespace KiwiNet.Protocols.Packets.Login
             PacketIO.WriteUInt32(stream, SessionId);
             PacketIO.WriteString(stream, WorldAreaId);
 
-            PacketIO.WriteUInt8(stream, (byte)Entries.Count);
+            PacketIO.WriteByte(stream, (byte)Entries.Count);
             foreach (InstanceDetailsEntry entry in Entries)
                 entry.Serialize(stream);
         }

@@ -18,7 +18,7 @@
         protected override void DeserializeData(Stream stream)
         {
             Field0 = PacketIO.ReadUInt32(stream);
-            Email = PacketIO.ReadStringUtf16(stream);
+            Email = PacketIO.ReadString(stream);
             stream.Read(PasswordHash);
         }
     }

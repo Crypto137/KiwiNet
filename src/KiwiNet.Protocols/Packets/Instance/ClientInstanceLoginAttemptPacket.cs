@@ -16,7 +16,7 @@
 
         protected override void DeserializeData(Stream stream)
         {
-            CharacterName = PacketIO.ReadStringUtf16(stream);
+            CharacterName = PacketIO.ReadString(stream);
             SessionId = PacketIO.ReadUInt32(stream);
         }
     }

@@ -19,8 +19,8 @@
 
         protected override void DeserializeData(Stream stream)
         {
-            Name = PacketIO.ReadStringUtf16(stream);
-            League = PacketIO.ReadStringUtf16(stream);
+            Name = PacketIO.ReadString(stream);
+            League = PacketIO.ReadString(stream);
             Field2 = PacketIO.ReadUInt32(stream);
             Field3 = PacketIO.ReadUInt32(stream);
             Class = (CharacterClass)PacketIO.ReadUInt32(stream);

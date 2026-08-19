@@ -16,7 +16,7 @@
             PacketIO.WriteUInt32(stream, ObjectTemplate);
             PacketIO.WriteUInt32(stream, Field1);
 
-            PacketIO.WriteUInt8(stream, (byte)Field2.Count);
+            PacketIO.WriteByte(stream, (byte)Field2.Count);
             foreach (var kvp in Field2)
             {
                 PacketIO.WriteUInt32(stream, kvp.Item1);

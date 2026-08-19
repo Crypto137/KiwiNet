@@ -15,7 +15,7 @@
 
         protected override void DeserializeData(Stream stream)
         {
-            Value = PacketIO.ReadStringUtf16(stream);
+            Value = PacketIO.ReadString(stream);
         }
 
         protected override void SerializeData(Stream stream)

@@ -24,7 +24,7 @@ namespace KiwiNet.Protocols.Packets.Instance
             PacketIO.WriteUInt32(stream, Field1);
             PacketIO.WriteString(stream, Field2);
 
-            PacketIO.WriteUInt8(stream, (byte)Entries.Count);
+            PacketIO.WriteByte(stream, (byte)Entries.Count);
             foreach (InstanceDetailsEntry entry in Entries)
                 entry.Serialize(stream);
         }
