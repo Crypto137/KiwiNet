@@ -30,12 +30,24 @@ namespace KiwiNet.Protocols
                     packet = new InstanceClientLoginAttemptReplyPacket();
                     break;
 
+                case PacketId.InstanceClientChatMessagePacketId:
+                    packet = new InstanceClientChatMessagePacket();
+                    break;
+
                 case PacketId.InstanceClientInstanceInformationPacketId:
                     packet = new InstanceClientInstanceInformationPacket();
                     break;
 
                 case PacketId.InstanceClientInstanceDetailsPacketId:
                     packet = new InstanceClientInstanceDetailsPacket();
+                    break;
+
+                case PacketId.InstanceClientPassiveSkillListPacketId:
+                    packet = new InstanceClientPassiveSkillListPacket();
+                    break;
+
+                case PacketId.InstanceClientLadderPacketId:
+                    packet = new InstanceClientLadderPacket();
                     break;
 
                 case PacketId.ClientInstanceTerrainGenerationResultId:
