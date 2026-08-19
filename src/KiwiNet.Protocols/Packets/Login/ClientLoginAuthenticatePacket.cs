@@ -1,6 +1,4 @@
-﻿using KiwiNet.Core.Extensions;
-
-namespace KiwiNet.Protocols.Packets.Login
+﻿namespace KiwiNet.Protocols.Packets.Login
 {
     public sealed class ClientLoginAuthenticatePacket : Packet
     {
@@ -19,14 +17,9 @@ namespace KiwiNet.Protocols.Packets.Login
 
         protected override void DeserializeData(Stream stream)
         {
-            Field0 = stream.Read<uint>();
-            Email = stream.ReadNetworkUtf16String();
+            Field0 = PacketIO.ReadUInt32(stream);
+            Email = PacketIO.ReadStringUtf16(stream);
             stream.Read(PasswordHash);
-        }
-
-        protected override void SerializeData(Stream stream)
-        {
-            throw new NotImplementedException();
         }
     }
 }

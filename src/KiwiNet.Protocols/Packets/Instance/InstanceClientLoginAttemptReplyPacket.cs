@@ -1,7 +1,4 @@
-﻿using KiwiNet.Core.Extensions;
-using System.Buffers.Binary;
-
-namespace KiwiNet.Protocols.Packets.Instance
+﻿namespace KiwiNet.Protocols.Packets.Instance
 {
     public sealed class InstanceClientLoginAttemptReplyPacket : Packet
     {
@@ -12,15 +9,10 @@ namespace KiwiNet.Protocols.Packets.Instance
         {
         }
 
-        protected override void DeserializeData(Stream stream)
-        {
-            throw new NotImplementedException();
-        }
-
         protected override void SerializeData(Stream stream)
         {
-            stream.Write(BinaryPrimitives.ReverseEndianness(Field0));
-            stream.WriteNetworkUtf16String(Field1);
+            PacketIO.WriteUInt32(stream, Field0);
+            PacketIO.WriteString(stream, Field1);
         }
     }
 }

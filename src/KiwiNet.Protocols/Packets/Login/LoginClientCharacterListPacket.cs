@@ -1,7 +1,4 @@
-﻿using KiwiNet.Core.Extensions;
-using System.Buffers.Binary;
-
-namespace KiwiNet.Protocols.Packets.Login
+﻿namespace KiwiNet.Protocols.Packets.Login
 {
     public enum CharacterClass
     {
@@ -26,12 +23,12 @@ namespace KiwiNet.Protocols.Packets.Login
 
         public void Serialize(Stream stream)
         {
-            stream.WriteNetworkUtf16String(Name);
-            stream.WriteNetworkUtf16String(League);
-            stream.Write(Field2);
-            stream.Write(BinaryPrimitives.ReverseEndianness(Level));
-            stream.Write(BinaryPrimitives.ReverseEndianness(Field4));
-            stream.Write((byte)Class);
+            PacketIO.WriteString(stream, Name);
+            PacketIO.WriteString(stream, League);
+            PacketIO.WriteUInt8(stream, Field2);
+            PacketIO.WriteInt32(stream, Level);
+            PacketIO.WriteInt32(stream, Field4);
+            PacketIO.WriteUInt8(stream, (byte)Class);
         }
     }
 
@@ -44,18 +41,13 @@ namespace KiwiNet.Protocols.Packets.Login
         {
         }
 
-        protected override void DeserializeData(Stream stream)
-        {
-            throw new NotImplementedException();
-        }
-
         protected override void SerializeData(Stream stream)
         {
-            stream.Write(BinaryPrimitives.ReverseEndianness(Characters.Count));
+            PacketIO.WriteInt32(stream, Characters.Count);
             foreach (CharacterInfo character in Characters)
                 character.Serialize(stream);
 
-            stream.Write(BinaryPrimitives.ReverseEndianness(Field1));
+            PacketIO.WriteInt32(stream, Field1);
         }
     }
 }

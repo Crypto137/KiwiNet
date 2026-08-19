@@ -19,10 +19,5 @@
             stream.Read(OldPasswordHash);
             stream.Read(NewPasswordHash);
         }
-
-        protected override void SerializeData(Stream stream)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

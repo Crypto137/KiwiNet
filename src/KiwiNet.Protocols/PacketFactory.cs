@@ -1,4 +1,5 @@
-﻿using KiwiNet.Protocols.Packets.Common;
+﻿using KiwiNet.Core.Logging;
+using KiwiNet.Protocols.Packets.Common;
 using KiwiNet.Protocols.Packets.Instance;
 using KiwiNet.Protocols.Packets.Login;
 
@@ -6,6 +7,8 @@ namespace KiwiNet.Protocols
 {
     public class PacketFactory
     {
+        private static readonly Logger Logger = LogManager.CreateLogger();
+
         // TODO: packet pooling?
 
         public static T Get<T>() where T: Packet, new()
@@ -71,13 +74,14 @@ namespace KiwiNet.Protocols
                     packet = new LoginClientLeagueListPacket();
                     break;
 
+                case PacketId.ClientInstanceHeartbeatPacketId:
                 case PacketId.InstanceClientHeartbeatReplyPacketId:
                 case PacketId.InstanceClientYouAreDeadId:
                 case PacketId.InstanceClientAreaChangeFailedPacketId:
                 case PacketId.InstanceClientToggleMovieModeId:
                 case PacketId.InstanceClientAdvanceFrameId:
                 case PacketId.ClientLoginRequestLeagueListPacketId:
-                    packet = new Packet(packetId);
+                    packet = new SimplePacket(packetId);
                     break;
 
                 case PacketId.InstanceClientOpenScreenId:
@@ -104,7 +108,8 @@ namespace KiwiNet.Protocols
                     break;
 
                 default:
-                    packet = new Packet(packetId);
+                    Logger.Warn($"Get(): {packetId} has no definition, falling back to SimplePacket");
+                    packet = new SimplePacket(packetId);
                     break;
             }
 

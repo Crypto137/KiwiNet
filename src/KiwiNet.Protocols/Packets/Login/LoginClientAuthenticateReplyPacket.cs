@@ -15,11 +15,6 @@ namespace KiwiNet.Protocols.Packets.Login
         {
         }
 
-        protected override void DeserializeData(Stream stream)
-        {
-            throw new NotImplementedException();
-        }
-
         protected override void SerializeData(Stream stream)
         {
             stream.Write(Result);

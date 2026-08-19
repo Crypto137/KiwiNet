@@ -1,7 +1,4 @@
-﻿using KiwiNet.Core.Extensions;
-using System.Buffers.Binary;
-
-namespace KiwiNet.Protocols.Packets.Instance
+﻿namespace KiwiNet.Protocols.Packets.Instance
 {
     public sealed class ClientInstanceTerrainGenerationResult : Packet
     {
@@ -19,13 +16,8 @@ namespace KiwiNet.Protocols.Packets.Instance
 
         protected override void DeserializeData(Stream stream)
         {
-            TileHash = BinaryPrimitives.ReverseEndianness(stream.Read<uint>());
-            DoodadHash = BinaryPrimitives.ReverseEndianness(stream.Read<uint>());
-        }
-
-        protected override void SerializeData(Stream stream)
-        {
-            throw new NotImplementedException();
+            TileHash = PacketIO.ReadUInt32(stream);
+            DoodadHash = PacketIO.ReadUInt32(stream);
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using KiwiNet.Core.Extensions;
-using System.Buffers.Binary;
-
-namespace KiwiNet.Protocols.Packets.Instance
+﻿namespace KiwiNet.Protocols.Packets.Instance
 {
     public sealed class InstanceClientObjectAddPacket : Packet
     {
@@ -14,21 +11,16 @@ namespace KiwiNet.Protocols.Packets.Instance
         {
         }
 
-        protected override void DeserializeData(Stream stream)
-        {
-            throw new NotImplementedException();
-        }
-
         protected override void SerializeData(Stream stream)
         {
-            stream.Write(BinaryPrimitives.ReverseEndianness(ObjectTemplate));
-            stream.Write(BinaryPrimitives.ReverseEndianness(Field1));
+            PacketIO.WriteUInt32(stream, ObjectTemplate);
+            PacketIO.WriteUInt32(stream, Field1);
 
-            stream.Write((byte)Field2.Count);
+            PacketIO.WriteUInt8(stream, (byte)Field2.Count);
             foreach (var kvp in Field2)
             {
-                stream.Write(BinaryPrimitives.ReverseEndianness(kvp.Item1));
-                stream.Write(BinaryPrimitives.ReverseEndianness(kvp.Item2));
+                PacketIO.WriteUInt32(stream, kvp.Item1);
+                PacketIO.WriteUInt32(stream, kvp.Item2);
             }
 
             stream.Write(Blob);

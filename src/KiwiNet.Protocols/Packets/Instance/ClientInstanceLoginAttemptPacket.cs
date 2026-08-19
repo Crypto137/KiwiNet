@@ -1,7 +1,4 @@
-﻿using KiwiNet.Core.Extensions;
-using System.Buffers.Binary;
-
-namespace KiwiNet.Protocols.Packets.Instance
+﻿namespace KiwiNet.Protocols.Packets.Instance
 {
     public sealed class ClientInstanceLoginAttemptPacket : Packet
     {
@@ -19,13 +16,8 @@ namespace KiwiNet.Protocols.Packets.Instance
 
         protected override void DeserializeData(Stream stream)
         {
-            CharacterName = stream.ReadNetworkUtf16String();
-            SessionId = BinaryPrimitives.ReverseEndianness(stream.Read<uint>());
-        }
-
-        protected override void SerializeData(Stream stream)
-        {
-            throw new NotImplementedException();
+            CharacterName = PacketIO.ReadStringUtf16(stream);
+            SessionId = PacketIO.ReadUInt32(stream);
         }
     }
 }

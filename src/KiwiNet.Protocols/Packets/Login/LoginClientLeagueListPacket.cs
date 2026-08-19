@@ -1,7 +1,4 @@
-﻿using KiwiNet.Core.Extensions;
-using System.Buffers.Binary;
-
-namespace KiwiNet.Protocols.Packets.Login
+﻿namespace KiwiNet.Protocols.Packets.Login
 {
     public readonly struct LeagueInfo(string name, string description, bool isHardcore)
     {
@@ -11,9 +8,9 @@ namespace KiwiNet.Protocols.Packets.Login
 
         public void Serialize(Stream stream)
         {
-            stream.WriteNetworkUtf16String(Name);
-            stream.WriteNetworkUtf16String(Description);
-            stream.Write(IsHardcore);
+            PacketIO.WriteString(stream, Name);
+            PacketIO.WriteString(stream, Description);
+            PacketIO.WriteBool(stream, IsHardcore);
         }
     }
 
@@ -25,14 +22,9 @@ namespace KiwiNet.Protocols.Packets.Login
         {
         }
 
-        protected override void DeserializeData(Stream stream)
-        {
-            throw new NotImplementedException();
-        }
-
         protected override void SerializeData(Stream stream)
         {
-            stream.Write(BinaryPrimitives.ReverseEndianness(Leagues.Count));
+            PacketIO.WriteInt32(stream, Leagues.Count);
             foreach (LeagueInfo league in Leagues)
                 league.Serialize(stream);
         }

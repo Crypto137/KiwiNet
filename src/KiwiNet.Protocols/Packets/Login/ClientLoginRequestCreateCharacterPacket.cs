@@ -1,7 +1,4 @@
-﻿using KiwiNet.Core.Extensions;
-using System.Buffers.Binary;
-
-namespace KiwiNet.Protocols.Packets.Login
+﻿namespace KiwiNet.Protocols.Packets.Login
 {
     public sealed class ClientLoginRequestCreateCharacterPacket : Packet
     {
@@ -22,16 +19,11 @@ namespace KiwiNet.Protocols.Packets.Login
 
         protected override void DeserializeData(Stream stream)
         {
-            Name = stream.ReadNetworkUtf16String();
-            League = stream.ReadNetworkUtf16String();
-            Field2 = BinaryPrimitives.ReverseEndianness(stream.Read<uint>());
-            Field3 = BinaryPrimitives.ReverseEndianness(stream.Read<uint>());
-            Class = (CharacterClass)BinaryPrimitives.ReverseEndianness(stream.Read<uint>());
-        }
-
-        protected override void SerializeData(Stream stream)
-        {
-            throw new NotImplementedException();
+            Name = PacketIO.ReadStringUtf16(stream);
+            League = PacketIO.ReadStringUtf16(stream);
+            Field2 = PacketIO.ReadUInt32(stream);
+            Field3 = PacketIO.ReadUInt32(stream);
+            Class = (CharacterClass)PacketIO.ReadUInt32(stream);
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using KiwiNet.Core.Extensions;
-using KiwiNet.Protocols.Packets.Common;
-using System.Buffers.Binary;
+﻿using KiwiNet.Protocols.Packets.Common;
 
 namespace KiwiNet.Protocols.Packets.Instance
 {
@@ -22,11 +20,11 @@ namespace KiwiNet.Protocols.Packets.Instance
 
         protected override void SerializeData(Stream stream)
         {
-            stream.Write(BinaryPrimitives.ReverseEndianness(Field0));
-            stream.Write(BinaryPrimitives.ReverseEndianness(Field1));
-            stream.WriteNetworkUtf16String(Field2);
+            PacketIO.WriteUInt32(stream, Field0);
+            PacketIO.WriteUInt32(stream, Field1);
+            PacketIO.WriteString(stream, Field2);
 
-            stream.Write((byte)Entries.Count);
+            PacketIO.WriteUInt8(stream, (byte)Entries.Count);
             foreach (InstanceDetailsEntry entry in Entries)
                 entry.Serialize(stream);
         }

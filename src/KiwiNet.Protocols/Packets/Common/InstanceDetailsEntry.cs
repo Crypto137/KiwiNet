@@ -1,6 +1,4 @@
-﻿using KiwiNet.Core.Extensions;
-
-namespace KiwiNet.Protocols.Packets.Common
+﻿namespace KiwiNet.Protocols.Packets.Common
 {
     public readonly struct InstanceDetailsEntry(string hostname, string port)
     {
@@ -9,8 +7,8 @@ namespace KiwiNet.Protocols.Packets.Common
 
         public void Serialize(Stream stream)
         {
-            stream.WriteNetworkAsciiString(Hostname);
-            stream.WriteNetworkAsciiString(Port);
+            PacketIO.WriteStringAscii(stream, Hostname);
+            PacketIO.WriteStringAscii(stream, Port);
         }
     }
 }

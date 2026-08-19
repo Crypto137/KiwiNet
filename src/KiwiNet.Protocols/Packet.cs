@@ -4,7 +4,7 @@ using KiwiNet.Core.Network.Tcp;
 
 namespace KiwiNet.Protocols
 {
-    public class Packet : IPacket
+    public abstract class Packet : IPacket
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
 
@@ -61,8 +61,14 @@ namespace KiwiNet.Protocols
             return (int)stream.Position;
         }
 
-        protected virtual void DeserializeData(Stream stream) { }
+        protected virtual void DeserializeData(Stream stream)
+        {
+            throw new NotImplementedException();
+        }
 
-        protected virtual void SerializeData(Stream stream) { }
+        protected virtual void SerializeData(Stream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

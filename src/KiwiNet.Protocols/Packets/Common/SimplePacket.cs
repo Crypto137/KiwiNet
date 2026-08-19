@@ -1,21 +1,20 @@
 ﻿namespace KiwiNet.Protocols.Packets.Common
 {
-    public sealed class IntPacket : Packet
+    /// <summary>
+    /// Represents a packet with no data outside of its id.
+    /// </summary>
+    public sealed class SimplePacket : Packet
     {
-        public int Value { get; set; }
-
-        public IntPacket(PacketId id) : base(id)
+        public SimplePacket(PacketId id) : base(id)
         {
         }
 
         protected override void DeserializeData(Stream stream)
         {
-            Value = PacketIO.ReadInt32(stream);
         }
 
         protected override void SerializeData(Stream stream)
         {
-            PacketIO.WriteInt32(stream, Value);
         }
     }
 }

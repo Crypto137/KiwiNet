@@ -1,6 +1,4 @@
-﻿using KiwiNet.Core.Extensions;
-using KiwiNet.Protocols.Packets.Common;
-using System.Buffers.Binary;
+﻿using KiwiNet.Protocols.Packets.Common;
 
 namespace KiwiNet.Protocols.Packets.Login
 {
@@ -14,17 +12,12 @@ namespace KiwiNet.Protocols.Packets.Login
         {
         }
 
-        protected override void DeserializeData(Stream stream)
-        {
-            throw new NotImplementedException();
-        }
-
         protected override void SerializeData(Stream stream)
         {
-            stream.Write(BinaryPrimitives.ReverseEndianness(SessionId));
-            stream.WriteNetworkUtf16String(WorldAreaId);
+            PacketIO.WriteUInt32(stream, SessionId);
+            PacketIO.WriteString(stream, WorldAreaId);
 
-            stream.Write((byte)Entries.Count);
+            PacketIO.WriteUInt8(stream, (byte)Entries.Count);
             foreach (InstanceDetailsEntry entry in Entries)
                 entry.Serialize(stream);
         }

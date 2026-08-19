@@ -1,6 +1,4 @@
-﻿using KiwiNet.Core.Extensions;
-
-namespace KiwiNet.Protocols.Packets.Common
+﻿namespace KiwiNet.Protocols.Packets.Common
 {
     public sealed class StringPacket : Packet
     {
@@ -17,12 +15,12 @@ namespace KiwiNet.Protocols.Packets.Common
 
         protected override void DeserializeData(Stream stream)
         {
-            Value = stream.ReadNetworkUtf16String();
+            Value = PacketIO.ReadStringUtf16(stream);
         }
 
         protected override void SerializeData(Stream stream)
         {
-            stream.WriteNetworkUtf16String(Value);
+            PacketIO.WriteString(stream, Value);
         }
     }
 }
