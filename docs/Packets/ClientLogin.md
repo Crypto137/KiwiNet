@@ -184,7 +184,15 @@ struct LoginClientCharacterListPacket
 
 ## LoginClientDisconnectPlayerPacket
 
-TODO (id 96)
+Sent by the Login Server when a client is disconnected due to a `BackendError`.
+
+```c
+struct LoginClientDisconnectPlayerPacket
+{
+  u8 PacketId; // 96
+  u8 Reason;
+};
+```
 
 ## ClientLoginRequestLeagueListPacket
 
@@ -219,9 +227,17 @@ struct LoginClientLeagueListPacketId
 
 ## ClientLoginCreateAccountPacket
 
-TODO (id 100)
+Sent by the client when an account creation request is made.
 
-Note: create account button is disabled in version 0.8.8. TBD if it's possible to enable it.
+```c
+struct ClientLoginCreateAccountPacket
+{
+  u8 PacketId; // 99
+  // TODO  
+};
+```
+
+Note: account creation is disabled in version 0.8.8.
 
 ## LoginClientCreateAccountResultPacket
 
