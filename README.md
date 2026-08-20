@@ -4,6 +4,8 @@ KiwiNet is an experimental server emulator for pre-release versions of Path of E
 
 This project is intended for educational and archival purposes only. Support for "modern" versions (3.x+) is not planned.
 
+Feel free to join the [Discord server](https://discord.gg/YNPnrYw2C) if you want to discuss this project.
+
 ## Features
 
 This is still very far from being "playable".
