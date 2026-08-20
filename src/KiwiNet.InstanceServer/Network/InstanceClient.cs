@@ -99,12 +99,12 @@ namespace KiwiNet.InstanceServer.Network
             // this is where the server disconnects the client if the hashes don't match
             // InstanceClientForcedDisconnectionWarningPacketId -> BackendError.TerrainGenerationOutOfSync
 
-            /*
             var objAdd = PacketFactory.Get<InstanceClientObjectAddPacket>();
             objAdd.ObjectTemplate = HashUtility.MurmurHash2("Metadata/Characters/Str/Str");
             objAdd.Field1 = 0x1;
 
             using MemoryStream ms = new();
+
             ms.Write(0);        // u32  x coord?   this + 48
             ms.Write(0);        // u32  y coord?   this + 52
             ms.Write(0);        // u32  rotation?  this + 56
@@ -113,10 +113,13 @@ namespace KiwiNet.InstanceServer.Network
 
             // if flags & 4 -> read u32 x2
 
+            // other components
+            for (int i = 0; i < 209; i++)
+                ms.Write((byte)0);
+
             objAdd.Blob = ms.ToArray();
 
             Send(objAdd);
-            */
         }
 
         #endregion
