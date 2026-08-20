@@ -3,6 +3,7 @@ using KiwiNet.Core.Logging;
 using KiwiNet.Core.Network.Tcp;
 using KiwiNet.Core.Utils;
 using KiwiNet.Protocols;
+using KiwiNet.Protocols.Packets.Common;
 using KiwiNet.Protocols.Packets.Instance;
 
 namespace KiwiNet.InstanceServer.Network
@@ -51,6 +52,14 @@ namespace KiwiNet.InstanceServer.Network
 
                 case PacketId.ClientInstanceHeartbeatPacketId:
                     OnHeartbeat();
+                    break;
+
+                case PacketId.ClientInstanceAllocatePassiveSkillPointPacketId:
+                    OnAllocatePassiveSkillPoint(packet);
+                    break;
+
+                case PacketId.ClientInstanceChangeBoundSkillId:
+                    OnChangeBoundSkill(packet);
                     break;
 
                 case PacketId.ClientInstanceTerrainGenerationResultId:
@@ -107,6 +116,28 @@ namespace KiwiNet.InstanceServer.Network
             Send(PacketFactory.Get<Packet>(PacketId.InstanceClientHeartbeatReplyPacketId));
         }
 
+        private void OnAllocatePassiveSkillPoint(Packet packet)
+        {
+            if (packet is not IntPacket allocatePassiveSkillPoint)
+            {
+                Logger.Warn("OnAllocatePassiveSkillPoint(): Invalid packet");
+                return;
+            }
+
+            Logger.Debug($"OnAllocatePassiveSkillPoint(): 0x{allocatePassiveSkillPoint.Value:X8}");
+        }
+
+        private void OnChangeBoundSkill(Packet packet)
+        {
+            if (packet is not ClientInstanceChangeBoundSkill changeBoundSkill)
+            {
+                Logger.Warn("OnChangeBoundSkill(): Invalid packet");
+                return;
+            }
+
+            Logger.Debug($"OnChangeBoundSkill(): {changeBoundSkill}");
+        }
+
         private void OnTerrainGenerationResult(Packet packet)
         {
             if (packet is not ClientInstanceTerrainGenerationResult terrainGenerationResult)
@@ -115,7 +146,7 @@ namespace KiwiNet.InstanceServer.Network
                 return;
             }
 
-            Logger.Debug($"OnTerrainGenerationResult(): {packet}");
+            Logger.Debug($"OnTerrainGenerationResult(): {terrainGenerationResult}");
             // this is where the server disconnects the client if the hashes don't match
             // InstanceClientForcedDisconnectionWarningPacketId -> BackendError.TerrainGenerationOutOfSync
 

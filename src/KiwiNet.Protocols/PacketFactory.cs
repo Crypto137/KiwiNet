@@ -54,6 +54,10 @@ namespace KiwiNet.Protocols
                     packet = new InstanceClientLadderPacket();
                     break;
 
+                case PacketId.ClientInstanceChangeBoundSkillId:
+                    packet = new ClientInstanceChangeBoundSkill();
+                    break;
+
                 case PacketId.ClientInstanceTerrainGenerationResultId:
                     packet = new ClientInstanceTerrainGenerationResult();
                     break;
@@ -100,6 +104,7 @@ namespace KiwiNet.Protocols
                     packet = new SimplePacket(packetId);
                     break;
 
+                case PacketId.ClientInstanceAllocatePassiveSkillPointPacketId:
                 case PacketId.InstanceClientOpenScreenId:
                 case PacketId.InstanceClientPartyLeftId:
                 case PacketId.InstanceClientTradeEndedId:
