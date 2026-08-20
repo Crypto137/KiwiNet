@@ -2,7 +2,7 @@
 
 namespace KiwiNet.Protocols.Packets.Instance
 {
-    public class InstanceClientChatMessagePacket : Packet
+    public sealed class InstanceClientChatMessagePacket : Packet
     {
         public string Name { get; set; } = string.Empty;
         public string Text { get; set; } = string.Empty;
@@ -10,11 +10,6 @@ namespace KiwiNet.Protocols.Packets.Instance
 
         public InstanceClientChatMessagePacket() : base(PacketId.InstanceClientChatMessagePacketId)
         {
-        }
-
-        protected override void DeserializeData(Stream stream)
-        {
-            throw new NotImplementedException();
         }
 
         protected override void SerializeData(Stream stream)

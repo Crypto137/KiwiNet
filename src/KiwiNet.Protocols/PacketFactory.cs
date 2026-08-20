@@ -30,6 +30,10 @@ namespace KiwiNet.Protocols
                     packet = new InstanceClientLoginAttemptReplyPacket();
                     break;
 
+                case PacketId.ClientInstanceChatMessagePacketId:
+                    packet = new ClientInstanceChatMessagePacket();
+                    break;
+
                 case PacketId.InstanceClientChatMessagePacketId:
                     packet = new InstanceClientChatMessagePacket();
                     break;

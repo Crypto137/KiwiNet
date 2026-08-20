@@ -13,11 +13,6 @@ namespace KiwiNet.Protocols.Packets.Instance
         {
         }
 
-        protected override void DeserializeData(Stream stream)
-        {
-            throw new NotImplementedException();
-        }
-
         protected override void SerializeData(Stream stream)
         {
             PacketIO.WriteUInt32(stream, Field0);

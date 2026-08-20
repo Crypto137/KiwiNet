@@ -45,8 +45,12 @@ namespace KiwiNet.InstanceServer.Network
                     OnLoginAttempt(packet);
                     break;
 
+                case PacketId.ClientInstanceChatMessagePacketId:
+                    OnChatMessage(packet);
+                    break;
+
                 case PacketId.ClientInstanceHeartbeatPacketId:
-                    OnHeartbeat(packet);
+                    OnHeartbeat();
                     break;
 
                 case PacketId.ClientInstanceTerrainGenerationResultId:
@@ -77,12 +81,28 @@ namespace KiwiNet.InstanceServer.Network
             var instanceInfo = PacketFactory.Get<InstanceClientInstanceInformationPacket>();
             instanceInfo.Field0 = 1;
             instanceInfo.WorldAreaId = "1_1_1";
-            instanceInfo.Field2 = "";
+            instanceInfo.League = "Default";
             instanceInfo.Seed = 666;
             Send(instanceInfo);
         }
 
-        private void OnHeartbeat(Packet packet)
+        private void OnChatMessage(Packet packet)
+        {
+            if (packet is not ClientInstanceChatMessagePacket chatMessage)
+            {
+                Logger.Warn("OnChatMessage(): Invalid packet");
+                return;
+            }
+
+            Logger.Debug($"OnChatMessage(): {chatMessage.Text}");
+
+            InstanceClientChatMessagePacket reply = PacketFactory.Get<InstanceClientChatMessagePacket>();
+            reply.Name = "Player";
+            reply.Text = chatMessage.Text;
+            Send(reply);
+        }
+
+        private void OnHeartbeat()
         {
             Send(PacketFactory.Get<Packet>(PacketId.InstanceClientHeartbeatReplyPacketId));
         }

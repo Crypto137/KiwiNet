@@ -4,7 +4,7 @@
     {
         public uint Field0 { get; set; }                        // probably some kind of runtime instance id?
         public string WorldAreaId { get; set; } = string.Empty; // id column in the WorldAreas table
-        public string Field2 { get; set; } = string.Empty;      // copied to handler (this + 3680)
+        public string League { get; set; } = string.Empty;      // league name
         public uint Seed { get; set; }                          // DRLG seed
         public List<uint> Field4 { get; } = new();              // hashes of things to preload?
 
@@ -16,7 +16,7 @@
         {
             PacketIO.WriteUInt32(stream, Field0);
             PacketIO.WriteString(stream, WorldAreaId);
-            PacketIO.WriteString(stream, Field2);
+            PacketIO.WriteString(stream, League);
             PacketIO.WriteUInt32(stream, Seed);
 
             PacketIO.WriteInt16(stream, (short)Field4.Count);
