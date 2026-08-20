@@ -22,6 +22,50 @@ namespace KiwiNet.Protocols
 
             switch (packetId)
             {
+                case PacketId.ClientInstanceQuitRequestPacketId:
+                case PacketId.ClientInstanceHeartbeatPacketId:
+                case PacketId.InstanceClientHeartbeatReplyPacketId:
+                case PacketId.InstanceClientYouAreDeadId:
+                case PacketId.InstanceClientAreaChangeFailedPacketId:
+                case PacketId.InstanceClientToggleMovieModeId:
+                case PacketId.InstanceClientAdvanceFrameId:
+                case PacketId.ClientLoginRequestLeagueListPacketId:
+                    packet = new SimplePacket(packetId);
+                    break;
+
+                case PacketId.ClientInstanceAllocatePassiveSkillPointPacketId:
+                case PacketId.InstanceClientOpenScreenId:
+                case PacketId.ClientInstancePartyAcceptId:  // TODO: always 0x01720000, probably custom structure
+                case PacketId.ClientInstancePartyLeaveId:   // TODO: always 0x01720000, probably custom structure
+                case PacketId.InstanceClientPartyLeftId:
+                case PacketId.InstanceClientTradeEndedId:
+                    packet = new IntPacket(packetId);
+                    break;
+
+                case PacketId.ClientInstanceAddFriendPacketId:
+                case PacketId.ClientInstanceRemoveFriendPacketId:
+                case PacketId.ClientInstanceIgnorePacketId:
+                case PacketId.ClientInstanceUnIgnorePacketId:
+                case PacketId.ClientInstancePartyInviteId:
+                case PacketId.ClientInstancePartyKickId:
+                case PacketId.ClientInstancePartyPromoteId:
+                case PacketId.InstanceClientContactRemoveId:
+                case PacketId.InstanceClientAreaChangeNotificationPacketId:
+                case PacketId.ClientLoginRequestDeleteCharacterPacketId:
+                case PacketId.ClientLoginChooseCharacterPacketId:
+                    packet = new StringPacket(packetId);
+                    break;
+
+                case PacketId.InstanceClientForcedDisconnectionWarningPacketId:
+                case PacketId.LoginClientRequestPasswordChangeReplyPacketId:
+                case PacketId.LoginClientRequestDeleteCharacterReplyPacketId:
+                case PacketId.LoginClientChooseCharacterReplyPacketId:
+                case PacketId.LoginClientRequestCreateCharacterReplyPacketId:
+                case PacketId.LoginClientDisconnectPlayerPacketId:
+                case PacketId.LoginClientCreateAccountResultPacketId:
+                    packet = new BackendErrorPacket(packetId);
+                    break;
+
                 case PacketId.ClientInstanceLoginAttemptPacketId:
                     packet = new ClientInstanceLoginAttemptPacket();
                     break;
@@ -92,40 +136,6 @@ namespace KiwiNet.Protocols
 
                 case PacketId.LoginClientLeagueListPacketId:
                     packet = new LoginClientLeagueListPacket();
-                    break;
-
-                case PacketId.ClientInstanceHeartbeatPacketId:
-                case PacketId.InstanceClientHeartbeatReplyPacketId:
-                case PacketId.InstanceClientYouAreDeadId:
-                case PacketId.InstanceClientAreaChangeFailedPacketId:
-                case PacketId.InstanceClientToggleMovieModeId:
-                case PacketId.InstanceClientAdvanceFrameId:
-                case PacketId.ClientLoginRequestLeagueListPacketId:
-                    packet = new SimplePacket(packetId);
-                    break;
-
-                case PacketId.ClientInstanceAllocatePassiveSkillPointPacketId:
-                case PacketId.InstanceClientOpenScreenId:
-                case PacketId.InstanceClientPartyLeftId:
-                case PacketId.InstanceClientTradeEndedId:
-                    packet = new IntPacket(packetId);
-                    break;
-
-                case PacketId.InstanceClientContactRemoveId:
-                case PacketId.InstanceClientAreaChangeNotificationPacketId:
-                case PacketId.ClientLoginRequestDeleteCharacterPacketId:
-                case PacketId.ClientLoginChooseCharacterPacketId:
-                    packet = new StringPacket(packetId);
-                    break;
-
-                case PacketId.InstanceClientForcedDisconnectionWarningPacketId:
-                case PacketId.LoginClientRequestPasswordChangeReplyPacketId:
-                case PacketId.LoginClientRequestDeleteCharacterReplyPacketId:
-                case PacketId.LoginClientChooseCharacterReplyPacketId:
-                case PacketId.LoginClientRequestCreateCharacterReplyPacketId:
-                case PacketId.LoginClientDisconnectPlayerPacketId:
-                case PacketId.LoginClientCreateAccountResultPacketId:
-                    packet = new BackendErrorPacket(packetId);
                     break;
 
                 default:
