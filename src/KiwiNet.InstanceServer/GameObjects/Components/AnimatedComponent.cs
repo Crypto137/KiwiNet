@@ -1,10 +1,13 @@
-﻿namespace KiwiNet.InstanceServer.GameObjects.Components
+﻿using KiwiNet.Protocols;
+
+namespace KiwiNet.InstanceServer.GameObjects.Components
 {
     public sealed class AnimatedComponent : Component
     {
         public override void Serialize(Stream stream)
         {
-            throw new NotImplementedException();
+            // dummy bytes
+            PacketIO.WriteByte(stream, 0);
         }
     }
 }

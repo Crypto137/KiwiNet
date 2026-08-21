@@ -3,6 +3,7 @@ using KiwiNet.Core.Logging;
 using KiwiNet.Core.Network.Tcp;
 using KiwiNet.Core.Utils;
 using KiwiNet.InstanceServer.GameObjects;
+using KiwiNet.InstanceServer.GameObjects.Components;
 using KiwiNet.Protocols;
 using KiwiNet.Protocols.Packets.Common;
 using KiwiNet.Protocols.Packets.Instance;
@@ -161,15 +162,16 @@ namespace KiwiNet.InstanceServer.Network
                 GridPosition = new(300, 540),
             };
 
-            player.Initialize(ref settings);
+            // component order is strict for serialization
+            player.Initialize(ref settings);    // Positioned instantiated in Initialize()
+            player.GetOrCreateComponent<LifeComponent>();
+            player.GetOrCreateComponent<AnimatedComponent>();
+            player.GetOrCreateComponent<PlayerComponent>().Name = "KiwiEmu";
+            player.GetOrCreateComponent<InventoriesComponent>();
+            player.GetOrCreateComponent<ActorComponent>();
 
             using MemoryStream ms = new();
-
             player.Serialize(ms);
-
-            // dummy bytes for other components
-            for (int i = 0; i < 209; i++)
-                ms.Write((byte)0);
 
             var objAdd = PacketFactory.Get<InstanceClientObjectAddPacket>();
             objAdd.Blob = ms.ToArray();
