@@ -1,4 +1,5 @@
-﻿using KiwiNet.Protocols.Packets.Login;
+﻿using KiwiNet.Protocols.Packets.Common;
+using KiwiNet.Protocols.Packets.Login;
 
 namespace KiwiNet.LoginServer.Accounts
 {
