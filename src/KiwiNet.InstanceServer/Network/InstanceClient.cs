@@ -2,6 +2,7 @@
 using KiwiNet.Core.Logging;
 using KiwiNet.Core.Network.Tcp;
 using KiwiNet.Core.Utils;
+using KiwiNet.InstanceServer.Entities;
 using KiwiNet.Protocols;
 using KiwiNet.Protocols.Packets.Common;
 using KiwiNet.Protocols.Packets.Instance;
@@ -150,26 +151,29 @@ namespace KiwiNet.InstanceServer.Network
             // this is where the server disconnects the client if the hashes don't match
             // InstanceClientForcedDisconnectionWarningPacketId -> BackendError.TerrainGenerationOutOfSync
 
-            var objAdd = PacketFactory.Get<InstanceClientObjectAddPacket>();
-            objAdd.ObjectTemplate = HashUtility.MurmurHash2("Metadata/Characters/Str/Str");
-            objAdd.Field1 = 0x1;
+
+            Entity player = new();
+
+            EntitySettings settings = new()
+            {
+                Template = HashUtility.MurmurHash2("Metadata/Characters/Str/Str"),
+                Id = 0x1,
+                PositionX = 300,
+                PositionY = 540,
+            };
+
+            player.Initialize(ref settings);
 
             using MemoryStream ms = new();
 
-            ms.Write(0);        // u32  x coord?   this + 48
-            ms.Write(0);        // u32  y coord?   this + 52
-            ms.Write(0);        // u32  rotation?  this + 56
-            ms.Write((byte)0);  // u8   flags?
-            ms.Write(0);        // u32;            this + 16
+            player.Serialize(ms);
 
-            // if flags & 4 -> read u32 x2
-
-            // other components
+            // dummy bytes for other components
             for (int i = 0; i < 209; i++)
                 ms.Write((byte)0);
 
+            var objAdd = PacketFactory.Get<InstanceClientObjectAddPacket>();
             objAdd.Blob = ms.ToArray();
-
             Send(objAdd);
         }
 
