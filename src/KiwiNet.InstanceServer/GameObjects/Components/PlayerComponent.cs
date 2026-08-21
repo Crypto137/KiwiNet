@@ -1,4 +1,4 @@
-﻿namespace KiwiNet.InstanceServer.Entities.Components
+﻿namespace KiwiNet.InstanceServer.GameObjects.Components
 {
     public sealed class PlayerComponent : Component
     {

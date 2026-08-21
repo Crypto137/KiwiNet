@@ -1,9 +1,9 @@
-﻿using KiwiNet.InstanceServer.Entities.Components;
+﻿using KiwiNet.InstanceServer.GameObjects.Components;
 using KiwiNet.Protocols;
 
-namespace KiwiNet.InstanceServer.Entities
+namespace KiwiNet.InstanceServer.GameObjects
 {
-    public class Entity
+    public class GameObject
     {
         private readonly List<KeyValuePair<uint, uint>> _unkList = new();
         private readonly List<Component> _components = new();
@@ -11,11 +11,11 @@ namespace KiwiNet.InstanceServer.Entities
         public uint Template { get; private set; }
         public uint Id { get; private set; }
 
-        public Entity()
+        public GameObject()
         {
         }
 
-        public void Initialize(ref EntitySettings settings)
+        public void Initialize(ref GameObjectSettings settings)
         {
             Template = settings.Template;
             Id = settings.Id;

@@ -2,7 +2,7 @@
 using KiwiNet.Core.Logging;
 using KiwiNet.Core.Network.Tcp;
 using KiwiNet.Core.Utils;
-using KiwiNet.InstanceServer.Entities;
+using KiwiNet.InstanceServer.GameObjects;
 using KiwiNet.Protocols;
 using KiwiNet.Protocols.Packets.Common;
 using KiwiNet.Protocols.Packets.Instance;
@@ -152,9 +152,9 @@ namespace KiwiNet.InstanceServer.Network
             // InstanceClientForcedDisconnectionWarningPacketId -> BackendError.TerrainGenerationOutOfSync
 
 
-            Entity player = new();
+            GameObject player = new();
 
-            EntitySettings settings = new()
+            GameObjectSettings settings = new()
             {
                 Template = HashUtility.MurmurHash2("Metadata/Characters/Str/Str"),
                 Id = 0x1,

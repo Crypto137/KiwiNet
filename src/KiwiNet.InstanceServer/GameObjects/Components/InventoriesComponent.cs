@@ -1,6 +1,6 @@
-﻿namespace KiwiNet.InstanceServer.Entities.Components
+﻿namespace KiwiNet.InstanceServer.GameObjects.Components
 {
-    public sealed class LifeComponent : Component
+    public sealed class InventoriesComponent : Component
     {
         public override void Serialize(Stream stream)
         {

@@ -1,7 +1,6 @@
-﻿
-namespace KiwiNet.InstanceServer.Entities.Components
+﻿namespace KiwiNet.InstanceServer.GameObjects.Components
 {
-    public sealed class ActorComponent : Component
+    public sealed class AnimatedComponent : Component
     {
         public override void Serialize(Stream stream)
         {

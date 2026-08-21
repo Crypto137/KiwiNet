@@ -1,6 +1,6 @@
-﻿namespace KiwiNet.InstanceServer.Entities.Components
+﻿namespace KiwiNet.InstanceServer.GameObjects.Components
 {
-    public sealed class PathfindingComponent : Component
+    public sealed class LifeComponent : Component
     {
         public override void Serialize(Stream stream)
         {

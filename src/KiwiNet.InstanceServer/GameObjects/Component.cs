@@ -1,4 +1,4 @@
-﻿namespace KiwiNet.InstanceServer.Entities
+﻿namespace KiwiNet.InstanceServer.GameObjects
 {
     public abstract class Component
     {

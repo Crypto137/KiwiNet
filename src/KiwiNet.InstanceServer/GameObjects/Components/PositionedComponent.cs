@@ -2,7 +2,7 @@
 using KiwiNet.Protocols;
 using System.Numerics;
 
-namespace KiwiNet.InstanceServer.Entities.Components
+namespace KiwiNet.InstanceServer.GameObjects.Components
 {
     public sealed class PositionedComponent : Component
     {
