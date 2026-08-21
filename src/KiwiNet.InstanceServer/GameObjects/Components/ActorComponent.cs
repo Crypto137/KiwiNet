@@ -6,9 +6,30 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
     {
         public override void Serialize(Stream stream)
         {
-            // dummy bytes
-            for (int i = 0; i < 7; i++)
+            // call Serialize2 (aka probably SerializeUpdate)
+            PacketIO.WriteByte(stream, 0);
+
+            bool hasExtraData = false;
+            PacketIO.WriteBool(stream, hasExtraData);
+            if (hasExtraData)
+            {
+                PacketIO.WriteUInt32(stream, 0);
+                PacketIO.WriteUInt32(stream, 0);
+
+                PacketIO.WriteInt16(stream, 0);
+
+                PacketIO.WriteInt16(stream, 0);
+                PacketIO.WriteUInt32(stream, 0);
+                PacketIO.WriteUInt32(stream, 0);
+                PacketIO.WriteUInt32(stream, 0);
                 PacketIO.WriteByte(stream, 0);
+            }
+
+            PacketIO.WriteByte(stream, 0);
+
+            // these look like counts
+            PacketIO.WriteInt16(stream, 0);
+            PacketIO.WriteInt16(stream, 0);
         }
     }
 }
