@@ -21,3 +21,9 @@ This is still very far from being "playable".
 - Launch `Client.exe` with the `--nopatch` argument to bypass the patcher.
 
 - The archived client's GGPK file is missing the `Art\Textures\Interface` folder. The missing files can be added to the client directory without modifying the GGPK. `.mat` placeholders can be extracted from the GGPK with [VisualGGPK2](https://github.com/aianlinb/VisualGGPK2) and other tools, `.dds` and `.png` files can be substituted with arbitrary images.
+
+- If the client freezes at the login screen, you need to block access to the `tyypo.com` domain.
+  
+  - You can do this on Windows by adding `127.0.0.1 tyypo.com` to `C:\Windows\System32\drivers\etc\hosts`.
+  
+  - This is because the 0.8.8 client is hardcoded to load news from `tyypo.com/production_motd.txt`, and it doesn't handle errors very well.
