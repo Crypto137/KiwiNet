@@ -72,6 +72,19 @@ namespace KiwiNet.Protocols
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float ReadFloat(Stream stream)
+        {
+            uint bits = ReadUInt32(stream);
+            return BitConverter.UInt32BitsToSingle(bits);
+        }
+
+        public static void WriteFloat(Stream stream, float value)
+        {
+            uint bits = BitConverter.SingleToUInt32Bits(value);
+            WriteUInt32(stream, bits);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string ReadString(Stream stream)
         {
             short length = ReadInt16(stream);

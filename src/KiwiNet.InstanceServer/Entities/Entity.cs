@@ -21,8 +21,7 @@ namespace KiwiNet.InstanceServer.Entities
             Id = settings.Id;
 
             PositionedComponent positioned = GetOrCreateComponent<PositionedComponent>();
-            positioned.X = settings.PositionX;
-            positioned.Y = settings.PositionY;
+            positioned.SetPosition(settings.GridPosition);
         }
 
         public T GetOrCreateComponent<T>() where T: Component, new()

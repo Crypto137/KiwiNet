@@ -158,8 +158,7 @@ namespace KiwiNet.InstanceServer.Network
             {
                 Template = HashUtility.MurmurHash2("Metadata/Characters/Str/Str"),
                 Id = 0x1,
-                PositionX = 300,
-                PositionY = 540,
+                GridPosition = new(300, 540),
             };
 
             player.Initialize(ref settings);
