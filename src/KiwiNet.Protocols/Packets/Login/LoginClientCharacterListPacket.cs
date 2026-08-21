@@ -1,17 +1,7 @@
-﻿namespace KiwiNet.Protocols.Packets.Login
-{
-    public enum CharacterClass
-    {
-        StrDexInt,
-        Str,
-        Dex,
-        Int,
-        StrDex,
-        StrInt,
-        DexInt,
-        NumClasses, // there are more "test" class entries that are valid, but we're not including them here yet
-    }
+﻿using KiwiNet.Protocols.Packets.Common;
 
+namespace KiwiNet.Protocols.Packets.Login
+{
     public readonly struct CharacterInfo(string name, string league, byte field2, int level, int field4, CharacterClass @class)
     {
         public readonly string Name = name;

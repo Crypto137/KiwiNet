@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Login
+﻿using KiwiNet.Protocols.Packets.Common;
+
+namespace KiwiNet.Protocols.Packets.Login
 {
     public sealed class ClientLoginRequestCreateCharacterPacket : Packet
     {
