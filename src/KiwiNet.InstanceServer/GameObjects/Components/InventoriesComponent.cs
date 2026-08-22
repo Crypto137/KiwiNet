@@ -4,11 +4,19 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
 {
     public sealed class InventoriesComponent : Component
     {
+        public const int NumInventories = 38;
+
         public override void Serialize(Stream stream)
         {
-            // dummy bytes
-            for (int i = 0; i < 148; i++)
-                PacketIO.WriteByte(stream, 0);
+            for (int i = 0; i < NumInventories; i++)
+            {
+                int count = 0;
+                PacketIO.WriteInt32(stream, count);
+                for (int j = 0; j < count; j++)
+                {
+                    // TODO: item serialization for each inventory
+                }
+            }
         }
     }
 }

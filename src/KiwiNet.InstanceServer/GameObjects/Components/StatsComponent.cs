@@ -4,7 +4,7 @@
     {
         public override void Serialize(Stream stream)
         {
-            throw new NotImplementedException();
+            // nothing
         }
     }
 }

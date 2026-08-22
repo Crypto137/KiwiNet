@@ -4,11 +4,19 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
 {
     public sealed class LifeComponent : Component
     {
+        public uint Life { get; set; } = 0;
+
         public override void Serialize(Stream stream)
         {
-            // dummy bytes
-            for (int i = 0; i < 21; i++)
-                PacketIO.WriteByte(stream, 0);
+            // sub_4DE810
+            PacketIO.WriteUInt32(stream, Life);
+            PacketIO.WriteByte(stream, 0);
+            // virtual calls in a loop, the byte above may be a size for a vector
+
+            PacketIO.WriteUInt32(stream, 0);
+            PacketIO.WriteUInt32(stream, 0);
+            PacketIO.WriteUInt32(stream, 0);
+            PacketIO.WriteUInt32(stream, 0);
         }
     }
 }
