@@ -4,7 +4,7 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
 {
     public sealed class InventoriesComponent : Component
     {
-        public const int NumInventories = 38;
+        public const int NumInventories = 37;
 
         public override void Serialize(Stream stream)
         {
