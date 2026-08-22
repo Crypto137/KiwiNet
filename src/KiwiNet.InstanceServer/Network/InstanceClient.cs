@@ -1,9 +1,12 @@
 ﻿using KiwiNet.Core.Config;
 using KiwiNet.Core.Logging;
+using KiwiNet.Core.Math;
 using KiwiNet.Core.Network.Tcp;
 using KiwiNet.Core.Utils;
+using KiwiNet.InstanceServer.Commands;
 using KiwiNet.InstanceServer.GameObjects;
 using KiwiNet.InstanceServer.GameObjects.Components;
+using KiwiNet.InstanceServer.WorldAreas;
 using KiwiNet.Protocols;
 using KiwiNet.Protocols.Packets.Common;
 using KiwiNet.Protocols.Packets.Instance;
@@ -13,6 +16,11 @@ namespace KiwiNet.InstanceServer.Network
     public class InstanceClient : TcpClient
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
+
+        // temp garbage
+        private static InstanceClient _currentClient = null;
+        private static string _areaOverride = null;
+        private static Vector2Int? _startOverride = null;
 
         public InstanceClient()
         {
@@ -36,6 +44,27 @@ namespace KiwiNet.InstanceServer.Network
         {
             Logger.Trace($"OUT > {packet.Id}");
             Connection.Send(packet);
+        }
+
+        public bool BeginAreaTransfer(string areaId, Vector2Int? startOverride = null)
+        {
+            if (WorldArea.IsValidAreaId(areaId) == false)
+                return false;
+
+            _areaOverride = areaId;
+            _startOverride = startOverride;
+
+            StringPacket notification = PacketFactory.Get<StringPacket>(PacketId.InstanceClientAreaChangeNotificationPacketId);
+            notification.Value = areaId;
+            Send(notification);
+
+            InstanceClientInstanceDetailsPacket instanceDetails = PacketFactory.Get<InstanceClientInstanceDetailsPacket>();
+            instanceDetails.SessionId = 0xDEADBEEF;
+            instanceDetails.Field1 = 1;
+            instanceDetails.WorldAreaId = areaId;
+            instanceDetails.Entries.Add(new("localhost", "6112"));
+            Send(instanceDetails);
+            return true;
         }
 
         #region Handlers
@@ -97,11 +126,15 @@ namespace KiwiNet.InstanceServer.Network
             reply.Field1 = "";
             Send(reply);
 
+            // temp garbage part deux
+            _currentClient?.Connection.Disconnect();
+            _currentClient = this;
+
             GameConfig config = ConfigManager.Get<GameConfig>();
 
             var instanceInfo = PacketFactory.Get<InstanceClientInstanceInformationPacket>();
             instanceInfo.Field0 = 1;
-            instanceInfo.WorldAreaId = config.WorldAreaId;
+            instanceInfo.WorldAreaId = _areaOverride != null ? _areaOverride : config.WorldAreaId;
             instanceInfo.League = "Default";
             instanceInfo.Seed = (uint)config.WorldAreaSeed;
             Send(instanceInfo);
@@ -114,6 +147,9 @@ namespace KiwiNet.InstanceServer.Network
                 Logger.Warn("OnChatMessage(): Invalid packet");
                 return;
             }
+
+            if (CommandManager.Instance.TryParseCommand(this, chatMessage.Text))
+                return;
 
             Logger.Debug($"OnChatMessage(): {chatMessage.Text}");
 
@@ -180,12 +216,12 @@ namespace KiwiNet.InstanceServer.Network
             {
                 Template = HashUtility.MurmurHash2(config.CharacterTemplate),
                 Id = 0x1,
-                GridPosition = new(config.StartPositionX, config.StartPositionY),
+                GridPosition = _startOverride != null ? _startOverride.Value : new(config.StartPositionX, config.StartPositionY),
             };
 
             // component order is strict for serialization
             player.Initialize(ref settings);    // Positioned instantiated in Initialize()
-            player.GetOrCreateComponent<LifeComponent>().Life = 1;
+            player.GetOrCreateComponent<LifeComponent>().Life = 100;
             player.GetOrCreateComponent<AnimatedComponent>();
             player.GetOrCreateComponent<PlayerComponent>().Name = "KiwiNet";
             player.GetOrCreateComponent<InventoriesComponent>();

@@ -4,9 +4,9 @@ namespace KiwiNet.Protocols.Packets.Instance
 {
     public sealed class InstanceClientInstanceDetailsPacket : Packet
     {
-        public uint Field0 { get; set; }
+        public uint SessionId { get; set; }
         public uint Field1 { get; set; }
-        public string Field2 { get; set; } = string.Empty;
+        public string WorldAreaId { get; set; } = string.Empty;
         public List<InstanceDetailsEntry> Entries { get; } = new();
 
         public InstanceClientInstanceDetailsPacket() : base(PacketId.InstanceClientInstanceDetailsPacketId)
@@ -15,9 +15,9 @@ namespace KiwiNet.Protocols.Packets.Instance
 
         protected override void SerializeData(Stream stream)
         {
-            PacketIO.WriteUInt32(stream, Field0);
+            PacketIO.WriteUInt32(stream, SessionId);
             PacketIO.WriteUInt32(stream, Field1);
-            PacketIO.WriteString(stream, Field2);
+            PacketIO.WriteString(stream, WorldAreaId);
 
             PacketIO.WriteByte(stream, (byte)Entries.Count);
             foreach (InstanceDetailsEntry entry in Entries)
