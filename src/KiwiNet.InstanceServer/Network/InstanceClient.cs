@@ -184,7 +184,7 @@ namespace KiwiNet.InstanceServer.Network
             player.Initialize(ref settings);    // Positioned instantiated in Initialize()
             player.GetOrCreateComponent<LifeComponent>().Life = 1;
             player.GetOrCreateComponent<AnimatedComponent>();
-            player.GetOrCreateComponent<PlayerComponent>().Name = "KiwiEmu";
+            player.GetOrCreateComponent<PlayerComponent>().Name = "KiwiNet";
             player.GetOrCreateComponent<InventoriesComponent>();
             player.GetOrCreateComponent<ActorComponent>();
 
