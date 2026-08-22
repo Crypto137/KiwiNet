@@ -83,17 +83,16 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
             // call Serialize2 (aka probably SerializeUpdate)
             PacketIO.WriteByte(stream, 0);
 
-            bool hasExtraData = false;
-            PacketIO.WriteBool(stream, hasExtraData);
-            if (hasExtraData)
+            bool hasSkillData = false;
+            PacketIO.WriteBool(stream, hasSkillData);
+            if (hasSkillData)
             {
-                PacketIO.WriteUInt32(stream, 0);
-                PacketIO.WriteUInt32(stream, 0);
+                PacketIO.WriteUInt32(stream, 300);  // grid x
+                PacketIO.WriteUInt32(stream, 540);  // grid y
 
+                PacketIO.WriteInt16(stream, unchecked((short)0xB188));  // skill id
                 PacketIO.WriteInt16(stream, 0);
-
-                PacketIO.WriteInt16(stream, 0);
-                PacketIO.WriteUInt32(stream, 0);
+                PacketIO.WriteUInt32(stream, 0);    // can be 0
                 PacketIO.WriteUInt32(stream, 0);
                 PacketIO.WriteUInt32(stream, 0);
                 PacketIO.WriteByte(stream, 0);
