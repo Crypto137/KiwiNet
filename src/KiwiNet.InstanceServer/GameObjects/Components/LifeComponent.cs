@@ -4,7 +4,7 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
 {
     public sealed class LifeComponent : Component
     {
-        public uint Life { get; set; } = 0;
+        public uint Life { get; set; }
 
         public override void Serialize(Stream stream)
         {

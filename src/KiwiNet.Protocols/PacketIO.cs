@@ -78,6 +78,7 @@ namespace KiwiNet.Protocols
             return BitConverter.UInt32BitsToSingle(bits);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void WriteFloat(Stream stream, float value)
         {
             uint bits = BitConverter.SingleToUInt32Bits(value);

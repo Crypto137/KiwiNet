@@ -56,6 +56,14 @@ namespace KiwiNet.InstanceServer.Network
                     OnHeartbeat();
                     break;
 
+                case PacketId.ClientInstanceSkillTargetEntityId:
+                    OnSkillTargetEntity(packet);
+                    break;
+
+                case PacketId.ClientInstanceSkillTargetLocationId:
+                    OnSkillTargetLocation(packet);
+                    break;
+
                 case PacketId.ClientInstanceAllocatePassiveSkillPointPacketId:
                     OnAllocatePassiveSkillPoint(packet);
                     break;
@@ -118,6 +126,16 @@ namespace KiwiNet.InstanceServer.Network
             Send(PacketFactory.Get<Packet>(PacketId.InstanceClientHeartbeatReplyPacketId));
         }
 
+        private void OnSkillTargetEntity(Packet packet)
+        {
+            Logger.Debug($"OnSkillTargetEntity(): {packet}");
+        }
+
+        private void OnSkillTargetLocation(Packet packet)
+        {
+            Logger.Debug($"OnSkillTargetLocation(): {packet}");
+        }
+
         private void OnAllocatePassiveSkillPoint(Packet packet)
         {
             if (packet is not IntPacket allocatePassiveSkillPoint)
@@ -164,7 +182,7 @@ namespace KiwiNet.InstanceServer.Network
 
             // component order is strict for serialization
             player.Initialize(ref settings);    // Positioned instantiated in Initialize()
-            player.GetOrCreateComponent<LifeComponent>();
+            player.GetOrCreateComponent<LifeComponent>().Life = 1;
             player.GetOrCreateComponent<AnimatedComponent>();
             player.GetOrCreateComponent<PlayerComponent>().Name = "KiwiEmu";
             player.GetOrCreateComponent<InventoriesComponent>();

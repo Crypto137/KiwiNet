@@ -86,6 +86,14 @@ namespace KiwiNet.Protocols
                     packet = new InstanceClientInstanceInformationPacket();
                     break;
 
+                case PacketId.ClientInstanceSkillTargetEntityId:
+                    packet = new ClientInstanceSkillTargetEntity();
+                    break;
+
+                case PacketId.ClientInstanceSkillTargetLocationId:
+                    packet = new ClientInstanceSkillTargetLocation();
+                    break;
+
                 case PacketId.InstanceClientInstanceDetailsPacketId:
                     packet = new InstanceClientInstanceDetailsPacket();
                     break;
