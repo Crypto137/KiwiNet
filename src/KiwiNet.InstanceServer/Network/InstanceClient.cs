@@ -1,4 +1,4 @@
-﻿using KiwiNet.Core.Extensions;
+﻿using KiwiNet.Core.Config;
 using KiwiNet.Core.Logging;
 using KiwiNet.Core.Network.Tcp;
 using KiwiNet.Core.Utils;
@@ -97,11 +97,13 @@ namespace KiwiNet.InstanceServer.Network
             reply.Field1 = "";
             Send(reply);
 
+            GameConfig config = ConfigManager.Get<GameConfig>();
+
             var instanceInfo = PacketFactory.Get<InstanceClientInstanceInformationPacket>();
             instanceInfo.Field0 = 1;
-            instanceInfo.WorldAreaId = "1_1_1";
+            instanceInfo.WorldAreaId = config.WorldAreaId;
             instanceInfo.League = "Default";
-            instanceInfo.Seed = 666;
+            instanceInfo.Seed = (uint)config.WorldAreaSeed;
             Send(instanceInfo);
         }
 
@@ -170,14 +172,15 @@ namespace KiwiNet.InstanceServer.Network
             // this is where the server disconnects the client if the hashes don't match
             // InstanceClientForcedDisconnectionWarningPacketId -> BackendError.TerrainGenerationOutOfSync
 
+            GameConfig config = ConfigManager.Get<GameConfig>();
 
             GameObject player = new();
 
             GameObjectSettings settings = new()
             {
-                Template = HashUtility.MurmurHash2("Metadata/Characters/Str/Str"),
+                Template = HashUtility.MurmurHash2(config.CharacterTemplate),
                 Id = 0x1,
-                GridPosition = new(300, 540),
+                GridPosition = new(config.StartPositionX, config.StartPositionY),
             };
 
             // component order is strict for serialization
