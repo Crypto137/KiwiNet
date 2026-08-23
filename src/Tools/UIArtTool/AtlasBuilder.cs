@@ -1,4 +1,6 @@
-﻿using SixLabors.ImageSharp;
+﻿using BCnEncoder.Encoder;
+using BCnEncoder.ImageSharp;
+using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
@@ -44,8 +46,13 @@ namespace UIArtTool
                 AddImage(entry, filePath, atlasImage);
             }
 
-            // TODO: dds saving?
-            atlasImage.SaveAsPng($"{outputFilePath}.png");
+            BcEncoder encoder = new();
+            encoder.OutputOptions.Format = BCnEncoder.Shared.CompressionFormat.Rgba;
+            encoder.OutputOptions.Quality = CompressionQuality.BestQuality;
+            encoder.OutputOptions.FileFormat = BCnEncoder.Shared.OutputFileFormat.Dds;
+
+            using FileStream fs = File.Create(outputFilePath);
+            encoder.EncodeToStream(atlasImage, fs);
         }
 
         private static void AddImage(TextureAtlasEntry entry, string filePath, Image<Rgba32> atlasImage)
