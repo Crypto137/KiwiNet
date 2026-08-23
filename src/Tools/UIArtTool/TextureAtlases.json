@@ -1,0 +1,3421 @@
+[
+  {
+    "Name": "Art/Textures/Interface/HudAndPopup.dds",
+    "Entries": [
+      {
+        "Name": "imgCheckBoxBox",
+        "X": 566,
+        "Y": 730,
+        "Width": 28,
+        "Height": 28
+      },
+      {
+        "Name": "imgCheckBoxCheck",
+        "X": 597,
+        "Y": 730,
+        "Width": 28,
+        "Height": 28
+      },
+      {
+        "Name": "imgRadioButtonBox",
+        "X": 566,
+        "Y": 762,
+        "Width": 25,
+        "Height": 25
+      },
+      {
+        "Name": "imgRadioButtonCheck",
+        "X": 594,
+        "Y": 762,
+        "Width": 25,
+        "Height": 25
+      },
+      {
+        "Name": "imgComboBoxButton",
+        "X": 510,
+        "Y": 964,
+        "Width": 50,
+        "Height": 51
+      },
+      {
+        "Name": "imgComboBoxButtonH",
+        "X": 510,
+        "Y": 964,
+        "Width": 50,
+        "Height": 51
+      },
+      {
+        "Name": "imgComboBoxButtonD",
+        "X": 510,
+        "Y": 964,
+        "Width": 50,
+        "Height": 51
+      },
+      {
+        "Name": "imgSliderTrackLeftEnd",
+        "X": 636,
+        "Y": 979,
+        "Width": 28,
+        "Height": 40
+      },
+      {
+        "Name": "imgSliderTrackRightEnd",
+        "X": 701,
+        "Y": 979,
+        "Width": 28,
+        "Height": 40
+      },
+      {
+        "Name": "imgSliderTrack",
+        "X": 664,
+        "Y": 979,
+        "Width": 36,
+        "Height": 40
+      },
+      {
+        "Name": "imgSliderButton",
+        "X": 608,
+        "Y": 977,
+        "Width": 25,
+        "Height": 42
+      },
+      {
+        "Name": "imgScrollBarUp",
+        "X": 564,
+        "Y": 964,
+        "Width": 22,
+        "Height": 18
+      },
+      {
+        "Name": "imgScrollBarDown",
+        "X": 564,
+        "Y": 999,
+        "Width": 22,
+        "Height": 18
+      },
+      {
+        "Name": "imgScrollBarTrack",
+        "X": 564,
+        "Y": 985,
+        "Width": 22,
+        "Height": 12
+      },
+      {
+        "Name": "imgScrollBarThumbT",
+        "X": 586,
+        "Y": 975,
+        "Width": 22,
+        "Height": 10
+      },
+      {
+        "Name": "imgScrollBarThumb",
+        "X": 711,
+        "Y": 948,
+        "Width": 22,
+        "Height": 22
+      },
+      {
+        "Name": "imgScrollBarThumbB",
+        "X": 586,
+        "Y": 1007,
+        "Width": 22,
+        "Height": 10
+      },
+      {
+        "Name": "imgScrollBarThumbGrip",
+        "X": 586,
+        "Y": 986,
+        "Width": 22,
+        "Height": 22
+      },
+      {
+        "Name": "imgCompactScrollBarUp",
+        "X": 299,
+        "Y": 276,
+        "Width": 28,
+        "Height": 24
+      },
+      {
+        "Name": "imgCompactScrollBarDown",
+        "X": 330,
+        "Y": 276,
+        "Width": 28,
+        "Height": 24
+      },
+      {
+        "Name": "imgCompactScrollBarEnd",
+        "X": 361,
+        "Y": 276,
+        "Width": 28,
+        "Height": 24
+      },
+      {
+        "Name": "imgEditBoxBorderTL",
+        "X": 566,
+        "Y": 730,
+        "Width": 7,
+        "Height": 7
+      },
+      {
+        "Name": "imgEditBoxBorderT",
+        "X": 573,
+        "Y": 730,
+        "Width": 7,
+        "Height": 7
+      },
+      {
+        "Name": "imgEditBoxBorderTR",
+        "X": 586,
+        "Y": 730,
+        "Width": 7,
+        "Height": 7
+      },
+      {
+        "Name": "imgEditBoxBorderL",
+        "X": 566,
+        "Y": 737,
+        "Width": 7,
+        "Height": 7
+      },
+      {
+        "Name": "imgEditBoxBorderR",
+        "X": 586,
+        "Y": 737,
+        "Width": 7,
+        "Height": 7
+      },
+      {
+        "Name": "imgEditBoxBorderBL",
+        "X": 566,
+        "Y": 751,
+        "Width": 7,
+        "Height": 7
+      },
+      {
+        "Name": "imgEditBoxBorderB",
+        "X": 573,
+        "Y": 751,
+        "Width": 7,
+        "Height": 7
+      },
+      {
+        "Name": "imgEditBoxBorderBR",
+        "X": 586,
+        "Y": 751,
+        "Width": 7,
+        "Height": 7
+      },
+      {
+        "Name": "imgButtonBack",
+        "X": 303,
+        "Y": 4,
+        "Width": 128,
+        "Height": 128
+      },
+      {
+        "Name": "imgButtonHBack",
+        "X": 303,
+        "Y": 140,
+        "Width": 128,
+        "Height": 128
+      },
+      {
+        "Name": "imgButtonDBack",
+        "X": 8,
+        "Y": 4,
+        "Width": 128,
+        "Height": 128
+      },
+      {
+        "Name": "imgButtonBorderTL",
+        "X": 324,
+        "Y": 964,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderT",
+        "X": 336,
+        "Y": 964,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderTR",
+        "X": 370,
+        "Y": 964,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderL",
+        "X": 324,
+        "Y": 976,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderR",
+        "X": 370,
+        "Y": 976,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderBL",
+        "X": 324,
+        "Y": 1010,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderB",
+        "X": 336,
+        "Y": 1010,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderBR",
+        "X": 370,
+        "Y": 1010,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderHTL",
+        "X": 386,
+        "Y": 964,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderHT",
+        "X": 398,
+        "Y": 964,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderHTR",
+        "X": 432,
+        "Y": 964,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderHL",
+        "X": 386,
+        "Y": 976,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderHR",
+        "X": 432,
+        "Y": 976,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderHBL",
+        "X": 386,
+        "Y": 1010,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderHB",
+        "X": 398,
+        "Y": 1010,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderHBR",
+        "X": 432,
+        "Y": 1010,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderDTL",
+        "X": 448,
+        "Y": 964,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderDT",
+        "X": 460,
+        "Y": 964,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderDTR",
+        "X": 494,
+        "Y": 964,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderDL",
+        "X": 448,
+        "Y": 976,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderDR",
+        "X": 494,
+        "Y": 976,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderDBL",
+        "X": 448,
+        "Y": 1010,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderDB",
+        "X": 460,
+        "Y": 1010,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgButtonBorderDBR",
+        "X": 494,
+        "Y": 1010,
+        "Width": 12,
+        "Height": 12
+      },
+      {
+        "Name": "imgOptionsIcon",
+        "X": 234,
+        "Y": 366,
+        "Width": 39,
+        "Height": 50
+      },
+      {
+        "Name": "imgOptionsIcon",
+        "X": 234,
+        "Y": 366,
+        "Width": 39,
+        "Height": 50
+      },
+      {
+        "Name": "imgBigFrame",
+        "X": 632,
+        "Y": 846,
+        "Width": 96,
+        "Height": 96
+      },
+      {
+        "Name": "imgBigFrameH",
+        "X": 632,
+        "Y": 728,
+        "Width": 96,
+        "Height": 96
+      },
+      {
+        "Name": "imgSmallFrame",
+        "X": 433,
+        "Y": 882,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgSmallFrameH",
+        "X": 515,
+        "Y": 882,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgBorderTop",
+        "X": 330,
+        "Y": 801,
+        "Width": 64,
+        "Height": 7
+      },
+      {
+        "Name": "imgDivider",
+        "X": 330,
+        "Y": 936,
+        "Width": 64,
+        "Height": 10
+      },
+      {
+        "Name": "imgBorderEndLifeTop",
+        "X": 399,
+        "Y": 823,
+        "Width": 30,
+        "Height": 137
+      },
+      {
+        "Name": "imgBorderEndLifeBottom",
+        "X": 541,
+        "Y": 641,
+        "Width": 30,
+        "Height": 85
+      },
+      {
+        "Name": "imgBorderEndManaTop",
+        "X": 597,
+        "Y": 853,
+        "Width": 30,
+        "Height": 107
+      },
+      {
+        "Name": "imgBorderEndManaBottom",
+        "X": 541,
+        "Y": 552,
+        "Width": 30,
+        "Height": 85
+      },
+      {
+        "Name": "imgBorderTopJoin",
+        "X": 701,
+        "Y": 828,
+        "Width": 26,
+        "Height": 13
+      },
+      {
+        "Name": "imgFlaskFrame",
+        "X": 330,
+        "Y": 812,
+        "Width": 64,
+        "Height": 120
+      },
+      {
+        "Name": "imgBackground",
+        "X": 436,
+        "Y": 796,
+        "Width": 60,
+        "Height": 60
+      },
+      {
+        "Name": "imgMouseButtonLeft",
+        "X": 302,
+        "Y": 317,
+        "Width": 36,
+        "Height": 27
+      },
+      {
+        "Name": "imgMouseButtonMiddle",
+        "X": 341,
+        "Y": 317,
+        "Width": 36,
+        "Height": 27
+      },
+      {
+        "Name": "imgMouseButtonRight",
+        "X": 381,
+        "Y": 317,
+        "Width": 36,
+        "Height": 27
+      },
+      {
+        "Name": "imgChatButtonH",
+        "X": 344,
+        "Y": 700,
+        "Width": 40,
+        "Height": 36
+      },
+      {
+        "Name": "imgLifeOrbForeground",
+        "X": 4,
+        "Y": 701,
+        "Width": 315,
+        "Height": 318
+      },
+      {
+        "Name": "imgManaOrbForeground",
+        "X": 732,
+        "Y": 731,
+        "Width": 287,
+        "Height": 288
+      },
+      {
+        "Name": "imgLifeOrbLevel",
+        "X": 4,
+        "Y": 434,
+        "Width": 262,
+        "Height": 262
+      },
+      {
+        "Name": "imgManaOrbLevel",
+        "X": 758,
+        "Y": 3,
+        "Width": 261,
+        "Height": 263
+      },
+      {
+        "Name": "imgLifeOrbBackground",
+        "X": 271,
+        "Y": 432,
+        "Width": 266,
+        "Height": 264
+      },
+      {
+        "Name": "imgManaOrbBackground",
+        "X": 490,
+        "Y": 2,
+        "Width": 266,
+        "Height": 264
+      },
+      {
+        "Name": "imgShieldArc",
+        "X": 733,
+        "Y": 514,
+        "Width": 287,
+        "Height": 212
+      },
+      {
+        "Name": "imgExpLeft",
+        "X": 433,
+        "Y": 862,
+        "Width": 5,
+        "Height": 15
+      },
+      {
+        "Name": "imgExpMiddle",
+        "X": 468,
+        "Y": 862,
+        "Width": 35,
+        "Height": 15
+      },
+      {
+        "Name": "imgExpRight",
+        "X": 507,
+        "Y": 862,
+        "Width": 5,
+        "Height": 15
+      },
+      {
+        "Name": "imgExpNotchLarge",
+        "X": 443,
+        "Y": 862,
+        "Width": 8,
+        "Height": 15
+      },
+      {
+        "Name": "imgExpNotchSmall",
+        "X": 456,
+        "Y": 862,
+        "Width": 8,
+        "Height": 15
+      },
+      {
+        "Name": "imgOptionsButton",
+        "X": 450,
+        "Y": 269,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgBuyButton",
+        "X": 4,
+        "Y": 140,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgSocialButton",
+        "X": 532,
+        "Y": 269,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgCharacterScreenButton",
+        "X": 614,
+        "Y": 269,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgPassiveSkillsButton",
+        "X": 696,
+        "Y": 269,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgInventoryButton",
+        "X": 778,
+        "Y": 269,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgLadderButton",
+        "X": 860,
+        "Y": 269,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgMapButton",
+        "X": 942,
+        "Y": 269,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgQuestButton",
+        "X": 217,
+        "Y": 4,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgOptionsButtonH",
+        "X": 450,
+        "Y": 351,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgBuyButtonH",
+        "X": 4,
+        "Y": 222,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgSocialButtonH",
+        "X": 532,
+        "Y": 351,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgCharacterScreenButtonH",
+        "X": 614,
+        "Y": 351,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgPassiveSkillsButtonH",
+        "X": 696,
+        "Y": 351,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgInventoryButtonH",
+        "X": 778,
+        "Y": 351,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgLadderButtonH",
+        "X": 860,
+        "Y": 351,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgMapButtonH",
+        "X": 942,
+        "Y": 351,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgQuestButtonH",
+        "X": 217,
+        "Y": 86,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgOptionsButtonD",
+        "X": 286,
+        "Y": 351,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgBuyButtonD",
+        "X": 4,
+        "Y": 304,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgSocialButtonD",
+        "X": 368,
+        "Y": 351,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgCharacterScreenButtonD",
+        "X": 614,
+        "Y": 433,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgPassiveSkillsButtonD",
+        "X": 696,
+        "Y": 433,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgInventoryButtonD",
+        "X": 778,
+        "Y": 433,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgLadderButtonD",
+        "X": 860,
+        "Y": 433,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgMapButtonD",
+        "X": 942,
+        "Y": 433,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgQuestButtonD",
+        "X": 217,
+        "Y": 168,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "imgSkillClear",
+        "X": 642,
+        "Y": 651,
+        "Width": 64,
+        "Height": 64
+      },
+      {
+        "Name": "NPCBorderH",
+        "X": 330,
+        "Y": 801,
+        "Width": 64,
+        "Height": 7
+      },
+      {
+        "Name": "NPCBorderV",
+        "X": 399,
+        "Y": 830,
+        "Width": 7,
+        "Height": 64
+      },
+      {
+        "Name": "NPCBorderTL",
+        "X": 330,
+        "Y": 779,
+        "Width": 7,
+        "Height": 7
+      },
+      {
+        "Name": "NPCBorderTR",
+        "X": 330,
+        "Y": 768,
+        "Width": 7,
+        "Height": 7
+      },
+      {
+        "Name": "NPCBorderBL",
+        "X": 330,
+        "Y": 790,
+        "Width": 7,
+        "Height": 7
+      },
+      {
+        "Name": "NPCBorderBR",
+        "X": 330,
+        "Y": 757,
+        "Width": 7,
+        "Height": 7
+      },
+      {
+        "Name": "NPCBorderBRCross",
+        "X": 341,
+        "Y": 757,
+        "Width": 41,
+        "Height": 40
+      },
+      {
+        "Name": "NPCBorderBRTick",
+        "X": 566,
+        "Y": 791,
+        "Width": 41,
+        "Height": 40
+      },
+      {
+        "Name": "NPCSelectionArrow",
+        "X": 398,
+        "Y": 783,
+        "Width": 21,
+        "Height": 25
+      }
+    ]
+  },
+  {
+    "Name": "Art/Textures/Interface/marble.dds",
+    "Entries": [
+      {
+        "Name": "PanelBackground",
+        "X": 0,
+        "Y": 0,
+        "Width": 512,
+        "Height": 512
+      },
+      {
+        "Name": "WaitingNoticeBackground",
+        "X": 0,
+        "Y": 0,
+        "Width": 512,
+        "Height": 512
+      },
+      {
+        "Name": "imgMarbleBackground",
+        "X": 0,
+        "Y": 0,
+        "Width": 512,
+        "Height": 512
+      }
+    ]
+  },
+  {
+    "Name": "Art/Textures/Interface/PanelsCommonAndInventory.dds",
+    "Entries": [
+      {
+        "Name": "CommonCross",
+        "X": 452,
+        "Y": 426,
+        "Width": 29,
+        "Height": 27
+      },
+      {
+        "Name": "CommonTick",
+        "X": 453,
+        "Y": 460,
+        "Width": 33,
+        "Height": 23
+      },
+      {
+        "Name": "GoldCircleRaised",
+        "X": 452,
+        "Y": 488,
+        "Width": 64,
+        "Height": 64
+      },
+      {
+        "Name": "GoldCircleSunken",
+        "X": 452,
+        "Y": 556,
+        "Width": 64,
+        "Height": 63
+      },
+      {
+        "Name": "EmptyTexture",
+        "X": 0,
+        "Y": 0,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "TabArrowLarge",
+        "X": 446,
+        "Y": 100,
+        "Width": 25,
+        "Height": 36
+      },
+      {
+        "Name": "TabArrowSmall",
+        "X": 456,
+        "Y": 71,
+        "Width": 16,
+        "Height": 25
+      },
+      {
+        "Name": "LeftPanelTopLeft",
+        "X": 900,
+        "Y": 656,
+        "Width": 120,
+        "Height": 116
+      },
+      {
+        "Name": "LeftPanelTopRight",
+        "X": 720,
+        "Y": 384,
+        "Width": 148,
+        "Height": 148
+      },
+      {
+        "Name": "LeftPanelBottomLeft",
+        "X": 140,
+        "Y": 4,
+        "Width": 16,
+        "Height": 16
+      },
+      {
+        "Name": "LeftPanelBottomRight",
+        "X": 784,
+        "Y": 264,
+        "Width": 116,
+        "Height": 116
+      },
+      {
+        "Name": "LeftPanelCenterRight",
+        "X": 900,
+        "Y": 860,
+        "Width": 32,
+        "Height": 113
+      },
+      {
+        "Name": "RightPanelTopLeft",
+        "X": 872,
+        "Y": 384,
+        "Width": 148,
+        "Height": 148
+      },
+      {
+        "Name": "RightPanelTopRight",
+        "X": 904,
+        "Y": 536,
+        "Width": 116,
+        "Height": 116
+      },
+      {
+        "Name": "RightPanelBottomLeft",
+        "X": 904,
+        "Y": 264,
+        "Width": 116,
+        "Height": 116
+      },
+      {
+        "Name": "RightPanelBottomRight",
+        "X": 160,
+        "Y": 4,
+        "Width": 16,
+        "Height": 16
+      },
+      {
+        "Name": "RightPanelCenterLeft",
+        "X": 938,
+        "Y": 860,
+        "Width": 34,
+        "Height": 113
+      },
+      {
+        "Name": "OuterBorderTop",
+        "X": 892,
+        "Y": 976,
+        "Width": 128,
+        "Height": 20
+      },
+      {
+        "Name": "OuterBorderBottom",
+        "X": 892,
+        "Y": 1000,
+        "Width": 128,
+        "Height": 20
+      },
+      {
+        "Name": "OuterBorderLeft",
+        "X": 1000,
+        "Y": 844,
+        "Width": 20,
+        "Height": 128
+      },
+      {
+        "Name": "OuterBorderRight",
+        "X": 976,
+        "Y": 844,
+        "Width": 20,
+        "Height": 128
+      },
+      {
+        "Name": "ScrollBarCenter",
+        "X": 748,
+        "Y": 316,
+        "Width": 22,
+        "Height": 64
+      },
+      {
+        "Name": "ScrollBarTop",
+        "X": 660,
+        "Y": 278,
+        "Width": 22,
+        "Height": 15
+      },
+      {
+        "Name": "ScrollBarBottom",
+        "X": 748,
+        "Y": 286,
+        "Width": 22,
+        "Height": 14
+      },
+      {
+        "Name": "ScrollBarHandleT",
+        "X": 704,
+        "Y": 292,
+        "Width": 22,
+        "Height": 14
+      },
+      {
+        "Name": "ScrollBarHandle",
+        "X": 704,
+        "Y": 306,
+        "Width": 22,
+        "Height": 14
+      },
+      {
+        "Name": "ScrollBarHandleB",
+        "X": 704,
+        "Y": 366,
+        "Width": 22,
+        "Height": 14
+      },
+      {
+        "Name": "ScrollBarHandleGrip",
+        "X": 704,
+        "Y": 320,
+        "Width": 22,
+        "Height": 28
+      },
+      {
+        "Name": "ScrollBarFiller",
+        "X": 780,
+        "Y": 240,
+        "Width": 22,
+        "Height": 22
+      },
+      {
+        "Name": "WaypointSymbol",
+        "X": 328,
+        "Y": 266,
+        "Width": 75,
+        "Height": 75
+      },
+      {
+        "Name": "LadderSymbol",
+        "X": 405,
+        "Y": 267,
+        "Width": 75,
+        "Height": 75
+      },
+      {
+        "Name": "SocialSymbol",
+        "X": 483,
+        "Y": 267,
+        "Width": 75,
+        "Height": 75
+      },
+      {
+        "Name": "CharacterSymbol",
+        "X": 405,
+        "Y": 345,
+        "Width": 75,
+        "Height": 75
+      },
+      {
+        "Name": "StashSymbol",
+        "X": 327,
+        "Y": 345,
+        "Width": 75,
+        "Height": 75
+      },
+      {
+        "Name": "InventorySymbol",
+        "X": 405,
+        "Y": 345,
+        "Width": 75,
+        "Height": 75
+      },
+      {
+        "Name": "MailSymbol",
+        "X": 327,
+        "Y": 345,
+        "Width": 75,
+        "Height": 75
+      },
+      {
+        "Name": "OptionsSymbol",
+        "X": 889,
+        "Y": 781,
+        "Width": 75,
+        "Height": 75
+      },
+      {
+        "Name": "TradeSymbol",
+        "X": 702,
+        "Y": 545,
+        "Width": 75,
+        "Height": 75
+      },
+      {
+        "Name": "AltarSymbol",
+        "X": 763,
+        "Y": 790,
+        "Width": 75,
+        "Height": 75
+      },
+      {
+        "Name": "SkillsSymbol",
+        "X": 763,
+        "Y": 868,
+        "Width": 75,
+        "Height": 75
+      },
+      {
+        "Name": "VendorSymbol",
+        "X": 763,
+        "Y": 946,
+        "Width": 75,
+        "Height": 75
+      },
+      {
+        "Name": "ContainerBackground",
+        "X": 768,
+        "Y": 4,
+        "Width": 252,
+        "Height": 252
+      },
+      {
+        "Name": "ContainerMultiBackgroundPiece1",
+        "X": 208,
+        "Y": 60,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "ContainerMultiBackgroundPiece2",
+        "X": 422,
+        "Y": 182,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "RopeBorderTop",
+        "X": 380,
+        "Y": 4,
+        "Width": 64,
+        "Height": 24
+      },
+      {
+        "Name": "RopeBorderBottom",
+        "X": 380,
+        "Y": 32,
+        "Width": 64,
+        "Height": 24
+      },
+      {
+        "Name": "RopeBorderLeft",
+        "X": 448,
+        "Y": 4,
+        "Width": 24,
+        "Height": 64
+      },
+      {
+        "Name": "RopeBorderRight",
+        "X": 476,
+        "Y": 4,
+        "Width": 24,
+        "Height": 64
+      },
+      {
+        "Name": "RopeBorderTL",
+        "X": 352,
+        "Y": 60,
+        "Width": 24,
+        "Height": 24
+      },
+      {
+        "Name": "RopeBorderTR",
+        "X": 352,
+        "Y": 4,
+        "Width": 24,
+        "Height": 24
+      },
+      {
+        "Name": "RopeBorderBL",
+        "X": 352,
+        "Y": 88,
+        "Width": 24,
+        "Height": 24
+      },
+      {
+        "Name": "RopeBorderBR",
+        "X": 352,
+        "Y": 32,
+        "Width": 24,
+        "Height": 24
+      },
+      {
+        "Name": "StandardBorderTop",
+        "X": 380,
+        "Y": 74,
+        "Width": 64,
+        "Height": 10
+      },
+      {
+        "Name": "StandardBorderBottom",
+        "X": 380,
+        "Y": 60,
+        "Width": 64,
+        "Height": 10
+      },
+      {
+        "Name": "StandardBorderLeft",
+        "X": 476,
+        "Y": 72,
+        "Width": 10,
+        "Height": 64
+      },
+      {
+        "Name": "StandardBorderRight",
+        "X": 490,
+        "Y": 72,
+        "Width": 10,
+        "Height": 64
+      },
+      {
+        "Name": "StandardBorderTL",
+        "X": 408,
+        "Y": 88,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "StandardBorderTR",
+        "X": 422,
+        "Y": 88,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "StandardBorderBL",
+        "X": 380,
+        "Y": 88,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "StandardBorderBR",
+        "X": 394,
+        "Y": 88,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "StandardBorderBLSpecial",
+        "X": 380,
+        "Y": 102,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "StandardBorderBRSpecial",
+        "X": 394,
+        "Y": 102,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "GoldBorderTop",
+        "X": 380,
+        "Y": 79,
+        "Width": 64,
+        "Height": 5
+      },
+      {
+        "Name": "GoldBorderBottom",
+        "X": 380,
+        "Y": 60,
+        "Width": 64,
+        "Height": 5
+      },
+      {
+        "Name": "GoldBorderLeft",
+        "X": 481,
+        "Y": 72,
+        "Width": 5,
+        "Height": 64
+      },
+      {
+        "Name": "GoldBorderRight",
+        "X": 490,
+        "Y": 72,
+        "Width": 5,
+        "Height": 64
+      },
+      {
+        "Name": "GoldBorderTL",
+        "X": 413,
+        "Y": 93,
+        "Width": 5,
+        "Height": 5
+      },
+      {
+        "Name": "GoldBorderTR",
+        "X": 422,
+        "Y": 93,
+        "Width": 5,
+        "Height": 5
+      },
+      {
+        "Name": "GoldBorderBL",
+        "X": 385,
+        "Y": 88,
+        "Width": 5,
+        "Height": 5
+      },
+      {
+        "Name": "GoldBorderBR",
+        "X": 394,
+        "Y": 88,
+        "Width": 5,
+        "Height": 5
+      },
+      {
+        "Name": "LightBorderTop",
+        "X": 208,
+        "Y": 4,
+        "Width": 128,
+        "Height": 10
+      },
+      {
+        "Name": "LightBorderBottom",
+        "X": 208,
+        "Y": 18,
+        "Width": 128,
+        "Height": 10
+      },
+      {
+        "Name": "LightBorderLeft",
+        "X": 180,
+        "Y": 4,
+        "Width": 10,
+        "Height": 128
+      },
+      {
+        "Name": "LightBorderRight",
+        "X": 194,
+        "Y": 4,
+        "Width": 10,
+        "Height": 128
+      },
+      {
+        "Name": "LightBorderTL",
+        "X": 236,
+        "Y": 32,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "LightBorderTR",
+        "X": 250,
+        "Y": 32,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "LightBorderBL",
+        "X": 236,
+        "Y": 46,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "LightBorderBR",
+        "X": 250,
+        "Y": 46,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "OuterLightBorderTop",
+        "X": 208,
+        "Y": 4,
+        "Width": 128,
+        "Height": 5
+      },
+      {
+        "Name": "OuterLightBorderBottom",
+        "X": 208,
+        "Y": 23,
+        "Width": 128,
+        "Height": 5
+      },
+      {
+        "Name": "OuterLightBorderLeft",
+        "X": 180,
+        "Y": 4,
+        "Width": 5,
+        "Height": 128
+      },
+      {
+        "Name": "OuterLightBorderRight",
+        "X": 199,
+        "Y": 4,
+        "Width": 5,
+        "Height": 128
+      },
+      {
+        "Name": "OuterLightBorderTL",
+        "X": 236,
+        "Y": 32,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "OuterLightBorderTR",
+        "X": 250,
+        "Y": 32,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "OuterLightBorderBL",
+        "X": 236,
+        "Y": 46,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "OuterLightBorderBR",
+        "X": 250,
+        "Y": 46,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "InnerLightBorderTop",
+        "X": 208,
+        "Y": 9,
+        "Width": 128,
+        "Height": 5
+      },
+      {
+        "Name": "InnerLightBorderBottom",
+        "X": 208,
+        "Y": 18,
+        "Width": 128,
+        "Height": 5
+      },
+      {
+        "Name": "InnerLightBorderLeft",
+        "X": 185,
+        "Y": 4,
+        "Width": 5,
+        "Height": 128
+      },
+      {
+        "Name": "InnerLightBorderRight",
+        "X": 194,
+        "Y": 4,
+        "Width": 5,
+        "Height": 128
+      },
+      {
+        "Name": "InnerLightBorderTL",
+        "X": 241,
+        "Y": 37,
+        "Width": 5,
+        "Height": 5
+      },
+      {
+        "Name": "InnerLightBorderTR",
+        "X": 250,
+        "Y": 37,
+        "Width": 5,
+        "Height": 5
+      },
+      {
+        "Name": "InnerLightBorderBL",
+        "X": 241,
+        "Y": 46,
+        "Width": 5,
+        "Height": 5
+      },
+      {
+        "Name": "InnerLightBorderBR",
+        "X": 250,
+        "Y": 46,
+        "Width": 5,
+        "Height": 5
+      },
+      {
+        "Name": "InnerBorderTop",
+        "X": 264,
+        "Y": 46,
+        "Width": 64,
+        "Height": 10
+      },
+      {
+        "Name": "InnerBorderBottom",
+        "X": 264,
+        "Y": 32,
+        "Width": 64,
+        "Height": 10
+      },
+      {
+        "Name": "InnerBorderLeft",
+        "X": 306,
+        "Y": 60,
+        "Width": 10,
+        "Height": 64
+      },
+      {
+        "Name": "InnerBorderRight",
+        "X": 292,
+        "Y": 60,
+        "Width": 10,
+        "Height": 64
+      },
+      {
+        "Name": "InnerBorderTL",
+        "X": 320,
+        "Y": 102,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "InnerBorderTR",
+        "X": 320,
+        "Y": 88,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "InnerBorderBL",
+        "X": 320,
+        "Y": 74,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "InnerBorderBR",
+        "X": 320,
+        "Y": 60,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "InnerBorderBLSpecial",
+        "X": 306,
+        "Y": 128,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "InnerBorderBRSpecial",
+        "X": 292,
+        "Y": 128,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "InnerBorderTLDecorate",
+        "X": 208,
+        "Y": 32,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "InnerBorderTRDecorate",
+        "X": 222,
+        "Y": 32,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "InnerBorderBLDecorate",
+        "X": 208,
+        "Y": 46,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "InnerBorderBRDecorate",
+        "X": 222,
+        "Y": 46,
+        "Width": 10,
+        "Height": 10
+      },
+      {
+        "Name": "InventoryStatueTop",
+        "X": 4,
+        "Y": 56,
+        "Width": 167,
+        "Height": 98
+      },
+      {
+        "Name": "InventoryStatueTopLeft",
+        "X": 0,
+        "Y": 167,
+        "Width": 166,
+        "Height": 452
+      },
+      {
+        "Name": "InventoryStatueTopRight",
+        "X": 170,
+        "Y": 181,
+        "Width": 150,
+        "Height": 439
+      },
+      {
+        "Name": "InventoryStatueLeft",
+        "X": 0,
+        "Y": 623,
+        "Width": 408,
+        "Height": 400
+      },
+      {
+        "Name": "InventoryStatueRight",
+        "X": 413,
+        "Y": 623,
+        "Width": 345,
+        "Height": 400
+      },
+      {
+        "Name": "InventoryStatueRightExtra",
+        "X": 520,
+        "Y": 527,
+        "Width": 68,
+        "Height": 91
+      },
+      {
+        "Name": "InventoryStatueCenter",
+        "X": 4,
+        "Y": 30,
+        "Width": 167,
+        "Height": 23
+      },
+      {
+        "Name": "InventoryTorso",
+        "X": 323,
+        "Y": 427,
+        "Width": 126,
+        "Height": 189
+      },
+      {
+        "Name": "InventorySwordShield",
+        "X": 603,
+        "Y": 400,
+        "Width": 97,
+        "Height": 217
+      },
+      {
+        "Name": "InventoryBoots",
+        "X": 473,
+        "Y": 710,
+        "Width": 113,
+        "Height": 98
+      },
+      {
+        "Name": "InventoryRing",
+        "X": 215,
+        "Y": 660,
+        "Width": 52,
+        "Height": 47
+      },
+      {
+        "Name": "InventoryNecklace",
+        "X": 317,
+        "Y": 654,
+        "Width": 53,
+        "Height": 46
+      },
+      {
+        "Name": "InventoryGloves",
+        "X": 277,
+        "Y": 703,
+        "Width": 95,
+        "Height": 111
+      },
+      {
+        "Name": "InventoryBelt",
+        "X": 479,
+        "Y": 657,
+        "Width": 106,
+        "Height": 50
+      },
+      {
+        "Name": "InventoryHelm",
+        "X": 201,
+        "Y": 503,
+        "Width": 81,
+        "Height": 83
+      },
+      {
+        "Name": "InventoryPotion",
+        "X": 218,
+        "Y": 716,
+        "Width": 50,
+        "Height": 92
+      },
+      {
+        "Name": "InventorySocketGreen",
+        "X": 768,
+        "Y": 656,
+        "Width": 60,
+        "Height": 60
+      },
+      {
+        "Name": "InventorySocketWhite",
+        "X": 830,
+        "Y": 656,
+        "Width": 60,
+        "Height": 60
+      },
+      {
+        "Name": "InventorySocketRed",
+        "X": 768,
+        "Y": 719,
+        "Width": 60,
+        "Height": 60
+      },
+      {
+        "Name": "InventorySocketBlue",
+        "X": 830,
+        "Y": 719,
+        "Width": 60,
+        "Height": 60
+      },
+      {
+        "Name": "InventoryGemInSocketBluePassive",
+        "X": 520,
+        "Y": 430,
+        "Width": 32,
+        "Height": 32
+      },
+      {
+        "Name": "InventoryGemInSocketWhitePassive",
+        "X": 588,
+        "Y": 344,
+        "Width": 32,
+        "Height": 32
+      },
+      {
+        "Name": "InventoryGemInSocketGreenPassive",
+        "X": 520,
+        "Y": 463,
+        "Width": 32,
+        "Height": 32
+      },
+      {
+        "Name": "InventoryGemInSocketRedPassive",
+        "X": 520,
+        "Y": 497,
+        "Width": 32,
+        "Height": 32
+      },
+      {
+        "Name": "InventoryGemInSocketBlueActive",
+        "X": 556,
+        "Y": 408,
+        "Width": 32,
+        "Height": 42
+      },
+      {
+        "Name": "InventoryGemInSocketWhiteActive",
+        "X": 556,
+        "Y": 366,
+        "Width": 32,
+        "Height": 42
+      },
+      {
+        "Name": "InventoryGemInSocketGreenActive",
+        "X": 556,
+        "Y": 450,
+        "Width": 32,
+        "Height": 42
+      },
+      {
+        "Name": "InventoryGemInSocketRedActive",
+        "X": 556,
+        "Y": 492,
+        "Width": 32,
+        "Height": 42
+      },
+      {
+        "Name": "InventorySocketGlow",
+        "X": 816,
+        "Y": 575,
+        "Width": 78,
+        "Height": 78
+      },
+      {
+        "Name": "InventorySocketLink",
+        "X": 768,
+        "Y": 626,
+        "Width": 42,
+        "Height": 28
+      }
+    ]
+  },
+  {
+    "Name": "Art/Textures/Interface/TempPopupImages.dds",
+    "Entries": [
+      {
+        "Name": "UniqueBorderTop",
+        "X": 52,
+        "Y": 68,
+        "Width": 120,
+        "Height": 18
+      },
+      {
+        "Name": "UniqueBorderBottom",
+        "X": 52,
+        "Y": 90,
+        "Width": 120,
+        "Height": 18
+      },
+      {
+        "Name": "UniqueBorderLeft",
+        "X": 204,
+        "Y": 8,
+        "Width": 18,
+        "Height": 52
+      },
+      {
+        "Name": "UniqueBorderRight",
+        "X": 226,
+        "Y": 8,
+        "Width": 18,
+        "Height": 52
+      },
+      {
+        "Name": "UniqueBorderTL",
+        "X": 4,
+        "Y": 68,
+        "Width": 18,
+        "Height": 18
+      },
+      {
+        "Name": "UniqueBorderTR",
+        "X": 26,
+        "Y": 68,
+        "Width": 18,
+        "Height": 18
+      },
+      {
+        "Name": "UniqueBorderBL",
+        "X": 4,
+        "Y": 90,
+        "Width": 18,
+        "Height": 18
+      },
+      {
+        "Name": "UniqueBorderBR",
+        "X": 26,
+        "Y": 90,
+        "Width": 18,
+        "Height": 18
+      },
+      {
+        "Name": "UniqueTitleBarLeft",
+        "X": 4,
+        "Y": 4,
+        "Width": 64,
+        "Height": 64
+      },
+      {
+        "Name": "UniqueTitleBarRight",
+        "X": 138,
+        "Y": 4,
+        "Width": 64,
+        "Height": 64
+      },
+      {
+        "Name": "UniqueTitleBarCenter",
+        "X": 72,
+        "Y": 4,
+        "Width": 60,
+        "Height": 64
+      },
+      {
+        "Name": "UniqueSeperatorLeft",
+        "X": 238,
+        "Y": 4,
+        "Width": 18,
+        "Height": 8
+      },
+      {
+        "Name": "UniqueSeperatorRight",
+        "X": 297,
+        "Y": 4,
+        "Width": 18,
+        "Height": 8
+      },
+      {
+        "Name": "UniqueSeperatorCenter",
+        "X": 264,
+        "Y": 4,
+        "Width": 24,
+        "Height": 8
+      },
+      {
+        "Name": "UniqueQualityBarLeft",
+        "X": 202,
+        "Y": 78,
+        "Width": 19,
+        "Height": 16
+      },
+      {
+        "Name": "UniqueQualityBarRight",
+        "X": 295,
+        "Y": 78,
+        "Width": 19,
+        "Height": 16
+      },
+      {
+        "Name": "UniqueQualityBarCenter",
+        "X": 231,
+        "Y": 78,
+        "Width": 60,
+        "Height": 16
+      },
+      {
+        "Name": "UniqueMonsterIcon",
+        "X": 248,
+        "Y": 29,
+        "Width": 71,
+        "Height": 35
+      },
+      {
+        "Name": "RareBorderTop",
+        "X": 52,
+        "Y": 176,
+        "Width": 120,
+        "Height": 18
+      },
+      {
+        "Name": "RareBorderBottom",
+        "X": 52,
+        "Y": 198,
+        "Width": 120,
+        "Height": 18
+      },
+      {
+        "Name": "RareBorderLeft",
+        "X": 204,
+        "Y": 116,
+        "Width": 18,
+        "Height": 52
+      },
+      {
+        "Name": "RareBorderRight",
+        "X": 226,
+        "Y": 116,
+        "Width": 18,
+        "Height": 52
+      },
+      {
+        "Name": "RareBorderTL",
+        "X": 4,
+        "Y": 176,
+        "Width": 18,
+        "Height": 18
+      },
+      {
+        "Name": "RareBorderTR",
+        "X": 26,
+        "Y": 176,
+        "Width": 18,
+        "Height": 18
+      },
+      {
+        "Name": "RareBorderBL",
+        "X": 4,
+        "Y": 198,
+        "Width": 18,
+        "Height": 18
+      },
+      {
+        "Name": "RareBorderBR",
+        "X": 26,
+        "Y": 198,
+        "Width": 18,
+        "Height": 18
+      },
+      {
+        "Name": "RareTitleBarLeft",
+        "X": 4,
+        "Y": 112,
+        "Width": 64,
+        "Height": 64
+      },
+      {
+        "Name": "RareTitleBarRight",
+        "X": 138,
+        "Y": 112,
+        "Width": 64,
+        "Height": 64
+      },
+      {
+        "Name": "RareTitleBarCenter",
+        "X": 72,
+        "Y": 112,
+        "Width": 60,
+        "Height": 64
+      },
+      {
+        "Name": "RareSeperatorLeft",
+        "X": 238,
+        "Y": 112,
+        "Width": 18,
+        "Height": 8
+      },
+      {
+        "Name": "RareSeperatorRight",
+        "X": 297,
+        "Y": 112,
+        "Width": 18,
+        "Height": 8
+      },
+      {
+        "Name": "RareSeperatorCenter",
+        "X": 264,
+        "Y": 112,
+        "Width": 24,
+        "Height": 8
+      },
+      {
+        "Name": "RareQualityBarLeft",
+        "X": 202,
+        "Y": 186,
+        "Width": 19,
+        "Height": 16
+      },
+      {
+        "Name": "RareQualityBarRight",
+        "X": 295,
+        "Y": 186,
+        "Width": 19,
+        "Height": 16
+      },
+      {
+        "Name": "RareQualityBarCenter",
+        "X": 231,
+        "Y": 186,
+        "Width": 60,
+        "Height": 16
+      },
+      {
+        "Name": "RareMonsterIcon",
+        "X": 248,
+        "Y": 137,
+        "Width": 71,
+        "Height": 35
+      },
+      {
+        "Name": "MagicBorderTop",
+        "X": 52,
+        "Y": 284,
+        "Width": 120,
+        "Height": 18
+      },
+      {
+        "Name": "MagicBorderBottom",
+        "X": 52,
+        "Y": 306,
+        "Width": 120,
+        "Height": 18
+      },
+      {
+        "Name": "MagicBorderLeft",
+        "X": 204,
+        "Y": 224,
+        "Width": 18,
+        "Height": 52
+      },
+      {
+        "Name": "MagicBorderRight",
+        "X": 226,
+        "Y": 224,
+        "Width": 18,
+        "Height": 52
+      },
+      {
+        "Name": "MagicBorderTL",
+        "X": 4,
+        "Y": 284,
+        "Width": 18,
+        "Height": 18
+      },
+      {
+        "Name": "MagicBorderTR",
+        "X": 26,
+        "Y": 284,
+        "Width": 18,
+        "Height": 18
+      },
+      {
+        "Name": "MagicBorderBL",
+        "X": 4,
+        "Y": 306,
+        "Width": 18,
+        "Height": 18
+      },
+      {
+        "Name": "MagicBorderBR",
+        "X": 26,
+        "Y": 306,
+        "Width": 18,
+        "Height": 18
+      },
+      {
+        "Name": "MagicTitleBarLeft",
+        "X": 4,
+        "Y": 220,
+        "Width": 64,
+        "Height": 64
+      },
+      {
+        "Name": "MagicTitleBarRight",
+        "X": 138,
+        "Y": 220,
+        "Width": 64,
+        "Height": 64
+      },
+      {
+        "Name": "MagicTitleBarCenter",
+        "X": 72,
+        "Y": 220,
+        "Width": 60,
+        "Height": 64
+      },
+      {
+        "Name": "MagicSeperatorLeft",
+        "X": 238,
+        "Y": 220,
+        "Width": 18,
+        "Height": 8
+      },
+      {
+        "Name": "MagicSeperatorRight",
+        "X": 297,
+        "Y": 220,
+        "Width": 18,
+        "Height": 8
+      },
+      {
+        "Name": "MagicSeperatorCenter",
+        "X": 264,
+        "Y": 220,
+        "Width": 24,
+        "Height": 8
+      },
+      {
+        "Name": "MagicQualityBarLeft",
+        "X": 202,
+        "Y": 294,
+        "Width": 19,
+        "Height": 16
+      },
+      {
+        "Name": "MagicQualityBarRight",
+        "X": 295,
+        "Y": 294,
+        "Width": 19,
+        "Height": 16
+      },
+      {
+        "Name": "MagicQualityBarCenter",
+        "X": 231,
+        "Y": 294,
+        "Width": 60,
+        "Height": 16
+      },
+      {
+        "Name": "MagicMonsterIcon",
+        "X": 248,
+        "Y": 245,
+        "Width": 71,
+        "Height": 35
+      },
+      {
+        "Name": "NormalBorderTop",
+        "X": 52,
+        "Y": 392,
+        "Width": 120,
+        "Height": 18
+      },
+      {
+        "Name": "NormalBorderBottom",
+        "X": 52,
+        "Y": 414,
+        "Width": 120,
+        "Height": 18
+      },
+      {
+        "Name": "NormalBorderLeft",
+        "X": 204,
+        "Y": 332,
+        "Width": 18,
+        "Height": 52
+      },
+      {
+        "Name": "NormalBorderRight",
+        "X": 226,
+        "Y": 332,
+        "Width": 18,
+        "Height": 52
+      },
+      {
+        "Name": "NormalBorderTL",
+        "X": 4,
+        "Y": 392,
+        "Width": 18,
+        "Height": 18
+      },
+      {
+        "Name": "NormalBorderTR",
+        "X": 26,
+        "Y": 392,
+        "Width": 18,
+        "Height": 18
+      },
+      {
+        "Name": "NormalBorderBL",
+        "X": 4,
+        "Y": 414,
+        "Width": 18,
+        "Height": 18
+      },
+      {
+        "Name": "NormalBorderBR",
+        "X": 26,
+        "Y": 414,
+        "Width": 18,
+        "Height": 18
+      },
+      {
+        "Name": "NormalTitleBarLeft",
+        "X": 4,
+        "Y": 328,
+        "Width": 64,
+        "Height": 64
+      },
+      {
+        "Name": "NormalTitleBarRight",
+        "X": 138,
+        "Y": 328,
+        "Width": 64,
+        "Height": 64
+      },
+      {
+        "Name": "NormalTitleBarCenter",
+        "X": 72,
+        "Y": 328,
+        "Width": 60,
+        "Height": 64
+      },
+      {
+        "Name": "NormalSeperatorLeft",
+        "X": 238,
+        "Y": 328,
+        "Width": 18,
+        "Height": 8
+      },
+      {
+        "Name": "NormalSeperatorRight",
+        "X": 297,
+        "Y": 328,
+        "Width": 18,
+        "Height": 8
+      },
+      {
+        "Name": "NormalSeperatorCenter",
+        "X": 264,
+        "Y": 328,
+        "Width": 24,
+        "Height": 8
+      },
+      {
+        "Name": "NormalQualityBarLeft",
+        "X": 202,
+        "Y": 402,
+        "Width": 19,
+        "Height": 16
+      },
+      {
+        "Name": "NormalQualityBarRight",
+        "X": 295,
+        "Y": 402,
+        "Width": 19,
+        "Height": 16
+      },
+      {
+        "Name": "NormalQualityBarCenter",
+        "X": 231,
+        "Y": 402,
+        "Width": 60,
+        "Height": 16
+      },
+      {
+        "Name": "NormalMonsterIcon",
+        "X": 248,
+        "Y": 353,
+        "Width": 71,
+        "Height": 35
+      },
+      {
+        "Name": "GemBorderTop",
+        "X": 52,
+        "Y": 500,
+        "Width": 120,
+        "Height": 18
+      },
+      {
+        "Name": "GemBorderBottom",
+        "X": 52,
+        "Y": 522,
+        "Width": 120,
+        "Height": 18
+      },
+      {
+        "Name": "GemBorderLeft",
+        "X": 204,
+        "Y": 440,
+        "Width": 18,
+        "Height": 52
+      },
+      {
+        "Name": "GemBorderRight",
+        "X": 226,
+        "Y": 440,
+        "Width": 18,
+        "Height": 52
+      },
+      {
+        "Name": "GemBorderTL",
+        "X": 4,
+        "Y": 500,
+        "Width": 18,
+        "Height": 18
+      },
+      {
+        "Name": "GemBorderTR",
+        "X": 26,
+        "Y": 500,
+        "Width": 18,
+        "Height": 18
+      },
+      {
+        "Name": "GemBorderBL",
+        "X": 4,
+        "Y": 522,
+        "Width": 18,
+        "Height": 18
+      },
+      {
+        "Name": "GemBorderBR",
+        "X": 26,
+        "Y": 522,
+        "Width": 18,
+        "Height": 18
+      },
+      {
+        "Name": "GemTitleBarLeft",
+        "X": 4,
+        "Y": 436,
+        "Width": 64,
+        "Height": 64
+      },
+      {
+        "Name": "GemTitleBarRight",
+        "X": 138,
+        "Y": 436,
+        "Width": 64,
+        "Height": 64
+      },
+      {
+        "Name": "GemTitleBarCenter",
+        "X": 72,
+        "Y": 436,
+        "Width": 60,
+        "Height": 64
+      },
+      {
+        "Name": "GemSeperatorLeft",
+        "X": 238,
+        "Y": 436,
+        "Width": 18,
+        "Height": 8
+      },
+      {
+        "Name": "GemSeperatorRight",
+        "X": 297,
+        "Y": 436,
+        "Width": 18,
+        "Height": 8
+      },
+      {
+        "Name": "GemSeperatorCenter",
+        "X": 264,
+        "Y": 436,
+        "Width": 24,
+        "Height": 8
+      },
+      {
+        "Name": "GemQualityBarLeft",
+        "X": 202,
+        "Y": 510,
+        "Width": 19,
+        "Height": 16
+      },
+      {
+        "Name": "GemQualityBarRight",
+        "X": 295,
+        "Y": 510,
+        "Width": 19,
+        "Height": 16
+      },
+      {
+        "Name": "GemQualityBarCenter",
+        "X": 231,
+        "Y": 510,
+        "Width": 60,
+        "Height": 16
+      },
+      {
+        "Name": "UniqueExpBorderTop",
+        "X": 228,
+        "Y": 78,
+        "Width": 60,
+        "Height": 4
+      },
+      {
+        "Name": "UniqueExpBorderBottom",
+        "X": 228,
+        "Y": 90,
+        "Width": 60,
+        "Height": 4
+      },
+      {
+        "Name": "UniqueExpBorderLeft",
+        "X": 213,
+        "Y": 82,
+        "Width": 9,
+        "Height": 8
+      },
+      {
+        "Name": "UniqueExpBorderRight",
+        "X": 296,
+        "Y": 82,
+        "Width": 9,
+        "Height": 8
+      },
+      {
+        "Name": "UniqueExpBorderTL",
+        "X": 213,
+        "Y": 78,
+        "Width": 9,
+        "Height": 4
+      },
+      {
+        "Name": "UniqueExpBorderTR",
+        "X": 296,
+        "Y": 78,
+        "Width": 9,
+        "Height": 4
+      },
+      {
+        "Name": "UniqueExpBorderBL",
+        "X": 213,
+        "Y": 90,
+        "Width": 9,
+        "Height": 4
+      },
+      {
+        "Name": "UniqueExpBorderBR",
+        "X": 296,
+        "Y": 90,
+        "Width": 9,
+        "Height": 4
+      },
+      {
+        "Name": "RareExpBorderTop",
+        "X": 228,
+        "Y": 186,
+        "Width": 60,
+        "Height": 4
+      },
+      {
+        "Name": "RarelExpBorderBottom",
+        "X": 228,
+        "Y": 198,
+        "Width": 60,
+        "Height": 4
+      },
+      {
+        "Name": "RareExpBorderLeft",
+        "X": 213,
+        "Y": 190,
+        "Width": 9,
+        "Height": 8
+      },
+      {
+        "Name": "RareExpBorderRight",
+        "X": 296,
+        "Y": 190,
+        "Width": 9,
+        "Height": 8
+      },
+      {
+        "Name": "RareExpBorderTL",
+        "X": 213,
+        "Y": 186,
+        "Width": 9,
+        "Height": 4
+      },
+      {
+        "Name": "RareExpBorderTR",
+        "X": 296,
+        "Y": 186,
+        "Width": 9,
+        "Height": 4
+      },
+      {
+        "Name": "RareExpBorderBL",
+        "X": 213,
+        "Y": 198,
+        "Width": 9,
+        "Height": 4
+      },
+      {
+        "Name": "RareExpBorderBR",
+        "X": 296,
+        "Y": 198,
+        "Width": 9,
+        "Height": 4
+      },
+      {
+        "Name": "MagicExpBorderTop",
+        "X": 228,
+        "Y": 294,
+        "Width": 60,
+        "Height": 4
+      },
+      {
+        "Name": "MagicExpBorderBottom",
+        "X": 228,
+        "Y": 306,
+        "Width": 60,
+        "Height": 4
+      },
+      {
+        "Name": "MagicExpBorderLeft",
+        "X": 213,
+        "Y": 298,
+        "Width": 9,
+        "Height": 8
+      },
+      {
+        "Name": "MagicExpBorderRight",
+        "X": 296,
+        "Y": 298,
+        "Width": 9,
+        "Height": 8
+      },
+      {
+        "Name": "MagicExpBorderTL",
+        "X": 213,
+        "Y": 294,
+        "Width": 9,
+        "Height": 4
+      },
+      {
+        "Name": "MagicExpBorderTR",
+        "X": 296,
+        "Y": 294,
+        "Width": 9,
+        "Height": 4
+      },
+      {
+        "Name": "MagicExpBorderBL",
+        "X": 213,
+        "Y": 306,
+        "Width": 9,
+        "Height": 4
+      },
+      {
+        "Name": "MagicExpBorderBR",
+        "X": 296,
+        "Y": 306,
+        "Width": 9,
+        "Height": 4
+      },
+      {
+        "Name": "NormalExpBorderTop",
+        "X": 228,
+        "Y": 402,
+        "Width": 60,
+        "Height": 4
+      },
+      {
+        "Name": "NormalExpBorderBottom",
+        "X": 228,
+        "Y": 414,
+        "Width": 60,
+        "Height": 4
+      },
+      {
+        "Name": "NormalExpBorderLeft",
+        "X": 213,
+        "Y": 406,
+        "Width": 9,
+        "Height": 8
+      },
+      {
+        "Name": "NormalExpBorderRight",
+        "X": 296,
+        "Y": 406,
+        "Width": 9,
+        "Height": 8
+      },
+      {
+        "Name": "NormalExpBorderTL",
+        "X": 213,
+        "Y": 402,
+        "Width": 9,
+        "Height": 4
+      },
+      {
+        "Name": "NormalExpBorderTR",
+        "X": 296,
+        "Y": 402,
+        "Width": 9,
+        "Height": 4
+      },
+      {
+        "Name": "NormalExpBorderBL",
+        "X": 213,
+        "Y": 414,
+        "Width": 9,
+        "Height": 4
+      },
+      {
+        "Name": "NormalExpBorderBR",
+        "X": 296,
+        "Y": 414,
+        "Width": 9,
+        "Height": 4
+      },
+      {
+        "Name": "GemExpBorderTop",
+        "X": 228,
+        "Y": 402,
+        "Width": 60,
+        "Height": 4
+      },
+      {
+        "Name": "GemExpBorderBottom",
+        "X": 228,
+        "Y": 414,
+        "Width": 60,
+        "Height": 4
+      },
+      {
+        "Name": "GemExpBorderLeft",
+        "X": 213,
+        "Y": 406,
+        "Width": 9,
+        "Height": 8
+      },
+      {
+        "Name": "GemExpBorderRight",
+        "X": 296,
+        "Y": 406,
+        "Width": 9,
+        "Height": 8
+      },
+      {
+        "Name": "GemExpBorderTL",
+        "X": 213,
+        "Y": 402,
+        "Width": 9,
+        "Height": 4
+      },
+      {
+        "Name": "GemExpBorderTR",
+        "X": 296,
+        "Y": 402,
+        "Width": 9,
+        "Height": 4
+      },
+      {
+        "Name": "GemExpBorderBL",
+        "X": 213,
+        "Y": 414,
+        "Width": 9,
+        "Height": 4
+      },
+      {
+        "Name": "GemExpBorderBR",
+        "X": 296,
+        "Y": 414,
+        "Width": 9,
+        "Height": 4
+      }
+    ]
+  },
+  {
+    "Name": "Art/Textures/Interface/LoginCreationLoading.dds",
+    "Entries": [
+      {
+        "Name": "imgLoadingScreenImage",
+        "X": 0,
+        "Y": 0,
+        "Width": 800,
+        "Height": 616
+      },
+      {
+        "Name": "imgLoadingScreenTitleLeft",
+        "X": 4,
+        "Y": 681,
+        "Width": 114,
+        "Height": 79
+      },
+      {
+        "Name": "imgLoadingScreenTitleRight",
+        "X": 146,
+        "Y": 681,
+        "Width": 114,
+        "Height": 79
+      },
+      {
+        "Name": "imgLoadingScreenTitleMid",
+        "X": 121,
+        "Y": 681,
+        "Width": 22,
+        "Height": 79
+      },
+      {
+        "Name": "imgLoadingScreenBorderLeft",
+        "X": 313,
+        "Y": 892,
+        "Width": 22,
+        "Height": 128
+      },
+      {
+        "Name": "imgLoadingScreenBorderRight",
+        "X": 339,
+        "Y": 892,
+        "Width": 22,
+        "Height": 128
+      },
+      {
+        "Name": "imgLoadingScreenBorderBottom",
+        "X": 4,
+        "Y": 633,
+        "Width": 128,
+        "Height": 22
+      },
+      {
+        "Name": "imgLoadingScreenBorderTop",
+        "X": 4,
+        "Y": 653,
+        "Width": 128,
+        "Height": 23
+      },
+      {
+        "Name": "imgLoadingScreenBorderTL",
+        "X": 332,
+        "Y": 712,
+        "Width": 66,
+        "Height": 66
+      },
+      {
+        "Name": "imgLoadingScreenBorderTR",
+        "X": 402,
+        "Y": 712,
+        "Width": 66,
+        "Height": 66
+      },
+      {
+        "Name": "imgLoadingScreenBorderBL",
+        "X": 332,
+        "Y": 782,
+        "Width": 66,
+        "Height": 66
+      },
+      {
+        "Name": "imgLoadingScreenBorderBR",
+        "X": 402,
+        "Y": 782,
+        "Width": 66,
+        "Height": 66
+      },
+      {
+        "Name": "imgPathOfExileLogo",
+        "X": 0,
+        "Y": 0,
+        "Width": 800,
+        "Height": 616
+      },
+      {
+        "Name": "imgLabelBackground",
+        "X": 680,
+        "Y": 720,
+        "Width": 128,
+        "Height": 128
+      },
+      {
+        "Name": "imgEntryBackground",
+        "X": 816,
+        "Y": 720,
+        "Width": 128,
+        "Height": 128
+      },
+      {
+        "Name": "imgLoginMidSection",
+        "X": 363,
+        "Y": 852,
+        "Width": 658,
+        "Height": 141
+      },
+      {
+        "Name": "imgLoginLeftSection",
+        "X": 263,
+        "Y": 752,
+        "Width": 23,
+        "Height": 268
+      },
+      {
+        "Name": "imgLoginRightSection",
+        "X": 290,
+        "Y": 752,
+        "Width": 23,
+        "Height": 268
+      },
+      {
+        "Name": "imgLoginBottomSection",
+        "X": 367,
+        "Y": 997,
+        "Width": 651,
+        "Height": 23
+      },
+      {
+        "Name": "imgLoginBorderIT",
+        "X": 266,
+        "Y": 744,
+        "Width": 60,
+        "Height": 4
+      },
+      {
+        "Name": "imgLoginBorderIB",
+        "X": 266,
+        "Y": 741,
+        "Width": 60,
+        "Height": 4
+      },
+      {
+        "Name": "imgLoginBorderIL",
+        "X": 321,
+        "Y": 758,
+        "Width": 4,
+        "Height": 60
+      },
+      {
+        "Name": "imgLoginBorderIR",
+        "X": 324,
+        "Y": 758,
+        "Width": 4,
+        "Height": 60
+      },
+      {
+        "Name": "imgLoginBorderITL",
+        "X": 289,
+        "Y": 721,
+        "Width": 4,
+        "Height": 4
+      },
+      {
+        "Name": "imgLoginBorderITR",
+        "X": 297,
+        "Y": 721,
+        "Width": 4,
+        "Height": 4
+      },
+      {
+        "Name": "imgLoginBorderIBL",
+        "X": 267,
+        "Y": 718,
+        "Width": 4,
+        "Height": 4
+      },
+      {
+        "Name": "imgLoginBorderIBR",
+        "X": 275,
+        "Y": 718,
+        "Width": 4,
+        "Height": 4
+      },
+      {
+        "Name": "imgLoginBorderOT",
+        "X": 266,
+        "Y": 741,
+        "Width": 60,
+        "Height": 4
+      },
+      {
+        "Name": "imgLoginBorderOB",
+        "X": 266,
+        "Y": 744,
+        "Width": 60,
+        "Height": 4
+      },
+      {
+        "Name": "imgLoginBorderOR",
+        "X": 324,
+        "Y": 758,
+        "Width": 4,
+        "Height": 60
+      },
+      {
+        "Name": "imgLoginBorderOL",
+        "X": 321,
+        "Y": 758,
+        "Width": 4,
+        "Height": 60
+      },
+      {
+        "Name": "imgLoginBorderOTL",
+        "X": 286,
+        "Y": 718,
+        "Width": 4,
+        "Height": 4
+      },
+      {
+        "Name": "imgLoginBorderOTR",
+        "X": 300,
+        "Y": 718,
+        "Width": 4,
+        "Height": 4
+      },
+      {
+        "Name": "imgLoginBorderOBL",
+        "X": 264,
+        "Y": 721,
+        "Width": 4,
+        "Height": 4
+      },
+      {
+        "Name": "imgLoginBorderOBR",
+        "X": 278,
+        "Y": 721,
+        "Width": 4,
+        "Height": 4
+      }
+    ]
+  },
+  {
+    "Name": "Art/Textures/Interface/LoginBackground.dds",
+    "Entries": [
+      {
+        "Name": "imgLoginBackground",
+        "X": 0,
+        "Y": 0,
+        "Width": 2048,
+        "Height": 1800
+      }
+    ]
+  },
+  {
+    "Name": "Art/Textures/Interface/PanelsAltarAndBits.dds",
+    "Entries": [
+      {
+        "Name": "AltarStatueVeryTopCenter",
+        "X": 656,
+        "Y": 476,
+        "Width": 248,
+        "Height": 95
+      },
+      {
+        "Name": "AltarStatueVeryTopLeft",
+        "X": 656,
+        "Y": 360,
+        "Width": 62,
+        "Height": 110
+      },
+      {
+        "Name": "AltarStatueVeryTopRight",
+        "X": 724,
+        "Y": 368,
+        "Width": 61,
+        "Height": 101
+      },
+      {
+        "Name": "AltarStatueTopCenter",
+        "X": 0,
+        "Y": 36,
+        "Width": 696,
+        "Height": 263
+      },
+      {
+        "Name": "AltarStatueTopLeft",
+        "X": 952,
+        "Y": 944,
+        "Width": 53,
+        "Height": 79
+      },
+      {
+        "Name": "AltarStatueTopRight",
+        "X": 952,
+        "Y": 864,
+        "Width": 50,
+        "Height": 77
+      },
+      {
+        "Name": "AltarStatueBottomCenter",
+        "X": 0,
+        "Y": 303,
+        "Width": 649,
+        "Height": 721
+      },
+      {
+        "Name": "AltarStatueBottomLeft",
+        "X": 704,
+        "Y": 4,
+        "Width": 80,
+        "Height": 287
+      },
+      {
+        "Name": "AltarStatueBottomRight",
+        "X": 788,
+        "Y": 4,
+        "Width": 62,
+        "Height": 288
+      },
+      {
+        "Name": "AltarStatueMidLeft",
+        "X": 844,
+        "Y": 848,
+        "Width": 98,
+        "Height": 175
+      },
+      {
+        "Name": "AltarStatueMidCenter",
+        "X": 768,
+        "Y": 848,
+        "Width": 69,
+        "Height": 175
+      },
+      {
+        "Name": "AltarStatueMidRight",
+        "X": 656,
+        "Y": 848,
+        "Width": 105,
+        "Height": 175
+      },
+      {
+        "Name": "AltarBackgroundSkull",
+        "X": 301,
+        "Y": 54,
+        "Width": 62,
+        "Height": 75
+      },
+      {
+        "Name": "AltarBackgroundBoulder",
+        "X": 795,
+        "Y": 368,
+        "Width": 124,
+        "Height": 100
+      },
+      {
+        "Name": "AltarBackgroundRibs",
+        "X": 914,
+        "Y": 484,
+        "Width": 88,
+        "Height": 84
+      },
+      {
+        "Name": "AltarBackgroundGem",
+        "X": 178,
+        "Y": 452,
+        "Width": 25,
+        "Height": 37
+      },
+      {
+        "Name": "AltarBackgroundStone",
+        "X": 454,
+        "Y": 452,
+        "Width": 28,
+        "Height": 30
+      },
+      {
+        "Name": "AltarBackgroundBone1",
+        "X": 189,
+        "Y": 711,
+        "Width": 27,
+        "Height": 113
+      },
+      {
+        "Name": "AltarBackgroundBone2",
+        "X": 305,
+        "Y": 709,
+        "Width": 29,
+        "Height": 120
+      },
+      {
+        "Name": "AltarBackgroundBone3",
+        "X": 424,
+        "Y": 717,
+        "Width": 20,
+        "Height": 104
+      },
+      {
+        "Name": "TradePanelLady",
+        "X": 656,
+        "Y": 575,
+        "Width": 339,
+        "Height": 269
+      },
+      {
+        "Name": "TradePanelDownSpike",
+        "X": 852,
+        "Y": 4,
+        "Width": 83,
+        "Height": 179
+      },
+      {
+        "Name": "TradePanelUpSpike",
+        "X": 938,
+        "Y": 4,
+        "Width": 81,
+        "Height": 178
+      },
+      {
+        "Name": "WaypointIcon",
+        "X": 924,
+        "Y": 404,
+        "Width": 68,
+        "Height": 71
+      }
+    ]
+  },
+  {
+    "Name": "Art/Textures/Interface/DeathAndOther.dds",
+    "Entries": [
+      {
+        "Name": "SkullsLeft",
+        "X": 2,
+        "Y": 3,
+        "Width": 59,
+        "Height": 200
+      },
+      {
+        "Name": "SkullsRight",
+        "X": 75,
+        "Y": 3,
+        "Width": 59,
+        "Height": 200
+      },
+      {
+        "Name": "BonesTop",
+        "X": 139,
+        "Y": 0,
+        "Width": 241,
+        "Height": 24
+      },
+      {
+        "Name": "BonesBottom",
+        "X": 139,
+        "Y": 31,
+        "Width": 241,
+        "Height": 24
+      },
+      {
+        "Name": "imgUnstackIcon",
+        "X": 138,
+        "Y": 55,
+        "Width": 160,
+        "Height": 72
+      }
+    ]
+  },
+  {
+    "Name": "Art/Textures/Interface/DeathAndSkills.dds",
+    "Entries": [
+      {
+        "Name": "PSCenterFrame",
+        "X": 0,
+        "Y": 675,
+        "Width": 348,
+        "Height": 349
+      },
+      {
+        "Name": "PSLargeTriangle",
+        "X": 622,
+        "Y": 892,
+        "Width": 145,
+        "Height": 129
+      },
+      {
+        "Name": "PSAttributePointCircle",
+        "X": 349,
+        "Y": 921,
+        "Width": 104,
+        "Height": 103
+      },
+      {
+        "Name": "PSSkillFrame",
+        "X": 456,
+        "Y": 921,
+        "Width": 103,
+        "Height": 103
+      },
+      {
+        "Name": "PSSkillFrameHighlighted",
+        "X": 0,
+        "Y": 454,
+        "Width": 103,
+        "Height": 103
+      },
+      {
+        "Name": "PSLockCircle",
+        "X": 564,
+        "Y": 966,
+        "Width": 54,
+        "Height": 55
+      },
+      {
+        "Name": "PSLineConnector",
+        "X": 356,
+        "Y": 906,
+        "Width": 55,
+        "Height": 11
+      },
+      {
+        "Name": "PSLineConnectorHighlighted",
+        "X": 425,
+        "Y": 906,
+        "Width": 55,
+        "Height": 11
+      },
+      {
+        "Name": "PSOrbit1Quarter",
+        "X": 672,
+        "Y": 471,
+        "Width": 90,
+        "Height": 90
+      },
+      {
+        "Name": "PSOrbit2Quarter",
+        "X": 606,
+        "Y": 393,
+        "Width": 168,
+        "Height": 168
+      },
+      {
+        "Name": "PSOrbit3Quarter",
+        "X": 564,
+        "Y": 199,
+        "Width": 340,
+        "Height": 340
+      },
+      {
+        "Name": "PSOrbit4Quarter",
+        "X": 523,
+        "Y": 24,
+        "Width": 496,
+        "Height": 496
+      },
+      {
+        "Name": "PSOrbit1QuarterHighlighted",
+        "X": 651,
+        "Y": 453,
+        "Width": 90,
+        "Height": 90
+      },
+      {
+        "Name": "PSOrbit2QuarterHighlighted",
+        "X": 585,
+        "Y": 372,
+        "Width": 168,
+        "Height": 168
+      },
+      {
+        "Name": "PSOrbit3QuarterHighlighted",
+        "X": 544,
+        "Y": 179,
+        "Width": 340,
+        "Height": 340
+      },
+      {
+        "Name": "PSOrbit4QuarterHighlighted",
+        "X": 503,
+        "Y": 4,
+        "Width": 496,
+        "Height": 496
+      },
+      {
+        "Name": "PSLineDeco",
+        "X": 770,
+        "Y": 976,
+        "Width": 48,
+        "Height": 48
+      },
+      {
+        "Name": "PSCurveDeco",
+        "X": 908,
+        "Y": 972,
+        "Width": 44,
+        "Height": 44
+      },
+      {
+        "Name": "PSCurveDecoCCW",
+        "X": 960,
+        "Y": 972,
+        "Width": 44,
+        "Height": 44
+      },
+      {
+        "Name": "PSLockDecoL",
+        "X": 824,
+        "Y": 988,
+        "Width": 36,
+        "Height": 24
+      },
+      {
+        "Name": "PSLockDecoR",
+        "X": 866,
+        "Y": 988,
+        "Width": 38,
+        "Height": 24
+      },
+      {
+        "Name": "PSIconCloseHover",
+        "X": 4,
+        "Y": 560,
+        "Width": 200,
+        "Height": 106
+      },
+      {
+        "Name": "PSClosePanelButton",
+        "X": 216,
+        "Y": 514,
+        "Width": 154,
+        "Height": 157
+      }
+    ]
+  }
+]
