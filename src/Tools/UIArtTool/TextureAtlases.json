@@ -482,8 +482,8 @@
         "Name": "imgBorderTopJoin",
         "X": 701,
         "Y": 828,
-        "Width": 26,
-        "Height": 13
+        "Width": 27,
+        "Height": 14
       },
       {
         "Name": "imgFlaskFrame",
@@ -531,43 +531,43 @@
         "Name": "imgLifeOrbForeground",
         "X": 4,
         "Y": 701,
-        "Width": 315,
-        "Height": 318
+        "Width": 316,
+        "Height": 319
       },
       {
         "Name": "imgManaOrbForeground",
         "X": 732,
         "Y": 731,
-        "Width": 287,
-        "Height": 288
+        "Width": 288,
+        "Height": 289
       },
       {
         "Name": "imgLifeOrbLevel",
         "X": 4,
         "Y": 434,
-        "Width": 262,
-        "Height": 262
+        "Width": 263,
+        "Height": 263
       },
       {
         "Name": "imgManaOrbLevel",
         "X": 758,
         "Y": 3,
-        "Width": 261,
-        "Height": 263
+        "Width": 262,
+        "Height": 264
       },
       {
         "Name": "imgLifeOrbBackground",
         "X": 271,
         "Y": 432,
-        "Width": 266,
-        "Height": 264
+        "Width": 267,
+        "Height": 265
       },
       {
         "Name": "imgManaOrbBackground",
         "X": 490,
         "Y": 2,
-        "Width": 266,
-        "Height": 264
+        "Width": 267,
+        "Height": 265
       },
       {
         "Name": "imgShieldArc",
@@ -580,36 +580,36 @@
         "Name": "imgExpLeft",
         "X": 433,
         "Y": 862,
-        "Width": 5,
-        "Height": 15
+        "Width": 6,
+        "Height": 16
       },
       {
         "Name": "imgExpMiddle",
         "X": 468,
         "Y": 862,
-        "Width": 35,
-        "Height": 15
+        "Width": 36,
+        "Height": 16
       },
       {
         "Name": "imgExpRight",
         "X": 507,
         "Y": 862,
-        "Width": 5,
-        "Height": 15
+        "Width": 6,
+        "Height": 16
       },
       {
         "Name": "imgExpNotchLarge",
         "X": 443,
         "Y": 862,
-        "Width": 8,
-        "Height": 15
+        "Width": 9,
+        "Height": 16
       },
       {
         "Name": "imgExpNotchSmall",
         "X": 456,
         "Y": 862,
-        "Width": 8,
-        "Height": 15
+        "Width": 9,
+        "Height": 16
       },
       {
         "Name": "imgOptionsButton",
@@ -879,22 +879,22 @@
         "Name": "PanelBackground",
         "X": 0,
         "Y": 0,
-        "Width": 512,
-        "Height": 512
+        "Width": 513,
+        "Height": 513
       },
       {
         "Name": "WaitingNoticeBackground",
         "X": 0,
         "Y": 0,
-        "Width": 512,
-        "Height": 512
+        "Width": 513,
+        "Height": 513
       },
       {
         "Name": "imgMarbleBackground",
         "X": 0,
         "Y": 0,
-        "Width": 512,
-        "Height": 512
+        "Width": 513,
+        "Height": 513
       }
     ]
   },
@@ -905,50 +905,50 @@
         "Name": "CommonCross",
         "X": 452,
         "Y": 426,
-        "Width": 29,
-        "Height": 27
+        "Width": 30,
+        "Height": 28
       },
       {
         "Name": "CommonTick",
         "X": 453,
         "Y": 460,
-        "Width": 33,
-        "Height": 23
+        "Width": 34,
+        "Height": 24
       },
       {
         "Name": "GoldCircleRaised",
         "X": 452,
         "Y": 488,
-        "Width": 64,
-        "Height": 64
+        "Width": 65,
+        "Height": 65
       },
       {
         "Name": "GoldCircleSunken",
         "X": 452,
         "Y": 556,
-        "Width": 64,
-        "Height": 63
+        "Width": 65,
+        "Height": 64
       },
       {
         "Name": "EmptyTexture",
         "X": 0,
         "Y": 0,
-        "Width": 10,
-        "Height": 10
+        "Width": 11,
+        "Height": 11
       },
       {
         "Name": "TabArrowLarge",
         "X": 446,
         "Y": 100,
-        "Width": 25,
-        "Height": 36
+        "Width": 26,
+        "Height": 37
       },
       {
         "Name": "TabArrowSmall",
         "X": 456,
         "Y": 71,
-        "Width": 16,
-        "Height": 25
+        "Width": 17,
+        "Height": 26
       },
       {
         "Name": "LeftPanelTopLeft",
@@ -1682,22 +1682,22 @@
         "Name": "InventoryStatueLeft",
         "X": 0,
         "Y": 623,
-        "Width": 408,
-        "Height": 400
+        "Width": 409,
+        "Height": 401
       },
       {
         "Name": "InventoryStatueRight",
         "X": 413,
         "Y": 623,
-        "Width": 345,
-        "Height": 400
+        "Width": 346,
+        "Height": 401
       },
       {
         "Name": "InventoryStatueRightExtra",
         "X": 520,
         "Y": 527,
-        "Width": 68,
-        "Height": 91
+        "Width": 69,
+        "Height": 92
       },
       {
         "Name": "InventoryStatueCenter",
@@ -1710,64 +1710,64 @@
         "Name": "InventoryTorso",
         "X": 323,
         "Y": 427,
-        "Width": 126,
-        "Height": 189
+        "Width": 127,
+        "Height": 190
       },
       {
         "Name": "InventorySwordShield",
         "X": 603,
         "Y": 400,
-        "Width": 97,
-        "Height": 217
+        "Width": 98,
+        "Height": 218
       },
       {
         "Name": "InventoryBoots",
         "X": 473,
         "Y": 710,
-        "Width": 113,
-        "Height": 98
+        "Width": 114,
+        "Height": 99
       },
       {
         "Name": "InventoryRing",
         "X": 215,
         "Y": 660,
-        "Width": 52,
-        "Height": 47
+        "Width": 53,
+        "Height": 48
       },
       {
         "Name": "InventoryNecklace",
         "X": 317,
         "Y": 654,
-        "Width": 53,
-        "Height": 46
+        "Width": 54,
+        "Height": 47
       },
       {
         "Name": "InventoryGloves",
         "X": 277,
         "Y": 703,
-        "Width": 95,
-        "Height": 111
+        "Width": 96,
+        "Height": 112
       },
       {
         "Name": "InventoryBelt",
         "X": 479,
         "Y": 657,
-        "Width": 106,
-        "Height": 50
+        "Width": 107,
+        "Height": 51
       },
       {
         "Name": "InventoryHelm",
         "X": 201,
         "Y": 503,
-        "Width": 81,
-        "Height": 83
+        "Width": 82,
+        "Height": 84
       },
       {
         "Name": "InventoryPotion",
         "X": 218,
         "Y": 716,
-        "Width": 50,
-        "Height": 92
+        "Width": 51,
+        "Height": 93
       },
       {
         "Name": "InventorySocketGreen",
@@ -3130,57 +3130,57 @@
         "Name": "AltarBackgroundSkull",
         "X": 301,
         "Y": 54,
-        "Width": 62,
-        "Height": 75
+        "Width": 63,
+        "Height": 76
       },
       {
         "Name": "AltarBackgroundBoulder",
         "X": 795,
         "Y": 368,
-        "Width": 124,
-        "Height": 100
+        "Width": 125,
+        "Height": 101
       },
       {
         "Name": "AltarBackgroundRibs",
         "X": 914,
         "Y": 484,
-        "Width": 88,
-        "Height": 84
+        "Width": 89,
+        "Height": 85
       },
       {
         "Name": "AltarBackgroundGem",
         "X": 178,
         "Y": 452,
-        "Width": 25,
-        "Height": 37
+        "Width": 26,
+        "Height": 38
       },
       {
         "Name": "AltarBackgroundStone",
         "X": 454,
         "Y": 452,
-        "Width": 28,
-        "Height": 30
+        "Width": 29,
+        "Height": 31
       },
       {
         "Name": "AltarBackgroundBone1",
         "X": 189,
         "Y": 711,
-        "Width": 27,
-        "Height": 113
+        "Width": 28,
+        "Height": 114
       },
       {
         "Name": "AltarBackgroundBone2",
         "X": 305,
         "Y": 709,
-        "Width": 29,
-        "Height": 120
+        "Width": 30,
+        "Height": 121
       },
       {
         "Name": "AltarBackgroundBone3",
         "X": 424,
         "Y": 717,
-        "Width": 20,
-        "Height": 104
+        "Width": 21,
+        "Height": 105
       },
       {
         "Name": "TradePanelLady",
@@ -3193,15 +3193,15 @@
         "Name": "TradePanelDownSpike",
         "X": 852,
         "Y": 4,
-        "Width": 83,
-        "Height": 179
+        "Width": 84,
+        "Height": 180
       },
       {
         "Name": "TradePanelUpSpike",
         "X": 938,
         "Y": 4,
-        "Width": 81,
-        "Height": 178
+        "Width": 82,
+        "Height": 179
       },
       {
         "Name": "WaypointIcon",

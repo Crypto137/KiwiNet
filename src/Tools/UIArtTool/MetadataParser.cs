@@ -85,8 +85,8 @@ namespace UIArtTool
                     string[] coords = size.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
                     x = int.Parse(coords[0]);
                     y = int.Parse(coords[1]);
-                    width = int.Parse(coords[2]) - x;
-                    height = int.Parse(coords[3]) - y;
+                    width = int.Parse(coords[2]) - x + 1;
+                    height = int.Parse(coords[3]) - y + 1;
                 }
 
                 TextureAtlasEntry entry = new()
