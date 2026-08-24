@@ -26,6 +26,7 @@ namespace KiwiNet.Protocols
                 case PacketId.ClientInstanceHeartbeatPacketId:
                 case PacketId.InstanceClientHeartbeatReplyPacketId:
                 case PacketId.InstanceClientYouAreDeadId:
+                case PacketId.InstanceClientTradeStateChangedId:
                 case PacketId.InstanceClientAreaChangeFailedPacketId:
                 case PacketId.InstanceClientToggleMovieModeId:
                 case PacketId.InstanceClientAdvanceFrameId:
@@ -106,16 +107,49 @@ namespace KiwiNet.Protocols
                     packet = new InstanceClientLadderPacket();
                     break;
 
+                case PacketId.InstanceClientWaypointListPacketId:
+                    packet = new InstanceClientWaypointListPacket();
+                    break;
+
                 case PacketId.ClientInstanceChangeBoundSkillId:
                     packet = new ClientInstanceChangeBoundSkill();
+                    break;
+
+                case PacketId.InstanceClientBoundSkillListId:
+                    packet = new InstanceClientBoundSkillList();
                     break;
 
                 case PacketId.ClientInstanceTerrainGenerationResultId:
                     packet = new ClientInstanceTerrainGenerationResult();
                     break;
 
+                case PacketId.InstanceClientDoNPCChatId:
+                case PacketId.InstanceClientBuyItemRemovedId:
+                    packet = new InstanceClientDoNPCChat(packetId);
+                    break;
+
+                case PacketId.InstanceClientPortalStateId:
+                    packet = new InstanceClientPortalState();
+                    break;
+
+                case PacketId.InstanceClientContactUpdateId:
+                    packet = new InstanceClientContactUpdate();
+                    break;
+
+                case PacketId.InstanceClientPartyChangedId:
+                    packet = new InstanceClientPartyChanged();
+                    break;
+
+                case PacketId.InstanceClientInstanceListId:
+                    packet = new InstanceClientInstanceList();
+                    break;
+
                 case PacketId.InstanceClientServerFrameDurationPacketId:
                     packet = new InstanceClientServerFrameDurationPacket();
+                    break;
+
+                case PacketId.InstanceClientDebugPathId:
+                    packet = new InstanceClientDebugPath();
                     break;
 
                 case PacketId.ClientLoginAuthenticatePacketId:
