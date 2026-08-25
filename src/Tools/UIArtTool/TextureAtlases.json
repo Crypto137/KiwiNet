@@ -879,22 +879,22 @@
         "Name": "PanelBackground",
         "X": 0,
         "Y": 0,
-        "Width": 513,
-        "Height": 513
+        "Width": 512,
+        "Height": 512
       },
       {
         "Name": "WaitingNoticeBackground",
         "X": 0,
         "Y": 0,
-        "Width": 513,
-        "Height": 513
+        "Width": 512,
+        "Height": 512
       },
       {
         "Name": "imgMarbleBackground",
         "X": 0,
         "Y": 0,
-        "Width": 513,
-        "Height": 513
+        "Width": 512,
+        "Height": 512
       }
     ]
   },
