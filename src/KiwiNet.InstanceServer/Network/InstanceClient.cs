@@ -22,6 +22,9 @@ namespace KiwiNet.InstanceServer.Network
         private static string _areaOverride = null;
         private static Vector2Int? _startOverride = null;
 
+        private string _characterName = string.Empty;
+        private string _area;
+
         public InstanceClient()
         {
         }
@@ -121,6 +124,8 @@ namespace KiwiNet.InstanceServer.Network
 
             Logger.Debug($"OnLoginAttempt(): {loginAttempt}");
 
+            _characterName = loginAttempt.CharacterName;
+
             var reply = PacketFactory.Get<InstanceClientLoginAttemptReplyPacket>();
             reply.Field0 = 1;
             reply.Field1 = "";
@@ -131,10 +136,11 @@ namespace KiwiNet.InstanceServer.Network
             _currentClient = this;
 
             GameConfig config = ConfigManager.Get<GameConfig>();
+            _area = _areaOverride ?? config.WorldAreaId;
 
             var instanceInfo = PacketFactory.Get<InstanceClientInstanceInformationPacket>();
             instanceInfo.Field0 = 1;
-            instanceInfo.WorldAreaId = _areaOverride != null ? _areaOverride : config.WorldAreaId;
+            instanceInfo.WorldAreaId = _area;
             instanceInfo.League = "Default";
             instanceInfo.Seed = (uint)config.WorldAreaSeed;
             Send(instanceInfo);
@@ -154,7 +160,7 @@ namespace KiwiNet.InstanceServer.Network
             Logger.Debug($"OnChatMessage(): {chatMessage.Text}");
 
             InstanceClientChatMessagePacket reply = PacketFactory.Get<InstanceClientChatMessagePacket>();
-            reply.Name = "Player";
+            reply.Name = _characterName;
             reply.Text = chatMessage.Text;
             Send(reply);
         }
@@ -223,7 +229,15 @@ namespace KiwiNet.InstanceServer.Network
             player.Initialize(ref settings);    // Positioned instantiated in Initialize()
             player.GetOrCreateComponent<LifeComponent>().Life = 100;
             player.GetOrCreateComponent<AnimatedComponent>();
-            player.GetOrCreateComponent<PlayerComponent>().Name = "KiwiNet";
+
+            PlayerComponent playerComponent = player.GetOrCreateComponent<PlayerComponent>();
+            playerComponent.Name = _characterName;
+            if (_area == "1_1_1")
+            {
+                player.GetComponent<PositionedComponent>().Rotation = 3.14f;
+                playerComponent.IsWashedUp = true;
+            }
+
             player.GetOrCreateComponent<InventoriesComponent>();
             player.GetOrCreateComponent<ActorComponent>();
 

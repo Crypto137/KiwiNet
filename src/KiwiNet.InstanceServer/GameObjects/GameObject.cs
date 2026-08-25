@@ -22,6 +22,7 @@ namespace KiwiNet.InstanceServer.GameObjects
 
             PositionedComponent positioned = GetOrCreateComponent<PositionedComponent>();
             positioned.SetPosition(settings.GridPosition);
+            positioned.Rotation = settings.Rotation;
         }
 
         public T GetOrCreateComponent<T>() where T: Component, new()

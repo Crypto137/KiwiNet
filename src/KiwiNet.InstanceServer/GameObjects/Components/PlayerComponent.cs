@@ -9,6 +9,7 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
         public CharacterClass Class { get; set; }
         public uint Experience { get; set; }
         public List<uint> PassiveSkills { get; } = new();
+        public bool IsWashedUp { get; set; }    // activates WashedUp action
 
         public override void Serialize(Stream stream)
         {
@@ -20,8 +21,7 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
             foreach (uint passiveSkill in PassiveSkills)
                 PacketIO.WriteUInt32(stream, passiveSkill);
 
-            PacketIO.WriteByte(stream, 0);
-            // WashedUp
+            PacketIO.WriteBool(stream, IsWashedUp);
 
             PacketIO.WriteUInt32(stream, 0);
 
