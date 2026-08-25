@@ -10,6 +10,8 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
         public uint Experience { get; set; }
         public List<uint> PassiveSkills { get; } = new();
         public bool IsWashedUp { get; set; }    // activates WashedUp action
+        public uint Unknown { get; set; }
+        public byte[] QuestStates { get; } = new byte[16];   // 4 bits per quest? 32 quests total?
 
         public override void Serialize(Stream stream)
         {
@@ -22,14 +24,8 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
                 PacketIO.WriteUInt32(stream, passiveSkill);
 
             PacketIO.WriteBool(stream, IsWashedUp);
-
-            PacketIO.WriteUInt32(stream, 0);
-
-            // one read of 16 bytes
-            PacketIO.WriteUInt32(stream, 0);
-            PacketIO.WriteUInt32(stream, 0);
-            PacketIO.WriteUInt32(stream, 0);
-            PacketIO.WriteUInt32(stream, 0);
+            PacketIO.WriteUInt32(stream, Unknown);
+            stream.Write(QuestStates);
         }
     }
 }

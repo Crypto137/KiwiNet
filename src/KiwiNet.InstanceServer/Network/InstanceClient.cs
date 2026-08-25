@@ -235,7 +235,7 @@ namespace KiwiNet.InstanceServer.Network
             if (_area == "1_1_1")
             {
                 player.GetComponent<PositionedComponent>().Rotation = 3.14f;
-                playerComponent.IsWashedUp = true;
+                //playerComponent.IsWashedUp = true;
             }
 
             player.GetOrCreateComponent<InventoriesComponent>();

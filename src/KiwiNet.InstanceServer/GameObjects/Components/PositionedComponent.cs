@@ -4,6 +4,15 @@ using System.Numerics;
 
 namespace KiwiNet.InstanceServer.GameObjects.Components
 {
+    [Flags]
+    public enum PositionedSerializeFlags : byte
+    {
+        None         = 0,
+        HasFlag235   = 1 << 0,
+        HasFlag232   = 1 << 1,
+        HasExtraData = 1 << 2,
+    }
+
     public sealed class PositionedComponent : Component
     {
         public const float WorldUnitsPerGridCell = 1000f / 92f; // 0x412DE9BD or 10.869565
@@ -13,20 +22,35 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
         public float Rotation { get; set; }     // radians in the [0, 2pi] range
         public float Scale { get; set; } = 1f;
 
+        public float HeightOffset { get; set; } = float.MaxValue;
+        public int Dword64 { get; set; } = int.MaxValue;
+
+        public bool Flag232 { get; set; }
+        public bool Flag235 { get; set; }
+
         public override void Serialize(Stream stream)
         {
-            byte flags = 0;
+            PositionedSerializeFlags flags = PositionedSerializeFlags.None;
+
+            if (Flag235)
+                flags |= PositionedSerializeFlags.HasFlag235;
+
+            if (Flag232)
+                flags |= PositionedSerializeFlags.HasFlag232;
+
+            if (Dword64 != int.MaxValue)
+                flags |= PositionedSerializeFlags.HasExtraData;
 
             PacketIO.WriteInt32(stream, GridPosition.X);
             PacketIO.WriteInt32(stream, GridPosition.Y);
             PacketIO.WriteFloat(stream, Rotation);
-            PacketIO.WriteByte(stream, flags);
+            PacketIO.WriteByte(stream, (byte)flags);
             PacketIO.WriteFloat(stream, Scale);
 
-            if ((flags & 0x4) != 0)
+            if (flags.HasFlag(PositionedSerializeFlags.HasExtraData))
             {
-                PacketIO.WriteFloat(stream, 0);
-                PacketIO.WriteUInt32(stream, 0);
+                PacketIO.WriteInt32(stream, Dword64);
+                PacketIO.WriteFloat(stream, HeightOffset);
             }
 
             // the client converts integer grid cell to float coordinates here
