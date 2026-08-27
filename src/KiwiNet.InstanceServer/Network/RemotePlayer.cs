@@ -1,85 +1,108 @@
 ﻿using KiwiNet.Core.Config;
 using KiwiNet.Core.Logging;
 using KiwiNet.Core.Math;
-using KiwiNet.Core.Network.Tcp;
 using KiwiNet.Core.Utils;
+using KiwiNet.InstanceServer.Areas;
 using KiwiNet.InstanceServer.Commands;
+using KiwiNet.InstanceServer.GameData;
 using KiwiNet.InstanceServer.GameObjects;
 using KiwiNet.InstanceServer.GameObjects.Components;
-using KiwiNet.InstanceServer.WorldAreas;
 using KiwiNet.Protocols;
 using KiwiNet.Protocols.Packets.Common;
 using KiwiNet.Protocols.Packets.Instance;
 
 namespace KiwiNet.InstanceServer.Network
 {
-    public class InstanceClient : TcpClient
+    public class RemotePlayer
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
 
-        // temp garbage
-        private static InstanceClient _currentClient = null;
-        private static string _areaOverride = null;
-        private static Vector2Int? _startOverride = null;
+        private readonly InstanceTcpClient _client;
 
-        private string _characterName = string.Empty;
-        private string _area;
+        public Area Area { get; }
 
-        public InstanceClient()
+        public GameObject Player { get; private set; }
+
+        public RemotePlayer(Area area, InstanceTcpClient client)
         {
-        }
-
-        public override void OnDataReceived(byte[] buffer, int length)
-        {
-            //Logger.Debug($"OnDataReceived(): {Convert.ToHexString(buffer.AsSpan(0, length))}");
-
-            List<Packet> packets = new();   // todo: pool this
-            Packet.ParseFrom(buffer, length, packets);
-
-            foreach (Packet packet in packets)
-            {
-                Logger.Trace($" IN < {packet.Id}");
-                ReceivePacket(packet);
-            }
+            Area = area;
+            _client = client;
         }
 
         public void Send(Packet packet)
         {
-            Logger.Trace($"OUT > {packet.Id}");
-            Connection.Send(packet);
+            _client.Send(packet);
         }
 
-        public bool BeginAreaTransfer(string areaId, Vector2Int? startOverride = null)
+        public void Load()
         {
-            if (WorldArea.IsValidAreaId(areaId) == false)
+            GameConfig config = ConfigManager.Get<GameConfig>();
+
+            // TODO: create Player game object via GameObjectManager, load persistent data here
+            Player = new();
+
+            GameObjectSettings settings = new()
+            {
+                Template = HashUtility.MurmurHash2(config.CharacterTemplate),
+                Id = 0x1,
+                GridPosition = _client.Session.StartPosition,
+            };
+
+            // component order is strict for serialization
+            Player.Initialize(ref settings);    // Positioned instantiated in Initialize()
+            Player.GetOrCreateComponent<LifeComponent>().Life = 100;
+            Player.GetOrCreateComponent<AnimatedComponent>();
+
+            PlayerComponent playerComponent = Player.GetOrCreateComponent<PlayerComponent>();
+            playerComponent.Name = _client.Session.CharacterName;
+            if (Area.WorldAreaId == "1_1_1")
+            {
+                Player.GetComponent<PositionedComponent>().Rotation = 3.14f;
+                //playerComponent.IsWashedUp = true;
+            }
+
+            Player.GetOrCreateComponent<InventoriesComponent>();
+            Player.GetOrCreateComponent<ActorComponent>();
+
+            //---
+
+            InstanceClientInstanceInformationPacket instanceInfo = PacketFactory.Get<InstanceClientInstanceInformationPacket>();
+            instanceInfo.PlayerObjectId = Player.Id;
+            instanceInfo.WorldAreaId = Area.WorldAreaId;
+            instanceInfo.League = Area.League;
+            instanceInfo.Seed = Area.Seed;
+            Send(instanceInfo);
+        }
+
+        public bool BeginAreaTransfer(string areaId, Vector2Int startOverride = default)
+        {
+            if (WorldAreaTable.IsValidAreaId(areaId) == false)
                 return false;
 
-            _areaOverride = areaId;
-            _startOverride = startOverride;
+            ClientSession session = _client.Session;
+
+            session.WorldAreaId = areaId;
+            session.StartPosition = startOverride;
 
             StringPacket notification = PacketFactory.Get<StringPacket>(PacketId.InstanceClientAreaChangeNotificationPacketId);
             notification.Value = areaId;
             Send(notification);
 
             InstanceClientInstanceDetailsPacket instanceDetails = PacketFactory.Get<InstanceClientInstanceDetailsPacket>();
-            instanceDetails.SessionId = 0xDEADBEEF;
-            instanceDetails.Field1 = 1;
+            instanceDetails.SessionId = session.Id;
+            instanceDetails.Field1 = 0;
             instanceDetails.WorldAreaId = areaId;
             instanceDetails.Entries.Add(new("localhost", "6112"));
             Send(instanceDetails);
             return true;
         }
 
-        #region Handlers
+        #region Message Handling
 
-        private void ReceivePacket(Packet packet)
+        public void ReceivePacket(Packet packet)
         {
             switch (packet.Id)
             {
-                case PacketId.ClientInstanceLoginAttemptPacketId:
-                    OnLoginAttempt(packet);
-                    break;
-
                 case PacketId.ClientInstanceChatMessagePacketId:
                     OnChatMessage(packet);
                     break;
@@ -114,38 +137,6 @@ namespace KiwiNet.InstanceServer.Network
             }
         }
 
-        private void OnLoginAttempt(Packet packet)
-        {
-            if (packet is not ClientInstanceLoginAttemptPacket loginAttempt)
-            {
-                Logger.Warn("OnLoginAttempt(): Invalid packet");
-                return;
-            }
-
-            Logger.Debug($"OnLoginAttempt(): {loginAttempt}");
-
-            _characterName = loginAttempt.CharacterName;
-
-            var reply = PacketFactory.Get<InstanceClientLoginAttemptReplyPacket>();
-            reply.Field0 = 1;
-            reply.Field1 = "";
-            Send(reply);
-
-            // temp garbage part deux
-            _currentClient?.Connection.Disconnect();
-            _currentClient = this;
-
-            GameConfig config = ConfigManager.Get<GameConfig>();
-            _area = _areaOverride ?? config.WorldAreaId;
-
-            var instanceInfo = PacketFactory.Get<InstanceClientInstanceInformationPacket>();
-            instanceInfo.Field0 = 1;
-            instanceInfo.WorldAreaId = _area;
-            instanceInfo.League = "Default";
-            instanceInfo.Seed = (uint)config.WorldAreaSeed;
-            Send(instanceInfo);
-        }
-
         private void OnChatMessage(Packet packet)
         {
             if (packet is not ClientInstanceChatMessagePacket chatMessage)
@@ -160,7 +151,7 @@ namespace KiwiNet.InstanceServer.Network
             Logger.Debug($"OnChatMessage(): {chatMessage.Text}");
 
             InstanceClientChatMessagePacket reply = PacketFactory.Get<InstanceClientChatMessagePacket>();
-            reply.Name = _characterName;
+            reply.Name = Player.GetComponent<PlayerComponent>().Name;
             reply.Text = chatMessage.Text;
             Send(reply);
         }
@@ -214,35 +205,8 @@ namespace KiwiNet.InstanceServer.Network
             // this is where the server disconnects the client if the hashes don't match
             // InstanceClientForcedDisconnectionWarningPacketId -> BackendError.TerrainGenerationOutOfSync
 
-            GameConfig config = ConfigManager.Get<GameConfig>();
-
-            GameObject player = new();
-
-            GameObjectSettings settings = new()
-            {
-                Template = HashUtility.MurmurHash2(config.CharacterTemplate),
-                Id = 0x1,
-                GridPosition = _startOverride != null ? _startOverride.Value : new(config.StartPositionX, config.StartPositionY),
-            };
-
-            // component order is strict for serialization
-            player.Initialize(ref settings);    // Positioned instantiated in Initialize()
-            player.GetOrCreateComponent<LifeComponent>().Life = 100;
-            player.GetOrCreateComponent<AnimatedComponent>();
-
-            PlayerComponent playerComponent = player.GetOrCreateComponent<PlayerComponent>();
-            playerComponent.Name = _characterName;
-            if (_area == "1_1_1")
-            {
-                player.GetComponent<PositionedComponent>().Rotation = 3.14f;
-                //playerComponent.IsWashedUp = true;
-            }
-
-            player.GetOrCreateComponent<InventoriesComponent>();
-            player.GetOrCreateComponent<ActorComponent>();
-
             using MemoryStream ms = new();
-            player.Serialize(ms);
+            Player.Serialize(ms);
 
             var objAdd = PacketFactory.Get<InstanceClientObjectAddPacket>();
             objAdd.Blob = ms.ToArray();

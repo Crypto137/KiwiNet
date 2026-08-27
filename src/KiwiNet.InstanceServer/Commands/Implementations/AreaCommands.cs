@@ -1,6 +1,6 @@
 ﻿using KiwiNet.Core.Math;
 using KiwiNet.InstanceServer.Network;
-using KiwiNet.InstanceServer.WorldAreas;
+using KiwiNet.InstanceServer.GameData;
 
 namespace KiwiNet.InstanceServer.Commands.Implementations
 {
@@ -8,16 +8,19 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
     public static class AreaCommands
     {
         [CommandHandler("areachange")]
-        public static string AreaChange(InstanceClient client, ReadOnlySpan<string> args)
+        public static string AreaChange(object invoker, ReadOnlySpan<string> args)
         {
+            if (invoker is not RemotePlayer remotePlayer)
+                return "This command must be invoked in-game.";
+
             if (args.Length == 0)
                 return "Please provide a valid world area id";
 
             string worldAreaId = args[0];
-            if (WorldArea.IsValidAreaId(worldAreaId) == false)
+            if (WorldAreaTable.IsValidAreaId(worldAreaId) == false)
                 return $"'{worldAreaId}' is not a valid world area id.";
 
-            Vector2Int? startPosition = null;
+            Vector2Int startPosition = default;
             if (args.Length >= 3)
             {
                 if (int.TryParse(args[1], out int x) == false)
@@ -35,7 +38,7 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
                 startPosition = new(x, y);
             }
 
-            client.BeginAreaTransfer(worldAreaId, startPosition);
+            remotePlayer.BeginAreaTransfer(worldAreaId, startPosition);
 
             return string.Empty;
         }

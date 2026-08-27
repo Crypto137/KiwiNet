@@ -1,6 +1,12 @@
-﻿namespace KiwiNet.InstanceServer.WorldAreas
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace KiwiNet.InstanceServer.GameData
 {
-    public class WorldArea
+    public class WorldAreaTable
     {
         // TODO: replace this with .dat files
         private static readonly IReadOnlyList<string> ValidAreasIds = [

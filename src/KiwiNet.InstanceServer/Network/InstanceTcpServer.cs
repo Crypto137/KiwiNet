@@ -8,7 +8,7 @@ namespace KiwiNet.InstanceServer.Network
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
 
-        private readonly Dictionary<TcpClientConnection, InstanceClient> _clients = new();
+        private readonly Dictionary<TcpClientConnection, InstanceTcpClient> _clients = new();
 
         public bool Initialize()
         {
@@ -33,18 +33,20 @@ namespace KiwiNet.InstanceServer.Network
         protected override void OnClientConnected(TcpClientConnection connection)
         {
             Logger.Trace("Client connected");
-            _clients[connection] = (InstanceClient)connection.Client;
+            _clients[connection] = (InstanceTcpClient)connection.Client;
         }
 
         protected override void OnClientDisconnected(TcpClientConnection connection)
         {
             Logger.Trace("Client disconnected");
-            _clients.Remove(connection);
+            _clients.Remove(connection, out InstanceTcpClient client);
+
+            client.OnDisconnected();
         }
 
         protected override TcpClient CreateTcpClient()
         {
-            return new InstanceClient();
+            return new InstanceTcpClient();
         }
     }
 }

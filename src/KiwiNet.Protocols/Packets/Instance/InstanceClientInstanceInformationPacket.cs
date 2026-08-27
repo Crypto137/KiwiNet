@@ -2,7 +2,7 @@
 {
     public sealed class InstanceClientInstanceInformationPacket : Packet
     {
-        public uint Field0 { get; set; }                        // probably some kind of runtime instance id?
+        public uint PlayerObjectId { get; set; }                // runtime id for the player game object
         public string WorldAreaId { get; set; } = string.Empty; // id column in the WorldAreas table
         public string League { get; set; } = string.Empty;      // league name
         public uint Seed { get; set; }                          // DRLG seed
@@ -14,7 +14,7 @@
 
         protected override void SerializeData(Stream stream)
         {
-            PacketIO.WriteUInt32(stream, Field0);
+            PacketIO.WriteUInt32(stream, PlayerObjectId);
             PacketIO.WriteString(stream, WorldAreaId);
             PacketIO.WriteString(stream, League);
             PacketIO.WriteUInt32(stream, Seed);

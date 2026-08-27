@@ -9,7 +9,7 @@ namespace KiwiNet.InstanceServer.Commands
     {
         private const char CommandPrefix = '/';
 
-        private delegate string CommandHandler(InstanceClient client, ReadOnlySpan<string> args);
+        private delegate string CommandHandler(object invoker, ReadOnlySpan<string> args);
 
         private readonly Dictionary<string, CommandHandler> _commands = new(StringComparer.OrdinalIgnoreCase);
 
@@ -34,7 +34,7 @@ namespace KiwiNet.InstanceServer.Commands
             }
         }
 
-        public bool TryParseCommand(InstanceClient client, string text)
+        public bool TryParseCommand(RemotePlayer player, string text)
         {
             if (string.IsNullOrWhiteSpace(text))
                 return false;
@@ -52,14 +52,14 @@ namespace KiwiNet.InstanceServer.Commands
             if (_commands.TryGetValue(command, out CommandHandler handler) == false)
                 return false;
 
-            string output = handler.Invoke(client, args);
+            string output = handler.Invoke(player, args);
 
             if (string.IsNullOrWhiteSpace(output) == false)
             {
                 InstanceClientChatMessagePacket outputMessage = PacketFactory.Get<InstanceClientChatMessagePacket>();
                 outputMessage.Name = "KiwiNet";
                 outputMessage.Text = output;
-                client.Send(outputMessage);
+                player.Send(outputMessage);
             }
 
             return true;
