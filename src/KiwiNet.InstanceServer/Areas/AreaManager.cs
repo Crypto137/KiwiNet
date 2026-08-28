@@ -6,33 +6,55 @@ namespace KiwiNet.InstanceServer.Areas
 {
     public class AreaManager
     {
+        private const int NumWorkerThreads = 1;
+
         private static readonly Logger Logger = LogManager.CreateLogger();
 
         private readonly Dictionary<uint, Area> _areas = new();
+
+        private readonly Dictionary<uint, AreaThread> _areaThreads = new();
         private readonly PriorityQueue<Area, TimeSpan> _updateQueue = new();
 
-        private Thread _workerThread;
         private bool _isRunning;
         private uint _currentInstanceId = 0;
+        private uint _currentThreadId = 0;
 
         public void Initialize()
         {
-            _isRunning = true;
+            if (_isRunning)
+                throw new InvalidOperationException();
 
-            // TODO: multiple worker threads
-            _workerThread= new(UpdateAreas)
+            // TODO: move thread number to config
+            int numWorkerThreads = Math.Max(NumWorkerThreads, 1);
+            for (int i = 0; i < numWorkerThreads; i++)
             {
-                Name = "AreaThread",
-                IsBackground = true,
-                CurrentCulture = CultureInfo.InvariantCulture,
-                Priority = ThreadPriority.AboveNormal,
-            };
+                AreaThread thread = new(this, ++_currentThreadId);
+                _areaThreads.Add(thread.Id, thread);
+                thread.Start();
+            }
 
-            _workerThread.Start();
+            _isRunning = true;
         }
 
         public void Shutdown()
         {
+            if (_isRunning == false)
+                throw new InvalidOperationException();
+
+            // There should be no running areas by the time this gets shut down
+            lock (_updateQueue)
+            {
+                int gameCount = _updateQueue.Count;
+                if (gameCount != 0)
+                    Logger.Warn($"{gameCount} areas still need updating");
+            }
+
+            foreach (var kvp in _areaThreads)
+            {
+                kvp.Value.Stop();
+                _areaThreads.Remove(kvp.Key);
+            }
+
             _isRunning = false;
         }
 
@@ -68,34 +90,7 @@ namespace KiwiNet.InstanceServer.Areas
                 _updateQueue.Enqueue(area, area.NextUpdateTime);
         }
 
-        private void UpdateAreas()
-        {
-            while (_isRunning)
-                UpdateNextArea();
-        }
-
-        private void UpdateNextArea()
-        {
-            Area area = GetNextArea();
-
-            try
-            {
-                if (area != null)
-                {
-                    area.Update();
-                }
-                else
-                {
-                    Thread.Sleep(1);
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e.ToString());
-            }
-        }
-
-        private Area GetNextArea()
+        public Area GetAreaToUpdate()
         {
             TimeSpan now = Clock.UnixTime;
 
