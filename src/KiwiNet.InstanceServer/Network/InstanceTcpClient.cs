@@ -27,7 +27,7 @@ namespace KiwiNet.InstanceServer.Network
 
             foreach (Packet packet in packets)
             {
-                Logger.Trace($" IN < {packet.Id}");
+                //Logger.Trace($" IN < {packet.Id}");
                 ReceivePacket(packet);
             }
         }
@@ -42,7 +42,7 @@ namespace KiwiNet.InstanceServer.Network
 
         public void Send(Packet packet)
         {
-            Logger.Trace($"OUT > {packet.Id}");
+            //Logger.Trace($"OUT > {packet.Id}");
             Connection.Send(packet);
         }
 
@@ -59,6 +59,10 @@ namespace KiwiNet.InstanceServer.Network
             {
                 case PacketId.ClientInstanceLoginAttemptPacketId:
                     OnLoginAttempt(packet);
+                    break;
+
+                case PacketId.ClientInstanceHeartbeatPacketId:
+                    OnHeartbeat();
                     break;
 
                 default:
@@ -126,6 +130,20 @@ namespace KiwiNet.InstanceServer.Network
 
             Area = area;
             Area.RemotePlayerManager.AddPlayer(this);
+        }
+
+        private void OnHeartbeat()
+        {
+            Send(PacketFactory.Get<Packet>(PacketId.InstanceClientHeartbeatReplyPacketId));
+
+#if DEBUG
+            if (Area != null)
+            {
+                InstanceClientServerFrameDurationPacket serverFrameDuration = PacketFactory.Get<InstanceClientServerFrameDurationPacket>();
+                serverFrameDuration.ServerFrameTimeMS = (short)Area.LastFrameTime.TotalMilliseconds;
+                Send(serverFrameDuration);
+            }
+#endif
         }
 
         #endregion

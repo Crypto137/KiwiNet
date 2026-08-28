@@ -24,6 +24,11 @@ namespace KiwiNet.InstanceServer.Network
             Area = worldArea;
         }
 
+        public Dictionary<InstanceTcpClient, RemotePlayer>.ValueCollection.Enumerator GetEnumerator()
+        {
+            return _players.Values.GetEnumerator();
+        }
+
         public void AddPlayer(InstanceTcpClient client)
         {
             _addClientQueue.Enqueue(client);

@@ -81,8 +81,6 @@ namespace KiwiNet.InstanceServer.Areas
 
         private void DoUpdate()
         {
-            Logger.Debug($"tick: {LastFrameTime.TotalMilliseconds} ms");
-
             RemotePlayerManager.Update();
         }
     }

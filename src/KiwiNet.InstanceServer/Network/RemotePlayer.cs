@@ -107,10 +107,6 @@ namespace KiwiNet.InstanceServer.Network
                     OnChatMessage(packet);
                     break;
 
-                case PacketId.ClientInstanceHeartbeatPacketId:
-                    OnHeartbeat();
-                    break;
-
                 case PacketId.ClientInstanceSkillTargetEntityId:
                     OnSkillTargetEntity(packet);
                     break;
@@ -154,11 +150,6 @@ namespace KiwiNet.InstanceServer.Network
             reply.Name = Player.GetComponent<PlayerComponent>().Name;
             reply.Text = chatMessage.Text;
             Send(reply);
-        }
-
-        private void OnHeartbeat()
-        {
-            Send(PacketFactory.Get<Packet>(PacketId.InstanceClientHeartbeatReplyPacketId));
         }
 
         private void OnSkillTargetEntity(Packet packet)
