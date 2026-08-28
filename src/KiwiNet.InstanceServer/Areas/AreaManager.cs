@@ -1,6 +1,5 @@
 ﻿using KiwiNet.Core.Logging;
 using KiwiNet.Core.System;
-using System.Globalization;
 
 namespace KiwiNet.InstanceServer.Areas
 {
@@ -82,6 +81,11 @@ namespace KiwiNet.InstanceServer.Areas
             }
 
             return area;
+        }
+
+        public void OnAreaShutdown(Area area)
+        {
+            _areas.Remove(area.InstanceId);
         }
 
         public void EnqueueAreaToUpdate(Area area)

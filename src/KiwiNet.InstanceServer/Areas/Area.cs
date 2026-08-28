@@ -16,6 +16,7 @@ namespace KiwiNet.InstanceServer.Areas
     public class Area
     {
         public const int TargetFrameTimeMS = 33;
+        public const int InstanceLifetimeMinutes = 15;
 
         private static readonly Logger Logger = LogManager.CreateLogger();
         private static readonly TimeSpan TargetFrameTime = TimeSpan.FromMilliseconds(TargetFrameTimeMS);
@@ -38,12 +39,18 @@ namespace KiwiNet.InstanceServer.Areas
         public TimeSpan LastProcessingTime { get; private set; } = TimeSpan.Zero;
         public TimeSpan LastFrameTime { get; private set; } = TimeSpan.FromMilliseconds(TargetFrameTimeMS);
         public TimeSpan LastUpdateEndTime { get; private set; } = Clock.UnixTime;
+        public TimeSpan LastActiveTime { get; private set; } = Clock.UnixTime;
 
         public Area(AreaManager areaManager)
         {
             AreaManager = areaManager;
             GameObjectManager = new(this);
             RemotePlayerManager = new(this);
+        }
+
+        public override string ToString()
+        {
+            return $"{WorldAreaId} (InstanceId={InstanceId}, League={League}, Seed={Seed})";
         }
 
         public void Initialize(ref AreaSettings settings)
@@ -58,11 +65,17 @@ namespace KiwiNet.InstanceServer.Areas
 
         public void Shutdown()
         {
-            State = AreaState.Shutdown;
+            State = AreaState.ShuttingDown;
         }
 
         public void Update()
         {
+            if (State == AreaState.ShuttingDown)
+            {
+                DoShutdown();
+                return;
+            }
+
             TimeSpan startTime = Clock.UnixTime;
 
             DoUpdate();
@@ -77,6 +90,32 @@ namespace KiwiNet.InstanceServer.Areas
             LastProcessingTime = endTime - startTime;
             LastFrameTime = endTime - LastUpdateEndTime;
             LastUpdateEndTime = endTime;
+
+            CheckExpiration(endTime);
+        }
+
+        private void CheckExpiration(TimeSpan now)
+        {
+            if (RemotePlayerManager.PlayerCount > 0)
+            {
+                LastActiveTime = now;
+                return;
+            }
+
+            TimeSpan inactiveTime = now - LastActiveTime;
+            if (inactiveTime >= TimeSpan.FromMinutes(InstanceLifetimeMinutes))
+            {
+                Logger.Info($"Area [{this}] expired");
+                Shutdown();
+            }
+        }
+
+        private void DoShutdown()
+        {
+            // do shutdown stuff here (disconnect players, destroy things)
+            State = AreaState.Shutdown;
+            AreaManager.OnAreaShutdown(this);
+            Logger.Info($"Area [{this}] finished shutting down");
         }
 
         private void DoUpdate()
