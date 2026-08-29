@@ -35,9 +35,10 @@ namespace KiwiNet.Protocols
                     break;
 
                 case PacketId.ClientInstanceAllocatePassiveSkillPointPacketId:
+                case PacketId.ClientInstanceRequestDismissPositiveBuffPacketId:
                 case PacketId.InstanceClientOpenScreenId:
-                case PacketId.ClientInstancePartyAcceptId:  // TODO: always 0x01720000, probably custom structure
-                case PacketId.ClientInstancePartyLeaveId:   // TODO: always 0x01720000, probably custom structure
+                case PacketId.ClientInstancePartyAcceptId:
+                case PacketId.ClientInstancePartyLeaveId:
                 case PacketId.InstanceClientPartyLeftId:
                 case PacketId.InstanceClientTradeEndedId:
                     packet = new IntPacket(packetId);
@@ -67,12 +68,23 @@ namespace KiwiNet.Protocols
                     packet = new BackendErrorPacket(packetId);
                     break;
 
+                case PacketId.ClientInstancePlaceItemId:
+                case PacketId.ClientInstanceLiftSocketableId:
+                case PacketId.ClientInstancePlaceSocketableId:
+                case PacketId.ClientInstanceUnstackPacketId:
+                    packet = new ClientInstanceInventoryMovePacket(packetId);
+                    break;
+
                 case PacketId.ClientInstanceLoginAttemptPacketId:
                     packet = new ClientInstanceLoginAttemptPacket();
                     break;
 
                 case PacketId.InstanceClientLoginAttemptReplyPacketId:
                     packet = new InstanceClientLoginAttemptReplyPacket();
+                    break;
+
+                case PacketId.ClientInstanceLinkItemPacketId:
+                    packet = new ClientInstanceLinkItemPacket();
                     break;
 
                 case PacketId.ClientInstanceChatMessagePacketId:
@@ -99,6 +111,10 @@ namespace KiwiNet.Protocols
                     packet = new InstanceClientInstanceDetailsPacket();
                     break;
 
+                case PacketId.ClientInstanceLiftItemId:
+                    packet = new ClientInstanceLiftItem();
+                    break;
+
                 case PacketId.InstanceClientPassiveSkillListPacketId:
                     packet = new InstanceClientPassiveSkillListPacket();
                     break;
@@ -111,12 +127,24 @@ namespace KiwiNet.Protocols
                     packet = new InstanceClientWaypointListPacket();
                     break;
 
+                case PacketId.ClientInstanceRequestWaypointUsePacketId:
+                    packet = new ClientInstanceRequestWaypointUsePacket();
+                    break;
+
                 case PacketId.ClientInstanceChangeBoundSkillId:
                     packet = new ClientInstanceChangeBoundSkill();
                     break;
 
                 case PacketId.InstanceClientBoundSkillListId:
                     packet = new InstanceClientBoundSkillList();
+                    break;
+
+                case PacketId.ClientInstanceUseItemId:
+                    packet = new ClientInstanceUseItem();
+                    break;
+
+                case PacketId.ClientInstanceUseItemOnItemId:
+                    packet = new ClientInstanceUseItemOnItem();
                     break;
 
                 case PacketId.ClientInstanceTerrainGenerationResultId:
