@@ -13,7 +13,7 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
         HasExtraData = 1 << 2,
     }
 
-    public sealed class PositionedComponent : Component
+    public sealed class PositionedComponent : ComponentA
     {
         public const float WorldUnitsPerGridCell = 1000f / 92f; // 0x412DE9BD or 10.869565
 

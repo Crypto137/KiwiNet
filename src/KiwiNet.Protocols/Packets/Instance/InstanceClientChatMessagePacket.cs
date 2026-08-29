@@ -1,4 +1,5 @@
 ﻿using KiwiNet.Core.Extensions;
+using KiwiNet.Protocols.Packets.Common;
 
 namespace KiwiNet.Protocols.Packets.Instance
 {
@@ -6,7 +7,7 @@ namespace KiwiNet.Protocols.Packets.Instance
     {
         public string Name { get; set; } = string.Empty;
         public string Text { get; set; } = string.Empty;
-        public List<object> Items { get; } = new();
+        public List<(int, ItemData)> Items { get; } = new();
 
         public InstanceClientChatMessagePacket() : base(PacketId.InstanceClientChatMessagePacketId)
         {
@@ -19,8 +20,11 @@ namespace KiwiNet.Protocols.Packets.Instance
 
             // Error message: Tried to serialise more than 255 items in one packet
             stream.Write((byte)Items.Count);
-            if (Items.Count > 0)
-                throw new NotImplementedException();    // TODO: polymorphic data for linked items
+            foreach ((int index, ItemData item) in Items)
+            {
+                PacketIO.WriteInt32(stream, index);
+                item.Serialize(stream);
+            }
         }
     }
 }

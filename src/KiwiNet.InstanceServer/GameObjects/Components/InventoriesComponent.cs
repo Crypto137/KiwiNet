@@ -2,7 +2,7 @@
 
 namespace KiwiNet.InstanceServer.GameObjects.Components
 {
-    public sealed class InventoriesComponent : Component
+    public sealed class InventoriesComponent : ComponentA
     {
         public const int NumInventories = 37;
 

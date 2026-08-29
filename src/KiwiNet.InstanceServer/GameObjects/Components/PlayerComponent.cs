@@ -3,7 +3,7 @@ using KiwiNet.Protocols.Packets.Common;
 
 namespace KiwiNet.InstanceServer.GameObjects.Components
 {
-    public sealed class PlayerComponent : Component
+    public sealed class PlayerComponent : ComponentA
     {
         public string Name { get; set; } = string.Empty;
         public CharacterClass Class { get; set; }

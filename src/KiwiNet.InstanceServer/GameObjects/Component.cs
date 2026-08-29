@@ -2,6 +2,6 @@
 {
     public abstract class Component
     {
-        public abstract void Serialize(Stream stream);
+        public GameObject Owner { get; set; }
     }
 }

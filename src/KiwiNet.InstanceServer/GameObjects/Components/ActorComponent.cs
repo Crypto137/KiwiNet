@@ -73,7 +73,7 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
         }
     }
 
-    public sealed class ActorComponent : Component
+    public sealed class ActorComponent : ComponentA
     {
         public List<ActorStructWithExtra> DataList1 { get; } = new();
         public List<ActorStruct> DataList2 { get; } = new();

@@ -2,7 +2,7 @@
 
 namespace KiwiNet.InstanceServer.GameObjects.Components
 {
-    public sealed class AnimatedComponent : Component
+    public sealed class AnimatedComponent : ComponentA
     {
         public string AOFilePath { get; set; }
 

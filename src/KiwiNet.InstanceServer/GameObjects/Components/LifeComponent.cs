@@ -34,7 +34,7 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
         }
     }
 
-    public sealed class LifeComponent : Component
+    public sealed class LifeComponent : ComponentA
     {
         public uint Life { get; set; }
         public uint Mana { get; set; }

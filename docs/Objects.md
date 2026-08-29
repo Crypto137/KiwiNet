@@ -8,6 +8,8 @@ Objects are composed of components, which handle domain-specific functionality (
 
 ### Common
 
+#### General
+
 - Positioned
 
 - Stats
@@ -32,12 +34,6 @@ Objects are composed of components, which handle domain-specific functionality (
 
 - LimitedLifespan
 
-- Base
-
-- LocalStats
-
-- Mods
-
 - AreaTransition
 
 - Projectile
@@ -49,6 +45,34 @@ Objects are composed of components, which handle domain-specific functionality (
 - NPC
 
 - Shrine
+
+#### Item
+
+- Base
+
+- Mods
+
+- LocalStats
+
+- AttributeRequirements
+
+- Quality
+
+- Armour
+
+- Sockets
+
+- Usable
+
+- Charges
+
+- Flask
+
+- SkillGem
+
+- Quest
+
+- Weapon
 
 ### Client
 
@@ -65,5 +89,3 @@ Objects are composed of components, which handle domain-specific functionality (
 - ClientWorldItem
 
 - ClientNPC
-
-

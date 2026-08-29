@@ -34,7 +34,7 @@ namespace KiwiNet.InstanceServer.GameObjects
                     return typedComponent;
             }
 
-            T component = new();
+            T component = new() { Owner = this };
             _components.Add(component);
             return component;
         }
@@ -68,7 +68,10 @@ namespace KiwiNet.InstanceServer.GameObjects
             else
             {
                 foreach (Component component in _components)
-                    component.Serialize(stream);
+                {
+                    if (component is ComponentA componentA)
+                        componentA.Serialize(stream);
+                }
             }
         }
     }
