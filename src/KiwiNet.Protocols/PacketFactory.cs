@@ -2,6 +2,7 @@
 using KiwiNet.Protocols.Packets.Common;
 using KiwiNet.Protocols.Packets.Instance;
 using KiwiNet.Protocols.Packets.Login;
+using KiwiNet.Protocols.Packets.Patching;
 
 namespace KiwiNet.Protocols
 {
@@ -22,10 +23,15 @@ namespace KiwiNet.Protocols
 
             switch (packetId)
             {
+                case PacketId.DisconnectionId:
+                case PacketId.PatchingRequestNotesId:
                 case PacketId.ClientInstanceQuitRequestPacketId:
                 case PacketId.ClientInstanceHeartbeatPacketId:
                 case PacketId.InstanceClientHeartbeatReplyPacketId:
+                case PacketId.ClientInstanceDropItemId:
+                case PacketId.ClientInstanceRespawnRequestId:
                 case PacketId.InstanceClientYouAreDeadId:
+                case PacketId.ClientInstanceFinishedNPCChatId:
                 case PacketId.InstanceClientTradeStateChangedId:
                 case PacketId.InstanceClientAreaChangeFailedPacketId:
                 case PacketId.InstanceClientToggleMovieModeId:
@@ -44,6 +50,8 @@ namespace KiwiNet.Protocols
                     packet = new IntPacket(packetId);
                     break;
 
+                case PacketId.PatchingRequestFolderContentsId:
+                case PacketId.PatchingNotesId:
                 case PacketId.ClientInstanceAddFriendPacketId:
                 case PacketId.ClientInstanceRemoveFriendPacketId:
                 case PacketId.ClientInstanceIgnorePacketId:
@@ -68,11 +76,16 @@ namespace KiwiNet.Protocols
                     packet = new BackendErrorPacket(packetId);
                     break;
 
-                case PacketId.ClientInstancePlaceItemId:
-                case PacketId.ClientInstanceLiftSocketableId:
-                case PacketId.ClientInstancePlaceSocketableId:
-                case PacketId.ClientInstanceUnstackPacketId:
-                    packet = new ClientInstanceInventoryMovePacket(packetId);
+                case PacketId.PatchingProtocolVersionId:
+                    packet = new PatchingProtocolVersion();
+                    break;
+
+                case PacketId.PatchingProtocolStartId:
+                    packet = new PatchingProtocolStart();
+                    break;
+
+                case PacketId.PatchingFolderContentsId:
+                    packet = new PatchingFolderContents();
                     break;
 
                 case PacketId.ClientInstanceLoginAttemptPacketId:
@@ -115,12 +128,23 @@ namespace KiwiNet.Protocols
                     packet = new ClientInstanceLiftItem();
                     break;
 
+                case PacketId.ClientInstancePlaceItemId:
+                case PacketId.ClientInstanceLiftSocketableId:
+                case PacketId.ClientInstancePlaceSocketableId:
+                case PacketId.ClientInstanceUnstackPacketId:
+                    packet = new ClientInstanceInventoryMovePacket(packetId);
+                    break;
+
                 case PacketId.InstanceClientPassiveSkillListPacketId:
                     packet = new InstanceClientPassiveSkillListPacket();
                     break;
 
                 case PacketId.InstanceClientLadderPacketId:
                     packet = new InstanceClientLadderPacket();
+                    break;
+
+                case PacketId.ClientInstanceStackItemsPacketId:
+                    packet = new ClientInstanceStackItemsPacket();
                     break;
 
                 case PacketId.InstanceClientWaypointListPacketId:
@@ -151,9 +175,18 @@ namespace KiwiNet.Protocols
                     packet = new ClientInstanceTerrainGenerationResult();
                     break;
 
+                case PacketId.ClientInstanceDoNPCChatId:
+                    packet = new ClientInstanceDoNPCChat();
+                    break;
+
                 case PacketId.InstanceClientDoNPCChatId:
                 case PacketId.InstanceClientBuyItemRemovedId:
                     packet = new InstanceClientDoNPCChat(packetId);
+                    break;
+
+                case PacketId.ClientInstanceTakeNPCItemId:
+                case PacketId.ClientInstanceTakeNPCItemToSocketId:
+                    packet = new ClientInstanceTakeNPCItem(packetId);
                     break;
 
                 case PacketId.InstanceClientPortalStateId:
@@ -170,6 +203,14 @@ namespace KiwiNet.Protocols
 
                 case PacketId.InstanceClientInstanceListId:
                     packet = new InstanceClientInstanceList();
+                    break;
+
+                case PacketId.ClientInstanceChooseInstanceId:
+                    packet = new ClientInstanceChooseInstance();
+                    break;
+
+                case PacketId.ClientInstancePlaceItemInTradeId:
+                    packet = new ClientInstancePlaceItemInTrade();
                     break;
 
                 case PacketId.InstanceClientServerFrameDurationPacketId:
@@ -206,6 +247,10 @@ namespace KiwiNet.Protocols
 
                 case PacketId.LoginClientLeagueListPacketId:
                     packet = new LoginClientLeagueListPacket();
+                    break;
+
+                case PacketId.ClientLoginCreateAccountPacketId:
+                    packet = new ClientLoginCreateAccountPacket();
                     break;
 
                 default:
