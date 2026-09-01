@@ -202,6 +202,10 @@ namespace KiwiNet.InstanceServer.Network
             var objAdd = PacketFactory.Get<InstanceClientObjectAddPacket>();
             objAdd.Blob = ms.ToArray();
             Send(objAdd);
+
+            var skills = PacketFactory.Get<InstanceClientBoundSkillList>();
+            skills.MouseSkills[0] = 0x7D5F79C7;
+            Send(skills);
         }
 
         #endregion

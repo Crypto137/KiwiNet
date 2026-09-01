@@ -12,10 +12,10 @@
         protected override void SerializeData(Stream stream)
         {
             for (int i = 0; i < MouseSkills.Length; i++)
-                MouseSkills[i] = PacketIO.ReadUInt32(stream);
+                PacketIO.WriteUInt32(stream, MouseSkills[i]);
 
             for (int i = 0; i < KeyboardSkills.Length; i++)
-                KeyboardSkills[i] = PacketIO.ReadUInt32(stream);
+                PacketIO.WriteUInt32(stream, KeyboardSkills[i]);
         }
     }
 }
