@@ -4,9 +4,9 @@ using System.Text;
 
 namespace KiwiNet.Core.Network
 {
-    public static class BufferedNetworkStreamExtensions
+    public static class NetworkConnectionExtensions
     {
-        public static string ReadString(this BufferedNetworkStream stream, Encoding encoding)
+        public static string ReadString(this NetworkConnection stream, Encoding encoding)
         {
             short length = stream.Read<short>();
             if (length == 0)
@@ -21,12 +21,12 @@ namespace KiwiNet.Core.Network
             return str;
         }
 
-        public static string ReadString(this BufferedNetworkStream stream)
+        public static string ReadString(this NetworkConnection stream)
         {
             return stream.ReadString(Encoding.Unicode);
         }
 
-        public static void WriteString(this BufferedNetworkStream stream, string str, Encoding encoding)
+        public static void WriteString(this NetworkConnection stream, string str, Encoding encoding)
         {
             int length = str.Length;
             Debug.Assert(length <= short.MaxValue);
@@ -42,7 +42,7 @@ namespace KiwiNet.Core.Network
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void WriteString(this BufferedNetworkStream stream, string str)
+        public static void WriteString(this NetworkConnection stream, string str)
         {
             stream.WriteString(str, Encoding.Unicode);
         }

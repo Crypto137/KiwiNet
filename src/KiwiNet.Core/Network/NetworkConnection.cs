@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace KiwiNet.Core.Network
 {
-    public class BufferedNetworkStream
+    public class NetworkConnection
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
 
@@ -30,7 +30,7 @@ namespace KiwiNet.Core.Network
         public bool IsConnected { get => _isConnected; }
         public bool IsTruncated { get => _isTruncated; }
 
-        public BufferedNetworkStream(Socket socket)
+        public NetworkConnection(Socket socket)
         {
             _socket = socket;
             _socket.Blocking = false;
