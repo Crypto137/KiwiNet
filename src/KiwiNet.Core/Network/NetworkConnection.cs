@@ -64,7 +64,7 @@ namespace KiwiNet.Core.Network
             catch (SocketException e)
             {
                 bytesReceived = -1;
-                errorCode = e.ErrorCode;    // WSAGetLastError()
+                errorCode = e.ErrorCode;    // Replacement for WSAGetLastError()
             }
 
             if (bytesReceived == 0)
@@ -74,7 +74,7 @@ namespace KiwiNet.Core.Network
             }
             else if (bytesReceived == -1)
             {
-                if (errorCode != 10035) // WSAEWOULDBLOCK
+                if (errorCode != (int)SocketError.WouldBlock)
                 {
                     _unkFlag = false;
                     _isConnected = false;
@@ -225,7 +225,7 @@ namespace KiwiNet.Core.Network
             }
 
             // Error handling
-            if (errorCode != 10035)   // WSAEWOULDBLOCK
+            if (errorCode != (int)SocketError.WouldBlock)
             {
                 _writePosition = 0;
                 _unkFlag = false;
@@ -251,7 +251,7 @@ namespace KiwiNet.Core.Network
             }
             catch (SocketException e)
             {
-                if (e.ErrorCode != 10004)   // WSAEINTR
+                if (e.ErrorCode != (int)SocketError.Interrupted)
                     Logger.Error($"Select returned a fatal error. Error Code: {e.ErrorCode}");
             }
         }
