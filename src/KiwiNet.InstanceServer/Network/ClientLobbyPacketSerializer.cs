@@ -1,6 +1,6 @@
 ﻿using KiwiNet.Core.Network;
 using KiwiNet.Protocols;
-using KiwiNet.Protocols.Packets.Instance;
+using KiwiNet.Protocols.Instance;
 
 namespace KiwiNet.InstanceServer.Network
 {
@@ -10,18 +10,19 @@ namespace KiwiNet.InstanceServer.Network
         {
         }
 
-        protected override Packet ConstructAndDeserializePacket(PacketId packetId, NetworkConnection connection)
+        protected override Packet ConstructAndDeserializePacket(byte packetId, NetworkConnection connection)
         {
             Packet packet = null;
 
-            switch (packetId)
+            switch ((PacketId)packetId)
             {
                 case PacketId.ClientInstanceLoginAttemptPacketId:
                     packet = PacketFactory.Get<ClientInstanceLoginAttemptPacket>();
+                    packet.Id = (byte)PacketId.ClientInstanceLoginAttemptPacketId;
+                    packet.Deserialize(connection);
                     break;
             }
 
-            packet?.Deserialize(connection);
             return packet;
         }
     }

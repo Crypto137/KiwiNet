@@ -2,8 +2,8 @@
 using KiwiNet.Core.Logging;
 using KiwiNet.Core.Network;
 using KiwiNet.Protocols;
-using KiwiNet.Protocols.Packets.Common;
-using KiwiNet.Protocols.Packets.Login;
+using KiwiNet.Protocols.Common;
+using KiwiNet.Protocols.Login;
 
 namespace KiwiNet.LoginServer.Network
 {
@@ -15,14 +15,14 @@ namespace KiwiNet.LoginServer.Network
         {
         }
 
-        protected override Packet ConstructAndDeserializePacket(PacketId packetId, NetworkConnection connection)
+        protected override Packet ConstructAndDeserializePacket(byte packetId, NetworkConnection connection)
         {
             if (ConfigManager.Get<LoginServerConfig>().LogPackets)
-                Logger.Debug($" IN < {packetId}");
+                Logger.Debug($" IN < {(PacketId)packetId}");
 
             Packet packet = null;
 
-            switch (packetId)
+            switch ((PacketId)packetId)
             {
                 case PacketId.ClientLoginAuthenticatePacketId:
                     packet = PacketFactory.Get<ClientLoginAuthenticatePacket>();
@@ -33,11 +33,11 @@ namespace KiwiNet.LoginServer.Network
                     break;
 
                 case PacketId.ClientLoginRequestDeleteCharacterPacketId:
-                    packet = PacketFactory.Get<StringPacket>(packetId);
+                    packet = PacketFactory.Get<StringPacket>();
                     break;
 
                 case PacketId.ClientLoginChooseCharacterPacketId:
-                    packet = PacketFactory.Get<StringPacket>(packetId);
+                    packet = PacketFactory.Get<StringPacket>();
                     break;
 
                 case PacketId.ClientLoginRequestCreateCharacterPacketId:
@@ -45,7 +45,7 @@ namespace KiwiNet.LoginServer.Network
                     break;
 
                 case PacketId.ClientLoginRequestLeagueListPacketId:
-                    packet = PacketFactory.Get<SimplePacket>(packetId);
+                    packet = PacketFactory.Get<SimplePacket>();
                     break;
 
                 case PacketId.ClientLoginCreateAccountPacketId:
@@ -53,7 +53,12 @@ namespace KiwiNet.LoginServer.Network
                     break;
             }
 
-            packet?.Deserialize(connection);
+            if (packet != null)
+            {
+                packet.Id = packetId;
+                packet.Deserialize(connection);
+            }
+
             return packet;
         }
     }

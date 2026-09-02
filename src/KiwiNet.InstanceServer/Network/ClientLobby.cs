@@ -4,7 +4,7 @@ using KiwiNet.Core.Logging;
 using KiwiNet.Core.Network;
 using KiwiNet.InstanceServer.Areas;
 using KiwiNet.Protocols;
-using KiwiNet.Protocols.Packets.Instance;
+using KiwiNet.Protocols.Instance;
 using System.Globalization;
 
 namespace KiwiNet.InstanceServer.Network
@@ -66,7 +66,7 @@ namespace KiwiNet.InstanceServer.Network
                 return;
             }
 
-            switch (packet.Id)
+            switch ((PacketId)packet.Id)
             {
                 case PacketId.ClientInstanceLoginAttemptPacketId:
                     OnClientLoginAttempt(connection, packet);
@@ -106,6 +106,7 @@ namespace KiwiNet.InstanceServer.Network
 
             connection.Write((byte)PacketId.InstanceClientLoginAttemptReplyPacketId);
             InstanceClientLoginAttemptReplyPacket reply = PacketFactory.Get<InstanceClientLoginAttemptReplyPacket>();
+            reply.Id = (byte)PacketId.InstanceClientLoginAttemptReplyPacketId;
             reply.Field0 = 1;
             reply.Field1 = "";
             reply.Serialize(connection);

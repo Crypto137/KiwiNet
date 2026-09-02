@@ -1,4 +1,4 @@
-﻿using KiwiNet.Protocols.Packets.Login;
+﻿using KiwiNet.Protocols.Login;
 
 namespace KiwiNet.LoginServer.Leagues
 {

@@ -1,10 +1,10 @@
-﻿using KiwiNet.Core.Extensions;
+﻿using KiwiNet.Core.Network;
 using KiwiNet.Core.Utils;
 using KiwiNet.InstanceServer.GameObjects;
 using KiwiNet.InstanceServer.GameObjects.Components.Items;
 using KiwiNet.InstanceServer.Network;
 using KiwiNet.Protocols;
-using KiwiNet.Protocols.Packets.Instance;
+using KiwiNet.Protocols.Instance;
 
 namespace KiwiNet.InstanceServer.Commands.Implementations
 {
@@ -32,6 +32,7 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
             byte[] blob = stream.ToArray();
 
             InstanceClientChatMessagePacket packet = PacketFactory.Get<InstanceClientChatMessagePacket>();
+            packet.Id = (byte)PacketId.InstanceClientChatMessagePacketId;
             packet.Name = "Server";
             packet.Text = "item link test _";
             packet.Items.Add((packet.Text.IndexOf('_'), blob));

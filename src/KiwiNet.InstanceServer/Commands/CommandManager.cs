@@ -1,6 +1,7 @@
-﻿using KiwiNet.InstanceServer.Network;
+﻿using KiwiNet.Core.Network;
+using KiwiNet.InstanceServer.Network;
 using KiwiNet.Protocols;
-using KiwiNet.Protocols.Packets.Instance;
+using KiwiNet.Protocols.Instance;
 using System.Reflection;
 
 namespace KiwiNet.InstanceServer.Commands
@@ -57,6 +58,7 @@ namespace KiwiNet.InstanceServer.Commands
             if (string.IsNullOrWhiteSpace(output) == false)
             {
                 InstanceClientChatMessagePacket outputMessage = PacketFactory.Get<InstanceClientChatMessagePacket>();
+                outputMessage.Id = (byte)PacketId.InstanceClientChatMessagePacketId;
                 outputMessage.Name = "KiwiNet";
                 outputMessage.Text = output;
                 player.Send(outputMessage);

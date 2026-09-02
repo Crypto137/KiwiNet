@@ -1,7 +1,6 @@
 ﻿using KiwiNet.Core.Logging;
 using KiwiNet.LoginServer.Leagues;
-using KiwiNet.Protocols.Packets.Common;
-using KiwiNet.Protocols.Packets.Login;
+using KiwiNet.Protocols.Common;
 using System.Security.Cryptography;
 using System.Text.Json;
 

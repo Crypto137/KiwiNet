@@ -1,7 +1,7 @@
 ﻿using KiwiNet.Core.Network;
 using KiwiNet.Protocols;
-using KiwiNet.Protocols.Packets.Common;
-using KiwiNet.Protocols.Packets.Instance;
+using KiwiNet.Protocols.Common;
+using KiwiNet.Protocols.Instance;
 
 namespace KiwiNet.InstanceServer.Network
 {
@@ -11,34 +11,34 @@ namespace KiwiNet.InstanceServer.Network
         {
         }
 
-        protected override Packet ConstructAndDeserializePacket(PacketId packetId, NetworkConnection connection)
+        protected override Packet ConstructAndDeserializePacket(byte packetId, NetworkConnection connection)
         {
             Packet packet = null;
 
-            switch (packetId)
+            switch ((PacketId)packetId)
             {
                 case PacketId.ClientInstanceLinkItemPacketId:
-                    packet = PacketFactory.Get<ClientInstanceLinkItemPacket>(packetId);
+                    packet = PacketFactory.Get<ClientInstanceLinkItemPacket>();
                     break;
 
                 case PacketId.ClientInstanceChatMessagePacketId:
-                    packet = PacketFactory.Get<ClientInstanceChatMessagePacket>(packetId);
+                    packet = PacketFactory.Get<ClientInstanceChatMessagePacket>();
                     break;
 
                 case PacketId.ClientInstanceQuitRequestPacketId:
-                    packet = PacketFactory.Get<SimplePacket>(packetId);
+                    packet = PacketFactory.Get<SimplePacket>();
                     break;
 
                 case PacketId.ClientInstanceHeartbeatPacketId:
-                    packet = PacketFactory.Get<SimplePacket>(packetId);
+                    packet = PacketFactory.Get<SimplePacket>();
                     break;
 
                 case PacketId.ClientInstanceSkillTargetEntityId:
-                    packet = PacketFactory.Get<ClientInstanceSkillTargetEntity>(packetId);
+                    packet = PacketFactory.Get<ClientInstanceSkillTargetEntity>();
                     break;
 
                 case PacketId.ClientInstanceSkillTargetLocationId:
-                    packet = PacketFactory.Get<ClientInstanceSkillTargetLocation>(packetId);
+                    packet = PacketFactory.Get<ClientInstanceSkillTargetLocation>();
                     break;
 
                 case PacketId.ClientInstancePickupItemFromGroundId:
@@ -46,27 +46,27 @@ namespace KiwiNet.InstanceServer.Network
                     break;
 
                 case PacketId.ClientInstanceLiftItemId:
-                    packet = PacketFactory.Get<ClientInstanceLiftItem>(packetId);
+                    packet = PacketFactory.Get<ClientInstanceLiftItem>();
                     break;
 
                 case PacketId.ClientInstanceDropItemId:
-                    packet = PacketFactory.Get<SimplePacket>(packetId);
+                    packet = PacketFactory.Get<SimplePacket>();
                     break;
 
                 case PacketId.ClientInstancePlaceItemId:
-                    packet = PacketFactory.Get<ClientInstanceInventoryMovePacket>(packetId);
+                    packet = PacketFactory.Get<ClientInstanceInventoryMovePacket>();
                     break;
 
                 case PacketId.ClientInstanceLiftSocketableId:
-                    packet = PacketFactory.Get<ClientInstanceInventoryMovePacket>(packetId);
+                    packet = PacketFactory.Get<ClientInstanceInventoryMovePacket>();
                     break;
 
                 case PacketId.ClientInstancePlaceSocketableId:
-                    packet = PacketFactory.Get<ClientInstanceInventoryMovePacket>(packetId);
+                    packet = PacketFactory.Get<ClientInstanceInventoryMovePacket>();
                     break;
 
                 case PacketId.ClientInstanceAllocatePassiveSkillPointPacketId:
-                    packet = PacketFactory.Get<IntPacket>(packetId);
+                    packet = PacketFactory.Get<IntPacket>();
                     break;
 
                 case PacketId.ClientInstanceRequestActionPacketId:
@@ -74,39 +74,39 @@ namespace KiwiNet.InstanceServer.Network
                     break;
 
                 case PacketId.ClientInstanceStackItemsPacketId:
-                    packet = PacketFactory.Get<ClientInstanceStackItemsPacket>(packetId);
+                    packet = PacketFactory.Get<ClientInstanceStackItemsPacket>();
                     break;
 
                 case PacketId.ClientInstanceRequestDismissPositiveBuffPacketId:
-                    packet = PacketFactory.Get<IntPacket>(packetId);
+                    packet = PacketFactory.Get<IntPacket>();
                     break;
 
                 case PacketId.ClientInstanceRequestWaypointUsePacketId:
-                    packet = PacketFactory.Get<ClientInstanceRequestWaypointUsePacket>(packetId);
+                    packet = PacketFactory.Get<ClientInstanceRequestWaypointUsePacket>();
                     break;
 
                 case PacketId.ClientInstanceChangeBoundSkillId:
-                    packet = PacketFactory.Get<ClientInstanceChangeBoundSkill>(packetId);
+                    packet = PacketFactory.Get<ClientInstanceChangeBoundSkill>();
                     break;
 
                 case PacketId.ClientInstanceRespawnRequestId:
-                    packet = PacketFactory.Get<SimplePacket>(packetId);
+                    packet = PacketFactory.Get<SimplePacket>();
                     break;
 
                 case PacketId.ClientInstanceUseItemId:
-                    packet = PacketFactory.Get<ClientInstanceUseItem>(packetId);
+                    packet = PacketFactory.Get<ClientInstanceUseItem>();
                     break;
 
                 case PacketId.ClientInstanceUseItemOnItemId:
-                    packet = PacketFactory.Get<ClientInstanceUseItemOnItem>(packetId);
+                    packet = PacketFactory.Get<ClientInstanceUseItemOnItem>();
                     break;
 
                 case PacketId.ClientInstanceUnstackPacketId:
-                    packet = PacketFactory.Get<ClientInstanceInventoryMovePacket>(packetId);
+                    packet = PacketFactory.Get<ClientInstanceInventoryMovePacket>();
                     break;
 
                 case PacketId.ClientInstanceTerrainGenerationResultId:
-                    packet = PacketFactory.Get<ClientInstanceTerrainGenerationResult>(packetId);
+                    packet = PacketFactory.Get<ClientInstanceTerrainGenerationResult>();
                     break;
 
                 case PacketId.ClientInstanceToggleMovieId:
@@ -118,58 +118,58 @@ namespace KiwiNet.InstanceServer.Network
                     break;
 
                 case PacketId.ClientInstanceAddFriendPacketId:
-                    packet = PacketFactory.Get<StringPacket>(packetId);
+                    packet = PacketFactory.Get<StringPacket>();
                     break;
 
                 case PacketId.ClientInstanceRemoveFriendPacketId:
-                    packet = PacketFactory.Get<StringPacket>(packetId);
+                    packet = PacketFactory.Get<StringPacket>();
                     break;
 
                 case PacketId.ClientInstanceIgnorePacketId:
-                    packet = PacketFactory.Get<StringPacket>(packetId);
+                    packet = PacketFactory.Get<StringPacket>();
                     break;
 
                 case PacketId.ClientInstanceUnIgnorePacketId:
-                    packet = PacketFactory.Get<StringPacket>(packetId);
+                    packet = PacketFactory.Get<StringPacket>();
                     break;
 
                 case PacketId.ClientInstanceDoNPCChatId:
                     break;
 
                 case PacketId.ClientInstanceFinishedNPCChatId:
-                    packet = PacketFactory.Get<SimplePacket>(packetId);
+                    packet = PacketFactory.Get<SimplePacket>();
                     break;
 
                 case PacketId.ClientInstanceTakeNPCItemId:
-                    packet = PacketFactory.Get<ClientInstanceTakeNPCItem>(packetId);
+                    packet = PacketFactory.Get<ClientInstanceTakeNPCItem>();
                     break;
 
                 case PacketId.ClientInstanceTakeNPCItemToSocketId:
-                    packet = PacketFactory.Get<ClientInstanceTakeNPCItem>(packetId);
+                    packet = PacketFactory.Get<ClientInstanceTakeNPCItem>();
                     break;
 
                 case PacketId.ClientInstancePartyInviteId:
-                    packet = PacketFactory.Get<StringPacket>(packetId);
+                    packet = PacketFactory.Get<StringPacket>();
                     break;
 
                 case PacketId.ClientInstancePartyKickId:
-                    packet = PacketFactory.Get<StringPacket>(packetId);
+                    packet = PacketFactory.Get<StringPacket>();
                     break;
 
                 case PacketId.ClientInstancePartyAcceptId:
-                    packet = PacketFactory.Get<IntPacket>(packetId);
+                    packet = PacketFactory.Get<IntPacket>();
                     break;
 
                 case PacketId.ClientInstancePartyLeaveId:
-                    packet = PacketFactory.Get<IntPacket>(packetId);
+                    packet = PacketFactory.Get<IntPacket>();
                     break;
 
                 case PacketId.ClientInstancePartyPromoteId:
-                    packet = PacketFactory.Get<StringPacket>(packetId);
+                    packet = PacketFactory.Get<StringPacket>();
                     break;
 
                 case PacketId.ClientInstanceChooseInstanceId:
-                    packet = PacketFactory.Get<ClientInstanceChooseInstance>(packetId);
+                    packet = PacketFactory.Get<ClientInstanceChooseInstance>();
                     break;
 
                 case PacketId.ClientInstanceOpenTradeId:
@@ -181,7 +181,7 @@ namespace KiwiNet.InstanceServer.Network
                     break;
 
                 case PacketId.ClientInstancePlaceItemInTradeId:
-                    packet = PacketFactory.Get<ClientInstancePlaceItemInTrade>(packetId);
+                    packet = PacketFactory.Get<ClientInstancePlaceItemInTrade>();
                     break;
 
                 case PacketId.ClientInstanceRemoveItemFromTradeId:
@@ -197,7 +197,12 @@ namespace KiwiNet.InstanceServer.Network
                     break;
             }
 
-            packet?.Deserialize(connection);
+            if (packet != null)
+            {
+                packet.Id = packetId;
+                packet.Deserialize(connection);
+            }
+
             return packet;
         }
     }

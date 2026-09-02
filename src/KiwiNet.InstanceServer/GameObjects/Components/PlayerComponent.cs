@@ -1,5 +1,5 @@
 ﻿using KiwiNet.Protocols;
-using KiwiNet.Protocols.Packets.Common;
+using KiwiNet.Protocols.Common;
 
 namespace KiwiNet.InstanceServer.GameObjects.Components
 {

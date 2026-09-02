@@ -4,8 +4,8 @@ using KiwiNet.Core.Network;
 using KiwiNet.LoginServer.Accounts;
 using KiwiNet.LoginServer.Leagues;
 using KiwiNet.Protocols;
-using KiwiNet.Protocols.Packets.Common;
-using KiwiNet.Protocols.Packets.Login;
+using KiwiNet.Protocols.Common;
+using KiwiNet.Protocols.Login;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
@@ -58,7 +58,7 @@ namespace KiwiNet.LoginServer.Network
         public void Send(Packet packet)
         {
             if (ConfigManager.Get<LoginServerConfig>().LogPackets)
-                Logger.Debug($"OUT > {packet.Id}");
+                Logger.Debug($"OUT > {(PacketId)packet.Id}");
 
             Connection.Write((byte)packet.Id);
             packet.Serialize(Connection);
@@ -67,7 +67,8 @@ namespace KiwiNet.LoginServer.Network
 
         public void SendBackendResult(PacketId packetId, BackendError result)
         {
-            BackendErrorPacket reply = PacketFactory.Get<BackendErrorPacket>(packetId);
+            BackendErrorPacket reply = PacketFactory.Get<BackendErrorPacket>();
+            reply.Id = (byte)packetId;
             reply.Value = result;
             Send(reply);
         }
@@ -75,6 +76,7 @@ namespace KiwiNet.LoginServer.Network
         public void SendCharacterList()
         {
             LoginClientCharacterListPacket characterList = PacketFactory.Get<LoginClientCharacterListPacket>();
+            characterList.Id = (byte)PacketId.LoginClientCharacterListPacketId;
 
             if (Account != null)
             {
@@ -96,7 +98,7 @@ namespace KiwiNet.LoginServer.Network
                 return;
             }
 
-            switch (packet.Id)
+            switch ((PacketId)packet.Id)
             {
                 case PacketId.ClientLoginAuthenticatePacketId:
                     OnAuthenticate(packet);
@@ -123,7 +125,7 @@ namespace KiwiNet.LoginServer.Network
                     break;
 
                 default:
-                    Logger.Warn($"Unhandled packet [{(int)packet.Id}] {packet.Id}");
+                    Logger.Warn($"Unhandled packet [{(PacketId)packet.Id}] {packet.Id}");
                     break;
             }
         }
@@ -164,7 +166,8 @@ namespace KiwiNet.LoginServer.Network
             if (result == BackendError.Success)
                 Account = account;
 
-            LoginClientAuthenticateReplyPacket reply = new();
+            LoginClientAuthenticateReplyPacket reply = PacketFactory.Get<LoginClientAuthenticateReplyPacket>();
+            reply.Id = (byte)PacketId.LoginClientAuthenticateReplyPacketId;
             reply.Result = result;
 
             if (result == BackendError.Success)
@@ -231,6 +234,7 @@ namespace KiwiNet.LoginServer.Network
 
             Logger.Info($"Sending instance details for {chooseCharacter.Value}");
             LoginClientInstanceDetailsPacket instanceDetails = PacketFactory.Get<LoginClientInstanceDetailsPacket>();
+            instanceDetails.Id = (byte)PacketId.LoginClientInstanceDetailsPacketId;
             instanceDetails.SessionId = 0xDEADBEEF;
             instanceDetails.WorldAreaId = "1_1_1";
             instanceDetails.Entries.Add(new(config.InstanceServer, $"{config.InstanceServerPort}"));
@@ -257,6 +261,7 @@ namespace KiwiNet.LoginServer.Network
         private void OnRequestLeagueList()
         {
             LoginClientLeagueListPacket reply = PacketFactory.Get<LoginClientLeagueListPacket>();
+            reply.Id = (byte)PacketId.LoginClientLeagueListPacketId;
 
             foreach (League league in LoginServerApp.Instance.LeagueManager)
                 reply.Leagues.Add(league.GetLeagueInfo());

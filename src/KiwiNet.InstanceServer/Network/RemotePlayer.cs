@@ -9,8 +9,8 @@ using KiwiNet.InstanceServer.GameData;
 using KiwiNet.InstanceServer.GameObjects;
 using KiwiNet.InstanceServer.GameObjects.Components;
 using KiwiNet.Protocols;
-using KiwiNet.Protocols.Packets.Common;
-using KiwiNet.Protocols.Packets.Instance;
+using KiwiNet.Protocols.Common;
+using KiwiNet.Protocols.Instance;
 using System.Diagnostics;
 
 namespace KiwiNet.InstanceServer.Network
@@ -82,6 +82,7 @@ namespace KiwiNet.InstanceServer.Network
             //---
 
             InstanceClientInstanceInformationPacket instanceInfo = PacketFactory.Get<InstanceClientInstanceInformationPacket>();
+            instanceInfo.Id = (byte)PacketId.InstanceClientInstanceInformationPacketId;
             instanceInfo.PlayerObjectId = Player.Id;
             instanceInfo.WorldAreaId = Area.WorldAreaId;
             instanceInfo.League = Area.League;
@@ -97,11 +98,13 @@ namespace KiwiNet.InstanceServer.Network
             Session.WorldAreaId = areaId;
             Session.StartPosition = startOverride;
 
-            StringPacket notification = PacketFactory.Get<StringPacket>(PacketId.InstanceClientAreaChangeNotificationPacketId);
+            StringPacket notification = PacketFactory.Get<StringPacket>();
+            notification.Id = (byte)PacketId.InstanceClientAreaChangeNotificationPacketId;
             notification.Value = areaId;
             Send(notification);
 
             InstanceClientInstanceDetailsPacket instanceDetails = PacketFactory.Get<InstanceClientInstanceDetailsPacket>();
+            instanceDetails.Id = (byte)PacketId.InstanceClientInstanceDetailsPacketId;
             instanceDetails.SessionId = Session.Id;
             instanceDetails.Field1 = 0;
             instanceDetails.WorldAreaId = areaId;
@@ -123,7 +126,7 @@ namespace KiwiNet.InstanceServer.Network
                 return;
             }
 
-            switch (packet.Id)
+            switch ((PacketId)packet.Id)
             {
                 case PacketId.ClientInstanceChatMessagePacketId:
                     OnChatMessage(packet);
@@ -154,7 +157,7 @@ namespace KiwiNet.InstanceServer.Network
                     break;
 
                 default:
-                    Logger.Warn($"Unhandled packet [{(int)packet.Id}] {packet.Id}");
+                    Logger.Warn($"Unhandled packet [{(PacketId)packet.Id}] {packet.Id}");
                     break;
             }
         }
@@ -173,6 +176,7 @@ namespace KiwiNet.InstanceServer.Network
             Logger.Debug($"OnChatMessage(): {chatMessage.Text}");
 
             InstanceClientChatMessagePacket reply = PacketFactory.Get<InstanceClientChatMessagePacket>();
+            reply.Id = (byte)PacketId.InstanceClientChatMessagePacketId;
             reply.Name = Player.GetComponent<PlayerComponent>().Name;
             reply.Text = chatMessage.Text;
             Send(reply);
@@ -180,9 +184,10 @@ namespace KiwiNet.InstanceServer.Network
 
         private void OnHeartbeat()
         {
-            Send(PacketFactory.Get<Packet>(PacketId.InstanceClientHeartbeatReplyPacketId));
+            Send(PacketFactory.Get<SimplePacket>((byte)PacketId.InstanceClientHeartbeatReplyPacketId));
 #if DEBUG
             InstanceClientServerFrameDurationPacket serverFrameDuration = PacketFactory.Get<InstanceClientServerFrameDurationPacket>();
+            serverFrameDuration.Id = (byte)PacketId.InstanceClientServerFrameDurationPacketId;
             serverFrameDuration.ServerFrameTimeMS = (short)Area.LastFrameTime.TotalMilliseconds;
             Send(serverFrameDuration);
 #endif
@@ -232,14 +237,16 @@ namespace KiwiNet.InstanceServer.Network
             // this is where the server disconnects the client if the hashes don't match
             // InstanceClientForcedDisconnectionWarningPacketId -> BackendError.TerrainGenerationOutOfSync
 
+            // FIXME: pass NetworkConnection to component serialization
             using MemoryStream ms = new();
             Player.Serialize(ms);
-
-            var objAdd = PacketFactory.Get<InstanceClientObjectAddPacket>();
-            objAdd.Blob = ms.ToArray();
-            Send(objAdd);
+            byte[] blob = ms.ToArray();
+            Connection.Write((byte)GameObjectPacketId.InstanceClientObjectAdd);
+            Connection.Write(blob);
+            Connection.Flush();
 
             var skills = PacketFactory.Get<InstanceClientBoundSkillList>();
+            skills.Id = (byte)PacketId.InstanceClientBoundSkillListId;
             skills.MouseSkills[0] = 0x7D5F79C7;
             Send(skills);
         }
