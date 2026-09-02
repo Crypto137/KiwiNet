@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Common
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Common
 {
     public sealed class IntPacket : Packet
     {
@@ -8,14 +10,14 @@
         {
         }
 
-        protected override void DeserializeData(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            Value = PacketIO.ReadInt32(stream);
+            connection.Write(Value);
         }
 
-        protected override void SerializeData(Stream stream)
+        public override void Deserialize(NetworkConnection connection)
         {
-            PacketIO.WriteInt32(stream, Value);
+            Value = connection.Read<int>();
         }
     }
 }

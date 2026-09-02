@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Instance
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Instance
 {
     public sealed class ClientInstanceSkillTargetLocation : Packet
     {
@@ -17,13 +19,13 @@
             return $"GridPositionX={GridPositionX}, GridPositionY={GridPositionY}, Field2=0x{Field2:X}, Count={Count}, Flags={Flags}";
         }
 
-        protected override void DeserializeData(Stream stream)
+        public override void Deserialize(NetworkConnection connection)
         {
-            GridPositionX = PacketIO.ReadUInt32(stream);
-            GridPositionY = PacketIO.ReadUInt32(stream);
-            Field2 = PacketIO.ReadInt16(stream);
-            Count = PacketIO.ReadInt16(stream);
-            Flags = PacketIO.ReadByte(stream);
+            GridPositionX = connection.Read<uint>();
+            GridPositionY = connection.Read<uint>();
+            Field2 = connection.Read<short>();
+            Count = connection.Read<short>();
+            Flags = connection.Read<byte>();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Patching
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Patching
 {
     public sealed class PatchingProtocolVersion : Packet
     {
@@ -8,9 +10,9 @@
         {
         }
 
-        protected override void DeserializeData(Stream stream)
+        public override void Deserialize(NetworkConnection connection)
         {
-            Field0 = PacketIO.ReadByte(stream);
+            Field0 = connection.Read<byte>();
         }
     }
 }

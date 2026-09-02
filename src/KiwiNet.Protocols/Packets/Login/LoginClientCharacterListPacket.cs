@@ -1,4 +1,5 @@
-﻿using KiwiNet.Protocols.Packets.Common;
+﻿using KiwiNet.Core.Network;
+using KiwiNet.Protocols.Packets.Common;
 
 namespace KiwiNet.Protocols.Packets.Login
 {
@@ -11,14 +12,14 @@ namespace KiwiNet.Protocols.Packets.Login
         public readonly int Field4 = field4;
         public readonly CharacterClass Class = @class;
 
-        public void Serialize(Stream stream)
+        public void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteString(stream, Name);
-            PacketIO.WriteString(stream, League);
-            PacketIO.WriteByte(stream, Field2);
-            PacketIO.WriteInt32(stream, Level);
-            PacketIO.WriteInt32(stream, Field4);
-            PacketIO.WriteByte(stream, (byte)Class);
+            connection.Write(Name);
+            connection.Write(League);
+            connection.Write(Field2);
+            connection.Write(Level);
+            connection.Write(Field4);
+            connection.Write((byte)Class);
         }
     }
 
@@ -31,13 +32,12 @@ namespace KiwiNet.Protocols.Packets.Login
         {
         }
 
-        protected override void SerializeData(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteInt32(stream, Characters.Count);
+            connection.Write(Characters.Count);
             foreach (CharacterInfo character in Characters)
-                character.Serialize(stream);
-
-            PacketIO.WriteInt32(stream, Field1);
+                character.Serialize(connection);
+            connection.Write(Field1);
         }
     }
 }

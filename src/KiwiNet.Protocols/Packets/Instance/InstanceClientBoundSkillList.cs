@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Instance
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Instance
 {
     public sealed class InstanceClientBoundSkillList : Packet
     {
@@ -9,13 +11,13 @@
         {
         }
 
-        protected override void SerializeData(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            for (int i = 0; i < MouseSkills.Length; i++)
-                PacketIO.WriteUInt32(stream, MouseSkills[i]);
+            foreach (uint mouseSkill in MouseSkills)
+                connection.Write(mouseSkill);
 
-            for (int i = 0; i < KeyboardSkills.Length; i++)
-                PacketIO.WriteUInt32(stream, KeyboardSkills[i]);
+            foreach (uint keyboardSkill in KeyboardSkills)
+                connection.Write(keyboardSkill);
         }
     }
 }

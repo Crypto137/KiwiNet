@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Instance
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Instance
 {
     public sealed class ClientInstanceLoginAttemptPacket : Packet
     {
@@ -14,10 +16,10 @@
             return $"CharacterName={CharacterName}, SessionId=0x{SessionId:X}";
         }
 
-        protected override void DeserializeData(Stream stream)
+        public override void Deserialize(NetworkConnection connection)
         {
-            CharacterName = PacketIO.ReadString(stream);
-            SessionId = PacketIO.ReadUInt32(stream);
+            CharacterName = connection.ReadString();
+            SessionId = connection.Read<uint>();
         }
     }
 }

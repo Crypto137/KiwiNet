@@ -1,6 +1,6 @@
 ﻿using KiwiNet.Core.Config;
 using KiwiNet.Core.Logging;
-using KiwiNet.Core.Network.Tcp;
+using KiwiNet.Core.Network;
 using KiwiNet.InstanceServer.Areas;
 using KiwiNet.Protocols;
 using KiwiNet.Protocols.Packets.Instance;

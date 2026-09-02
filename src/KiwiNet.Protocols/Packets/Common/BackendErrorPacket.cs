@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Common
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Common
 {
     public sealed class BackendErrorPacket : Packet
     {
@@ -8,14 +10,14 @@
         {
         }
 
-        protected override void DeserializeData(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            Value = (BackendError)PacketIO.ReadByte(stream);
+            connection.Write((byte)Value);
         }
 
-        protected override void SerializeData(Stream stream)
+        public override void Deserialize(NetworkConnection connection)
         {
-            PacketIO.WriteByte(stream, (byte)Value);
+            Value = (BackendError)connection.Read<byte>();
         }
     }
 }

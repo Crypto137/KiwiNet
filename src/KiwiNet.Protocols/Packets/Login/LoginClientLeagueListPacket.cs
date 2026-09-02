@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Login
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Login
 {
     public readonly struct LeagueInfo(string name, string description, bool isHardcore)
     {
@@ -6,11 +8,11 @@
         public readonly string Description = description;
         public readonly bool IsHardcore = isHardcore;
 
-        public void Serialize(Stream stream)
+        public void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteString(stream, Name);
-            PacketIO.WriteString(stream, Description);
-            PacketIO.WriteBool(stream, IsHardcore);
+            connection.Write(Name);
+            connection.Write(Description);
+            connection.Write(IsHardcore);
         }
     }
 
@@ -22,11 +24,11 @@
         {
         }
 
-        protected override void SerializeData(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteInt32(stream, Leagues.Count);
+            connection.Write(Leagues.Count);
             foreach (LeagueInfo league in Leagues)
-                league.Serialize(stream);
+                league.Serialize(connection);
         }
     }
 }

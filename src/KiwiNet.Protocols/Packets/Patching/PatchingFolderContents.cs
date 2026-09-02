@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Patching
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Patching
 {
     public readonly struct PatchingFolderEntry
     {
@@ -7,12 +9,12 @@
         public readonly uint Field2;
         public readonly byte[] Field3;  // 32 bytes
 
-        public void Serialize(Stream stream)
+        public void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteByte(stream, Field0);
-            PacketIO.WriteString(stream, Field1);
-            PacketIO.WriteUInt32(stream, Field2);
-            stream.Write(Field3);
+            connection.Write(Field0);
+            connection.Write(Field1);
+            connection.Write(Field2);
+            connection.Write(Field3);
         }
     }
 
@@ -25,13 +27,12 @@
         {
         }
 
-        protected override void SerializeData(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteString(stream, Field0);
-
-            PacketIO.WriteInt32(stream, Entries.Count);
+            connection.Write(Field0);
+            connection.Write(Entries.Count);
             foreach (PatchingFolderEntry entry in Entries)
-                entry.Serialize(stream);
+                entry.Serialize(connection);
         }
     }
 }

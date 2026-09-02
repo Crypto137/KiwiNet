@@ -1,14 +1,12 @@
 ﻿using KiwiNet.Core.Config;
 using KiwiNet.Core.Logging;
-using KiwiNet.Core.Network.Tcp;
+using KiwiNet.Core.Network;
 
 namespace KiwiNet.LoginServer.Network
 {
     public sealed class LoginTcpServer : TcpServer
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
-
-        private readonly Dictionary<TcpClientConnection, LoginClient> _clients = new();
 
         public bool Initialize()
         {
@@ -22,29 +20,15 @@ namespace KiwiNet.LoginServer.Network
             string bindIP = config.BindIP;
             int port = config.Port;
 
-            ReceiveTimeoutMS = -1;
-
             if (Start(bindIP, port) == false)
                 return;
 
             Logger.Info($"Listening on {bindIP}:{port}...");
         }
 
-        protected override void OnClientConnected(TcpClientConnection connection)
+        protected override void OnClientConnected(NetworkConnection connection)
         {
-            Logger.Trace("Client connected");
-            _clients[connection] = (LoginClient)connection.Client;
-        }
-
-        protected override void OnClientDisconnected(TcpClientConnection connection)
-        {
-            Logger.Trace("Client disconnected");
-            _clients.Remove(connection);
-        }
-
-        protected override TcpClient CreateTcpClient()
-        {
-            return new LoginClient();
+            LoginServerApp.Instance.LoginService.OnClientConnected(connection);
         }
     }
 }

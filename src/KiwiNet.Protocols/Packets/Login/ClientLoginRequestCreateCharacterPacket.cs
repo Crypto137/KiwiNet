@@ -1,4 +1,5 @@
-﻿using KiwiNet.Protocols.Packets.Common;
+﻿using KiwiNet.Core.Network;
+using KiwiNet.Protocols.Packets.Common;
 
 namespace KiwiNet.Protocols.Packets.Login
 {
@@ -19,13 +20,13 @@ namespace KiwiNet.Protocols.Packets.Login
             return $"Name={Name}, League={League}, Field2=0x{Field2:X}, Field3=0x{Field3:X}, Class={Class}";
         }
 
-        protected override void DeserializeData(Stream stream)
+        public override void Deserialize(NetworkConnection connection)
         {
-            Name = PacketIO.ReadString(stream);
-            League = PacketIO.ReadString(stream);
-            Field2 = PacketIO.ReadUInt32(stream);
-            Field3 = PacketIO.ReadUInt32(stream);
-            Class = (CharacterClass)PacketIO.ReadUInt32(stream);
+            Name = connection.ReadString();
+            League = connection.ReadString();
+            Field2 = connection.Read<uint>();
+            Field3 = connection.Read<uint>();
+            Class = (CharacterClass)connection.Read<uint>();
         }
     }
 }

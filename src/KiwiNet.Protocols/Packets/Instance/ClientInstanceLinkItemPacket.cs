@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Instance
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Instance
 {
     public sealed class ClientInstanceLinkItemPacket : Packet
     {
@@ -10,11 +12,11 @@
         {
         }
 
-        protected override void DeserializeData(Stream stream)
+        public override void Deserialize(NetworkConnection connection)
         {
-            Field0 = PacketIO.ReadUInt32(stream);
-            Field1 = PacketIO.ReadByte(stream);
-            Field2 = PacketIO.ReadUInt32(stream);
+            Field0 = connection.Read<uint>();
+            Field1 = connection.Read<byte>();
+            Field2 = connection.Read<uint>();
         }
     }
 }

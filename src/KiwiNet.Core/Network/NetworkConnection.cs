@@ -41,6 +41,13 @@ namespace KiwiNet.Core.Network
             _isConnected = true;
         }
 
+        public void Disconnect()
+        {
+            _socket.Disconnect(false);
+            _isActive = false;
+            _isConnected = false;
+        }
+
         public void Receive()
         {
             if (_isConnected == false)
@@ -95,9 +102,7 @@ namespace KiwiNet.Core.Network
 
             if (count >= BufferSize)
             {
-                _socket.Disconnect(false);
-                _isActive = false;
-                _isConnected = false;
+                Disconnect();
                 return;
             }
 
@@ -160,15 +165,13 @@ namespace KiwiNet.Core.Network
                 return _lastConfirmedReadPosition - _receivePosition - 1;
         }
 
-        public void Write(Span<byte> source)
+        public void Write(ReadOnlySpan<byte> source)
         {
             int count = source.Length;
 
             if (count > BufferSize)
             {
-                _socket.Disconnect(false);
-                _isActive = false;
-                _isConnected = false;
+                Disconnect();
                 return;
             }
 
@@ -265,9 +268,7 @@ namespace KiwiNet.Core.Network
                 if (e.ErrorCode != (int)SocketError.Interrupted)
                 {
                     Logger.Error($"Select returned a fatal error. Error Code: {e.ErrorCode}");
-                    _socket.Disconnect(false);
-                    _isActive = false;
-                    _isConnected = false;
+                    Disconnect();
                 }
             }
         }

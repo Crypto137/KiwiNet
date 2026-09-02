@@ -1,4 +1,5 @@
-﻿
+﻿using KiwiNet.Core.Network;
+
 namespace KiwiNet.Protocols.Packets.Instance
 {
     public readonly struct PortalStateEntry(uint field0, uint field1, string field2)
@@ -7,11 +8,11 @@ namespace KiwiNet.Protocols.Packets.Instance
         public readonly uint Field1 = field1;
         public readonly string Field2 = field2;
 
-        public void Serialize(Stream stream)
+        public void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteUInt32(stream, Field0);
-            PacketIO.WriteUInt32(stream, Field1);
-            PacketIO.WriteString(stream, Field2);
+            connection.Write(Field0);
+            connection.Write(Field1);
+            connection.Write(Field2);
         }
     }
 
@@ -23,11 +24,11 @@ namespace KiwiNet.Protocols.Packets.Instance
         {
         }
 
-        protected override void SerializeData(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteByte(stream, (byte)Entries.Count);
+            connection.Write((byte)Entries.Count);
             foreach (PortalStateEntry entry in Entries)
-                entry.Serialize(stream);
+                entry.Serialize(connection);
         }
     }
 }

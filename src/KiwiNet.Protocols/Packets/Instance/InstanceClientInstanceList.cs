@@ -1,4 +1,7 @@
-﻿namespace KiwiNet.Protocols.Packets.Instance
+﻿using KiwiNet.Core.Network;
+using System.Runtime.InteropServices;
+
+namespace KiwiNet.Protocols.Packets.Instance
 {
     public readonly struct InstanceListEntry(ulong field0, uint field1, List<string> field2)
     {
@@ -6,14 +9,13 @@
         public readonly uint Field1 = field1;
         public readonly List<string> Field2 = field2;
 
-        public void Serialize(Stream stream)
+        public void Serialize(NetworkConnection connection)
         {
-            stream.Write(BitConverter.GetBytes(Field0));    // 8 bytes, no endianness swap?
-            PacketIO.WriteUInt32(stream, Field1);
-
-            PacketIO.WriteByte(stream, (byte)Field2.Count);
+            connection.Write(MemoryMarshal.AsBytes([Field0]));  // 8 bytes, no endianness swap
+            connection.Write(Field1);
+            connection.Write((byte)Field2.Count);
             foreach (string str in Field2)
-                PacketIO.WriteString(stream, str);
+                connection.Write(str);
         }
     }
 
@@ -26,13 +28,12 @@
         {
         }
 
-        protected override void SerializeData(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteString(stream, Field0);
-
-            PacketIO.WriteByte(stream, (byte)Entries.Count);
+            connection.Write(Field0);
+            connection.Write((byte)Entries.Count);
             foreach (InstanceListEntry entry in Entries)
-                entry.Serialize(stream);
+                entry.Serialize(connection);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Login
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Login
 {
     public sealed class ClientLoginAuthenticatePacket : Packet
     {
@@ -15,11 +17,11 @@
             return $"Field0=0x{Field0:X2}, Email={Email}, PasswordHash={Convert.ToHexString(PasswordHash)}";
         }
 
-        protected override void DeserializeData(Stream stream)
+        public override void Deserialize(NetworkConnection connection)
         {
-            Field0 = PacketIO.ReadUInt32(stream);
-            Email = PacketIO.ReadString(stream);
-            stream.Read(PasswordHash);
+            Field0 = connection.Read<uint>();
+            Email = connection.ReadString();
+            connection.Read(PasswordHash);
         }
     }
 }

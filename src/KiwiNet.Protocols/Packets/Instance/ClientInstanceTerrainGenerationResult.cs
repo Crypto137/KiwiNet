@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Instance
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Instance
 {
     public sealed class ClientInstanceTerrainGenerationResult : Packet
     {
@@ -14,10 +16,10 @@
             return $"TileHash={TileHash}, DoodadHash={DoodadHash}";
         }
 
-        protected override void DeserializeData(Stream stream)
+        public override void Deserialize(NetworkConnection connection)
         {
-            TileHash = PacketIO.ReadUInt32(stream);
-            DoodadHash = PacketIO.ReadUInt32(stream);
+            TileHash = connection.Read<uint>();
+            DoodadHash = connection.Read<uint>();
         }
     }
 }

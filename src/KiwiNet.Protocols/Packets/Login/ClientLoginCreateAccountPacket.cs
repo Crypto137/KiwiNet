@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Login
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Login
 {
     public sealed class ClientLoginCreateAccountPacket : Packet
     {
@@ -10,11 +12,11 @@
         {
         }
 
-        protected override void DeserializeData(Stream stream)
+        public override void Deserialize(NetworkConnection connection)
         {
-            Field0 = PacketIO.ReadString(stream);
-            Field1 = PacketIO.ReadString(stream);
-            stream.Read(Field2);
+            Field0 = connection.ReadString();
+            Field1 = connection.ReadString();
+            connection.Read(Field2);
         }
     }
 }

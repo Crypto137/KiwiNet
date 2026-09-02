@@ -44,7 +44,7 @@ namespace KiwiNet.Protocols
         /// </returns>
         public static bool DeserializePacket(NetworkConnection connection, List<PacketSerializer> serializers)
         {
-            PacketId packetId = connection.Read<PacketId>();
+            PacketId packetId = (PacketId)connection.Read<byte>();
             if (connection.IsTruncated)
             {
                 connection.CancelRead();

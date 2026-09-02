@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Instance
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Instance
 {
     public sealed class InstanceClientObjectAddPacket : Packet
     {
@@ -8,9 +10,9 @@
         {
         }
 
-        protected override void SerializeData(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            stream.Write(Blob.Span);
+            connection.Write(Blob.Span);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using KiwiNet.Protocols.Packets.Common;
+﻿using KiwiNet.Core.Network;
+using KiwiNet.Protocols.Packets.Common;
 
 namespace KiwiNet.Protocols.Packets.Login
 {
@@ -12,14 +13,13 @@ namespace KiwiNet.Protocols.Packets.Login
         {
         }
 
-        protected override void SerializeData(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteUInt32(stream, SessionId);
-            PacketIO.WriteString(stream, WorldAreaId);
-
-            PacketIO.WriteByte(stream, (byte)Entries.Count);
+            connection.Write(SessionId);
+            connection.Write(WorldAreaId);
+            connection.Write((byte)Entries.Count);
             foreach (InstanceDetailsEntry entry in Entries)
-                entry.Serialize(stream);
+                entry.Serialize(connection);
         }
     }
 }

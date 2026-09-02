@@ -1,14 +1,17 @@
-﻿namespace KiwiNet.Protocols.Packets.Common
+﻿using KiwiNet.Core.Network;
+using System.Text;
+
+namespace KiwiNet.Protocols.Packets.Common
 {
-    public readonly struct InstanceDetailsEntry(string hostname, string port)
+    public readonly struct InstanceDetailsEntry(string host, string port)
     {
-        public readonly string Hostname = hostname;
+        public readonly string Host = host;
         public readonly string Port = port;
 
-        public void Serialize(Stream stream)
+        public void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteStringAscii(stream, Hostname);
-            PacketIO.WriteStringAscii(stream, Port);
+            connection.Write(Host, Encoding.ASCII);
+            connection.Write(Port, Encoding.ASCII);
         }
     }
 }

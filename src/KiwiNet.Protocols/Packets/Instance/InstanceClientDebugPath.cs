@@ -1,4 +1,5 @@
 ﻿using KiwiNet.Core.Math;
+using KiwiNet.Core.Network;
 
 namespace KiwiNet.Protocols.Packets.Instance
 {
@@ -10,13 +11,13 @@ namespace KiwiNet.Protocols.Packets.Instance
         {
         }
 
-        protected override void SerializeData(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteByte(stream, (byte)Points.Count);
+            connection.Write((byte)Points.Count);
             foreach (Vector2Int point in Points)
             {
-                PacketIO.WriteInt32(stream, point.X);
-                PacketIO.WriteInt32(stream, point.Y);
+                connection.Write(point.X);
+                connection.Write(point.Y);
             }
         }
     }

@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Instance
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Instance
 {
     public sealed class InstanceClientDoNPCChat : Packet
     {
@@ -9,10 +11,10 @@
         {
         }
 
-        protected override void SerializeData(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteUInt32(stream, Field0);
-            PacketIO.WriteByte(stream, Field1);
+            connection.Write(Field0);
+            connection.Write(Field1);
         }
     }
 }

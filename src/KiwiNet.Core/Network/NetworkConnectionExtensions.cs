@@ -13,33 +13,36 @@ namespace KiwiNet.Core.Network
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void WriteBool(this NetworkConnection connection, bool value)
+        public static void Write(this NetworkConnection connection, bool value)
         {
             connection.Write((byte)(value ? 1 : 0));
         }
 
-        public static string ReadString(this NetworkConnection connection, Encoding encoding)
+        public static string ReadString(this NetworkConnection connection)
         {
             short length = connection.Read<short>();
             if (length == 0)
                 return string.Empty;
 
-            // The game doesn't seem to use variable length encoding such as UTF-8,
-            // so we don't need to worry about our buffer being too large.
-            int numBytes = encoding.GetMaxByteCount(length);
-            Span<byte> buffer = stackalloc byte[numBytes];
+            Span<byte> buffer = stackalloc byte[length * 2];
             connection.Read(buffer);
             string str = Encoding.Unicode.GetString(buffer);
             return str;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static string ReadString(this NetworkConnection connection)
+        public static string ReadStringAscii(this NetworkConnection connection)
         {
-            return connection.ReadString(Encoding.Unicode);
+            short length = connection.Read<short>();
+            if (length == 0)
+                return string.Empty;
+
+            Span<byte> buffer = stackalloc byte[length];
+            connection.Read(buffer);
+            string str = Encoding.ASCII.GetString(buffer);
+            return str;
         }
 
-        public static void WriteString(this NetworkConnection connection, string str, Encoding encoding)
+        public static void Write(this NetworkConnection connection, string str, Encoding encoding)
         {
             int length = str.Length;
             Debug.Assert(length <= short.MaxValue);
@@ -54,10 +57,9 @@ namespace KiwiNet.Core.Network
             connection.Write(buffer);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void WriteString(this NetworkConnection connection, string str)
+        public static void Write(this NetworkConnection connection, string str)
         {
-            connection.WriteString(str, Encoding.Unicode);
+            connection.Write(str, Encoding.Unicode);
         }
     }
 }

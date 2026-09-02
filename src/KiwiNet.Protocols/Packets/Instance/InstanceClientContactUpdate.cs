@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Instance
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Instance
 {
     public sealed class InstanceClientContactUpdate : Packet
     {
@@ -12,13 +14,13 @@
         {
         }
 
-        protected override void SerializeData(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteUInt32(stream, Field0);
-            PacketIO.WriteByte(stream, Field1);
-            PacketIO.WriteString(stream, Field2);
-            PacketIO.WriteUInt32(stream, Field3);
-            PacketIO.WriteByte(stream, Field4);
+            connection.Write(Field0);
+            connection.Write(Field1);
+            connection.Write(Field2);
+            connection.Write(Field3);
+            connection.Write(Field4);
         }
     }
 }

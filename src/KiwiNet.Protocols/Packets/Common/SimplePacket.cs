@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Common
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Common
 {
     /// <summary>
     /// Represents a packet with no data outside of its id.
@@ -9,11 +11,11 @@
         {
         }
 
-        protected override void DeserializeData(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
         }
 
-        protected override void SerializeData(Stream stream)
+        public override void Deserialize(NetworkConnection connection)
         {
         }
     }

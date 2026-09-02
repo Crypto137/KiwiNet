@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Login
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Login
 {
     public sealed class ClientLoginRequestPasswordChangePacket : Packet
     {
@@ -14,10 +16,10 @@
             return $"OldPasswordHash={Convert.ToHexString(OldPasswordHash)}, NewPasswordHash={Convert.ToHexString(NewPasswordHash)}";
         }
 
-        protected override void DeserializeData(Stream stream)
+        public override void Deserialize(NetworkConnection connection)
         {
-            stream.Read(OldPasswordHash);
-            stream.Read(NewPasswordHash);
+            connection.Read(OldPasswordHash);
+            connection.Read(NewPasswordHash);
         }
     }
 }

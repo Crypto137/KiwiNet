@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Instance
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Instance
 {
     public sealed class ClientInstanceChangeBoundSkill : Packet
     {
@@ -14,10 +16,10 @@
             return $"Slot={Slot}, Skill=0x{Skill:X8}";
         }
 
-        protected override void DeserializeData(Stream stream)
+        public override void Deserialize(NetworkConnection connection)
         {
-            Slot = PacketIO.ReadByte(stream);
-            Skill = PacketIO.ReadUInt32(stream);
+            Slot = connection.Read<byte>();
+            Skill = connection.Read<uint>();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿
+﻿using KiwiNet.Core.Network;
+
 namespace KiwiNet.Protocols.Packets.Instance
 {
     public sealed class InstanceClientWaypointListPacket : Packet
@@ -10,13 +11,12 @@ namespace KiwiNet.Protocols.Packets.Instance
         {
         }
 
-        protected override void SerializeData(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteUInt32(stream, Field0);
-
-            PacketIO.WriteInt32(stream, Field1.Count);
+            connection.Write(Field0);
+            connection.Write(Field1.Count);
             foreach (byte b in Field1)
-                PacketIO.WriteByte(stream, b);
+                connection.Write(b);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Patching
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Patching
 {
     public sealed class PatchingProtocolStart : Packet
     {
@@ -9,10 +11,10 @@
         {
         }
 
-        protected override void SerializeData(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            stream.Write(Field0);
-            PacketIO.WriteString(stream, Field1);
+            connection.Write(Field0);
+            connection.Write(Field1);
         }
     }
 }

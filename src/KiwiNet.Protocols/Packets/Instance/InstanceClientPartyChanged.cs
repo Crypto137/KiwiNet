@@ -1,14 +1,16 @@
-﻿namespace KiwiNet.Protocols.Packets.Instance
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Instance
 {
     public readonly struct PartyChangedEntry(string field0, byte field1)
     {
         public readonly string Field0 = field0;
         public readonly byte Field1 = field1;
 
-        public void Serialize(Stream stream)
+        public void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteString(stream, Field0);
-            PacketIO.WriteByte(stream, Field1);
+            connection.Write(Field0);
+            connection.Write(Field1);
         }
     }
 
@@ -21,13 +23,12 @@
         {
         }
 
-        protected override void SerializeData(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteUInt32(stream, Field0);
-
-            PacketIO.WriteByte(stream, (byte)Entries.Count);
+            connection.Write(Field0);
+            connection.Write((byte)Entries.Count);
             foreach (PartyChangedEntry entry in Entries)
-                entry.Serialize(stream);
+                entry.Serialize(connection);
         }
     }
 }

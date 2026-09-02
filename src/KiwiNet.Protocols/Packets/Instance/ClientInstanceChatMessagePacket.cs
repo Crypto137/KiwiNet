@@ -1,23 +1,26 @@
-﻿namespace KiwiNet.Protocols.Packets.Instance
+﻿using KiwiNet.Core.Network;
+using KiwiNet.Protocols.Packets.Common;
+
+namespace KiwiNet.Protocols.Packets.Instance
 {
     public sealed class ClientInstanceChatMessagePacket : Packet
     {
         public string Text { get; set; } = string.Empty;
-        public List<object> Items { get; } = new();
+        public List<uint> Items { get; } = new();
 
         public ClientInstanceChatMessagePacket() : base(PacketId.ClientInstanceChatMessagePacketId)
         {
         }
 
-        protected override void DeserializeData(Stream stream)
+        public override void Deserialize(NetworkConnection connection)
         {
-            Text = PacketIO.ReadString(stream);
+            Text = connection.ReadString();
 
-            int numItems = PacketIO.ReadByte(stream);
+            byte numItems = connection.Read<byte>();
             for (int i = 0; i < numItems; i++)
             {
-                // TODO: polymorphic data for linked items
-                return;
+                uint item = connection.Read<uint>();
+                Items.Add(item);
             }
         }
     }

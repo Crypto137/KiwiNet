@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Instance
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Instance
 {
     public readonly struct LadderEntry(string field0, uint field1, uint field2)
     {
@@ -6,11 +8,11 @@
         public readonly uint Field1 = field1;
         public readonly uint Field2 = field2;
 
-        public void Serialize(Stream stream)
+        public void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteString(stream, Field0);
-            PacketIO.WriteUInt32(stream, Field1);
-            PacketIO.WriteUInt32(stream, Field2);
+            connection.Write(Field0);
+            connection.Write(Field1);
+            connection.Write(Field2);
         }
     }
 
@@ -22,11 +24,11 @@
         {
         }
 
-        protected override void SerializeData(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteInt32(stream, Entries.Count);
+            connection.Write(Entries.Count);
             foreach (LadderEntry entry in Entries)
-                entry.Serialize(stream);
+                entry.Serialize(connection);
         }
     }
 }

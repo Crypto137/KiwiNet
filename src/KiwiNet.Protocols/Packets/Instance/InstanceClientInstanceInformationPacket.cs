@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Instance
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Instance
 {
     public sealed class InstanceClientInstanceInformationPacket : Packet
     {
@@ -12,16 +14,15 @@
         {
         }
 
-        protected override void SerializeData(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteUInt32(stream, PlayerObjectId);
-            PacketIO.WriteString(stream, WorldAreaId);
-            PacketIO.WriteString(stream, League);
-            PacketIO.WriteUInt32(stream, Seed);
-
-            PacketIO.WriteInt16(stream, (short)Field4.Count);
+            connection.Write(PlayerObjectId);
+            connection.Write(WorldAreaId);
+            connection.Write(League);
+            connection.Write(Seed);
+            connection.Write((short)Field4.Count);
             foreach (uint value in Field4)
-                PacketIO.WriteUInt32(stream, value);
+                connection.Write(value);
         }
     }
 }

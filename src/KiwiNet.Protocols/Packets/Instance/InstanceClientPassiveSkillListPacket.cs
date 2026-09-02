@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.Protocols.Packets.Instance
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.Protocols.Packets.Instance
 {
     public sealed class InstanceClientPassiveSkillListPacket : Packet
     {
@@ -8,11 +10,11 @@
         {
         }
 
-        protected override void SerializeData(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteInt32(stream, PassiveSkills.Count);
+            connection.Write(PassiveSkills.Count);
             foreach (uint passiveSkill in PassiveSkills)
-                PacketIO.WriteUInt32(stream, passiveSkill);
+                connection.Write(passiveSkill);
         }
     }
 }

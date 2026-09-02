@@ -1,6 +1,6 @@
 ﻿using KiwiNet.Core.Config;
 using KiwiNet.Core.Logging;
-using KiwiNet.Core.Network.Tcp;
+using KiwiNet.Core.Network;
 
 namespace KiwiNet.InstanceServer.Network
 {
