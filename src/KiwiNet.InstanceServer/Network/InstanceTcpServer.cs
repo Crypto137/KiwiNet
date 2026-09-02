@@ -8,8 +8,6 @@ namespace KiwiNet.InstanceServer.Network
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
 
-        private readonly Dictionary<TcpClientConnection, InstanceTcpClient> _clients = new();
-
         public bool Initialize()
         {
             Run();
@@ -22,31 +20,15 @@ namespace KiwiNet.InstanceServer.Network
             string bindIP = config.BindIP;
             int port = config.Port;
 
-            ReceiveTimeoutMS = -1;
-
             if (Start(bindIP, port) == false)
                 return;
 
             Logger.Info($"Listening on {bindIP}:{port}...");
         }
 
-        protected override void OnClientConnected(TcpClientConnection connection)
+        protected override void OnClientConnected(NetworkConnection connection)
         {
-            Logger.Trace("Client connected");
-            _clients[connection] = (InstanceTcpClient)connection.Client;
-        }
-
-        protected override void OnClientDisconnected(TcpClientConnection connection)
-        {
-            Logger.Trace("Client disconnected");
-            _clients.Remove(connection, out InstanceTcpClient client);
-
-            client.OnDisconnected();
-        }
-
-        protected override TcpClient CreateTcpClient()
-        {
-            return new InstanceTcpClient();
+            InstanceServerApp.Instance.ClientLobby.OnClientConnected(connection);
         }
     }
 }

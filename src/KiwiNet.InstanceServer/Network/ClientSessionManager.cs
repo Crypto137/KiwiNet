@@ -1,4 +1,6 @@
-﻿namespace KiwiNet.InstanceServer.Network
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.InstanceServer.Network
 {
     public class ClientSessionManager
     {
@@ -15,10 +17,20 @@
             return session;
         }
 
+        public ClientSession GetSessionForConnection(NetworkConnection connection)
+        {
+            foreach (ClientSession session in _sessions.Values)
+            {
+                if (session.Connection == connection)
+                    return session;
+            }
+
+            return null;
+        }
+
         public void RemoveSession(uint sessionId)
         {
             _sessions.Remove(sessionId, out ClientSession session);
-            session?.CurrentClient?.Disconnect();
         }
     }
 }

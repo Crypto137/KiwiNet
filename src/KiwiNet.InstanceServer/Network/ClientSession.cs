@@ -1,4 +1,5 @@
 ﻿using KiwiNet.Core.Math;
+using KiwiNet.Core.Network;
 
 namespace KiwiNet.InstanceServer.Network
 {
@@ -9,6 +10,6 @@ namespace KiwiNet.InstanceServer.Network
         public string WorldAreaId { get; set; }
         public Vector2Int StartPosition { get; set; }
 
-        public InstanceTcpClient CurrentClient { get; set; }
+        public NetworkConnection Connection { get; set; }
     }
 }

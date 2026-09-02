@@ -11,6 +11,11 @@ namespace KiwiNet.Protocols
             Id = id;
         }
 
+        public override string ToString()
+        {
+            return Id.ToString();
+        }
+
         public void Dispose()
         {
             // TODO: pooling?

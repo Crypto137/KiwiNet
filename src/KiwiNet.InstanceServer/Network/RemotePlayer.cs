@@ -1,6 +1,7 @@
 ﻿using KiwiNet.Core.Config;
 using KiwiNet.Core.Logging;
 using KiwiNet.Core.Math;
+using KiwiNet.Core.Network;
 using KiwiNet.Core.Utils;
 using KiwiNet.InstanceServer.Areas;
 using KiwiNet.InstanceServer.Commands;
@@ -10,28 +11,42 @@ using KiwiNet.InstanceServer.GameObjects.Components;
 using KiwiNet.Protocols;
 using KiwiNet.Protocols.Packets.Common;
 using KiwiNet.Protocols.Packets.Instance;
+using System.Diagnostics;
 
 namespace KiwiNet.InstanceServer.Network
 {
-    public class RemotePlayer
+    public class RemotePlayer : IPacketHandler
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
 
-        private readonly InstanceTcpClient _client;
+        private readonly List<PacketSerializer> _packetSerializers;
 
         public Area Area { get; }
+        public NetworkConnection Connection { get; }
+        public ClientSession Session { get; }
 
         public GameObject Player { get; private set; }
 
-        public RemotePlayer(Area area, InstanceTcpClient client)
+        public RemotePlayer(Area area, NetworkConnection connection, ClientSession session)
         {
+            _packetSerializers = new() { new ClientGamePacketSerializer(this) };
+
             Area = area;
-            _client = client;
+            Connection = connection;
+            Session = session;
+        }
+
+        public void Receive()
+        {
+            Connection.Receive();
+            PacketSerializer.DeserializeAllPackets(Connection, _packetSerializers);
         }
 
         public void Send(Packet packet)
         {
-            _client.Send(packet);
+            Connection.Write((byte)packet.Id);
+            packet.Serialize(Connection);
+            Connection.Flush();
         }
 
         public void Load()
@@ -45,7 +60,7 @@ namespace KiwiNet.InstanceServer.Network
             {
                 Template = HashUtility.MurmurHash2(config.CharacterTemplate),
                 Id = 0x1,
-                GridPosition = _client.Session.StartPosition,
+                GridPosition = Session.StartPosition,
             };
 
             // component order is strict for serialization
@@ -54,7 +69,7 @@ namespace KiwiNet.InstanceServer.Network
             Player.GetOrCreateComponent<AnimatedComponent>();
 
             PlayerComponent playerComponent = Player.GetOrCreateComponent<PlayerComponent>();
-            playerComponent.Name = _client.Session.CharacterName;
+            playerComponent.Name = Session.CharacterName;
             if (Area.WorldAreaId == "1_1_1")
             {
                 Player.GetComponent<PositionedComponent>().Rotation = 3.14f;
@@ -79,17 +94,15 @@ namespace KiwiNet.InstanceServer.Network
             if (WorldAreaTable.IsValidAreaId(areaId) == false)
                 return false;
 
-            ClientSession session = _client.Session;
-
-            session.WorldAreaId = areaId;
-            session.StartPosition = startOverride;
+            Session.WorldAreaId = areaId;
+            Session.StartPosition = startOverride;
 
             StringPacket notification = PacketFactory.Get<StringPacket>(PacketId.InstanceClientAreaChangeNotificationPacketId);
             notification.Value = areaId;
             Send(notification);
 
             InstanceClientInstanceDetailsPacket instanceDetails = PacketFactory.Get<InstanceClientInstanceDetailsPacket>();
-            instanceDetails.SessionId = session.Id;
+            instanceDetails.SessionId = Session.Id;
             instanceDetails.Field1 = 0;
             instanceDetails.WorldAreaId = areaId;
             instanceDetails.Entries.Add(new("localhost", "6112"));
@@ -99,12 +112,25 @@ namespace KiwiNet.InstanceServer.Network
 
         #region Message Handling
 
-        public void ReceivePacket(Packet packet)
+        public void HandlePacket(NetworkConnection connection, Packet packet)
         {
+            Debug.Assert(connection == Connection);
+
+            if (packet == null)
+            {
+                Connection.Disconnect();
+                Area.RemotePlayerManager.RemovePlayer(Connection);
+                return;
+            }
+
             switch (packet.Id)
             {
                 case PacketId.ClientInstanceChatMessagePacketId:
                     OnChatMessage(packet);
+                    break;
+
+                case PacketId.ClientInstanceHeartbeatPacketId:
+                    OnHeartbeat();
                     break;
 
                 case PacketId.ClientInstanceSkillTargetEntityId:
@@ -150,6 +176,16 @@ namespace KiwiNet.InstanceServer.Network
             reply.Name = Player.GetComponent<PlayerComponent>().Name;
             reply.Text = chatMessage.Text;
             Send(reply);
+        }
+
+        private void OnHeartbeat()
+        {
+            Send(PacketFactory.Get<Packet>(PacketId.InstanceClientHeartbeatReplyPacketId));
+#if DEBUG
+            InstanceClientServerFrameDurationPacket serverFrameDuration = PacketFactory.Get<InstanceClientServerFrameDurationPacket>();
+            serverFrameDuration.ServerFrameTimeMS = (short)Area.LastFrameTime.TotalMilliseconds;
+            Send(serverFrameDuration);
+#endif
         }
 
         private void OnSkillTargetEntity(Packet packet)

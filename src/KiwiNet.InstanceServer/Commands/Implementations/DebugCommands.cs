@@ -26,7 +26,7 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
             ];
 
             using MemoryStream stream = new();
-            stream.Write(HashUtility.MurmurHash2("Metadata/Items/Weapons/OneHandWeapons/OneHandSwords/OneHandSword1"));
+            PacketIO.WriteUInt32(stream, HashUtility.MurmurHash2("Metadata/Items/Weapons/OneHandWeapons/OneHandSwords/OneHandSword1"));
             foreach (ComponentB component in components)
                 component.Serialize(stream);
             byte[] blob = stream.ToArray();

@@ -1,7 +1,7 @@
 ﻿using KiwiNet.Core.Collections;
 using KiwiNet.Core.Logging;
+using KiwiNet.Core.Network;
 using KiwiNet.InstanceServer.Areas;
-using KiwiNet.Protocols;
 
 namespace KiwiNet.InstanceServer.Network
 {
@@ -9,11 +9,10 @@ namespace KiwiNet.InstanceServer.Network
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
 
-        private readonly Dictionary<InstanceTcpClient, RemotePlayer> _players = new();
+        private readonly Dictionary<NetworkConnection, RemotePlayer> _players = new();
 
-        private readonly DoubleBufferQueue<InstanceTcpClient> _addClientQueue = new();
-        private readonly DoubleBufferQueue<InstanceTcpClient> _removeClientQueue = new();
-        private readonly DoubleBufferQueue<(InstanceTcpClient, Packet)> _packetQueue = new();
+        private readonly DoubleBufferQueue<NetworkConnection> _addClientQueue = new();
+        private readonly DoubleBufferQueue<NetworkConnection> _removeClientQueue = new();
 
         public Area Area { get; }
 
@@ -24,24 +23,19 @@ namespace KiwiNet.InstanceServer.Network
             Area = worldArea;
         }
 
-        public Dictionary<InstanceTcpClient, RemotePlayer>.ValueCollection.Enumerator GetEnumerator()
+        public Dictionary<NetworkConnection, RemotePlayer>.ValueCollection.Enumerator GetEnumerator()
         {
             return _players.Values.GetEnumerator();
         }
 
-        public void AddPlayer(InstanceTcpClient client)
+        public void AddPlayer(NetworkConnection connection)
         {
-            _addClientQueue.Enqueue(client);
+            _addClientQueue.Enqueue(connection);
         }
 
-        public void RemovePlayer(InstanceTcpClient client)
+        public void RemovePlayer(NetworkConnection connection)
         {
-            _removeClientQueue.Enqueue(client);
-        }
-
-        public void ReceivePacket(InstanceTcpClient client, Packet packet)
-        {
-            _packetQueue.Enqueue((client, packet));
+            _removeClientQueue.Enqueue(connection);
         }
 
         public void Update()
@@ -49,33 +43,28 @@ namespace KiwiNet.InstanceServer.Network
             _removeClientQueue.Swap();
             while (_removeClientQueue.CurrentCount > 0)
             {
-                InstanceTcpClient removedClient = _removeClientQueue.Dequeue();
-                _players.Remove(removedClient);
+                NetworkConnection connection = _removeClientQueue.Dequeue();
+                _players.Remove(connection, out RemotePlayer player);
+                ClientSession session = player.Session;
+                if (session.Connection == connection)
+                    InstanceServerApp.Instance.ClientSessionManager.RemoveSession(session.Id);
+                Logger.Debug($"Removed player from area [{Area}]");
             }
 
             _addClientQueue.Swap();
             while (_addClientQueue.CurrentCount > 0)
             {
-                InstanceTcpClient addedClient = _addClientQueue.Dequeue();
-                RemotePlayer player = new(Area, addedClient);
-                _players.Add(addedClient, player);
+                NetworkConnection connection = _addClientQueue.Dequeue();
+                ClientSession session = InstanceServerApp.Instance.ClientSessionManager.GetSessionForConnection(connection); // FIXME
+                RemotePlayer player = new(Area, connection, session);
+                _players.Add(connection, player);
+                Logger.Debug($"Added player to area [{Area}]");
 
                 player.Load();
             }
 
-            _packetQueue.Swap();
-            while (_packetQueue.CurrentCount > 0)
-            {
-                (InstanceTcpClient client, Packet packet) = _packetQueue.Dequeue();
-
-                if (_players.TryGetValue(client, out RemotePlayer player) == false)
-                {
-                    Logger.Warn($"No player to receive packet!");
-                    continue;
-                }
-
-                player.ReceivePacket(packet);
-            }
+            foreach (RemotePlayer player in _players.Values)
+                player.Receive();
         }
     }
 }

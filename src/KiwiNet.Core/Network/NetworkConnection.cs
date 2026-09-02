@@ -35,6 +35,7 @@ namespace KiwiNet.Core.Network
         public NetworkConnection(Socket socket)
         {
             _socket = socket;
+            _socket.NoDelay = true;
             _socket.Blocking = false;
 
             _isActive = true;

@@ -27,6 +27,7 @@ namespace KiwiNet.InstanceServer
     {
         public AreaManager AreaManager { get; } = new();
         public ClientSessionManager ClientSessionManager { get; } = new();
+        public ClientLobby ClientLobby { get; } = new();
         public InstanceTcpServer TcpServer { get; } = new();
 
         public static InstanceServerApp Instance { get; } = new();
@@ -41,12 +42,14 @@ namespace KiwiNet.InstanceServer
                 _ = WinMM.TimeBeginPeriod(1);
 
             AreaManager.Initialize();
-            return TcpServer.Initialize();
+            return ClientLobby.Initialize() &&
+                   TcpServer.Initialize();
         }
 
         protected override void DisposeSystems()
         {
             TcpServer.Shutdown();
+            ClientLobby.Shutdown();
             AreaManager.Shutdown();
 
             // Technically this isn't really needed, but MS docs say we should call it.
