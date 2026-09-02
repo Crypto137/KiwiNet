@@ -1,4 +1,5 @@
 ﻿using KiwiNet.Core.Logging;
+using System.Diagnostics;
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -14,9 +15,10 @@ namespace KiwiNet.Core.Network
 
         private readonly Socket _socket;
 
-        private bool _unkFlag;
+        private bool _isActive;
         private bool _isConnected;
         private bool _isTruncated;
+        private bool _throwIfWouldBlock;
 
         private readonly byte[] _writeBuffer = new byte[BufferSize];
         private int _writePosition;
@@ -26,7 +28,7 @@ namespace KiwiNet.Core.Network
         private int _lastConfirmedReadPosition;
         private int _receivePosition;
 
-        public bool UnkFlag { get => _unkFlag; }
+        public bool IsActive { get => _isActive; }
         public bool IsConnected { get => _isConnected; }
         public bool IsTruncated { get => _isTruncated; }
 
@@ -35,7 +37,7 @@ namespace KiwiNet.Core.Network
             _socket = socket;
             _socket.Blocking = false;
 
-            _unkFlag = true;
+            _isActive = true;
             _isConnected = true;
         }
 
@@ -44,12 +46,7 @@ namespace KiwiNet.Core.Network
             if (_isConnected == false)
                 return;
 
-            int length;
-            if (_lastConfirmedReadPosition <= _receivePosition)
-                length = BufferSize - _receivePosition - (_lastConfirmedReadPosition == 0 ? 1 : 0);
-            else
-                length = _lastConfirmedReadPosition - _receivePosition - 1;
-
+            int length = GetAvailableReceiveCapacity();
             if (length == 0)
                 goto End;
 
@@ -76,7 +73,7 @@ namespace KiwiNet.Core.Network
             {
                 if (errorCode != (int)SocketError.WouldBlock)
                 {
-                    _unkFlag = false;
+                    _isActive = false;
                     _isConnected = false;
                 }
 
@@ -99,7 +96,7 @@ namespace KiwiNet.Core.Network
             if (count >= BufferSize)
             {
                 _socket.Disconnect(false);
-                _unkFlag = false;
+                _isActive = false;
                 _isConnected = false;
                 return;
             }
@@ -136,6 +133,8 @@ namespace KiwiNet.Core.Network
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public T Read<T>() where T: unmanaged
         {
+            Debug.Assert(typeof(T).IsPrimitive);
+
             Span<byte> bytes = stackalloc byte[Unsafe.SizeOf<T>()];
             Read(bytes);
             bytes.Reverse();    // BE -> LE
@@ -153,16 +152,12 @@ namespace KiwiNet.Core.Network
             _isTruncated = false;
         }
 
-        public int GetAvailableReadCapacity()
+        public int GetAvailableReceiveCapacity()
         {
-            int capacity;
-
             if (_lastConfirmedReadPosition <= _receivePosition)
-                capacity = BufferSize - _receivePosition - (_lastConfirmedReadPosition == 0 ? 1 : 0);
+                return BufferSize - _receivePosition - (_lastConfirmedReadPosition == 0 ? 1 : 0);
             else
-                capacity = _lastConfirmedReadPosition - _receivePosition - 1;
-
-            return capacity;
+                return _lastConfirmedReadPosition - _receivePosition - 1;
         }
 
         public void Write(Span<byte> source)
@@ -172,7 +167,7 @@ namespace KiwiNet.Core.Network
             if (count > BufferSize)
             {
                 _socket.Disconnect(false);
-                _unkFlag = false;
+                _isActive = false;
                 _isConnected = false;
                 return;
             }
@@ -187,6 +182,8 @@ namespace KiwiNet.Core.Network
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Write<T>(T value) where T: unmanaged
         {
+            Debug.Assert(typeof(T).IsPrimitive);
+
             int count = Unsafe.SizeOf<T>();
 
             // No BufferSize Check for primitive type writes, same as the client.
@@ -200,7 +197,16 @@ namespace KiwiNet.Core.Network
             _writePosition += count;
         }
 
-        public void Flush()
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Write(byte value)
+        {
+            if (_writePosition + 1 > BufferSize)
+                Flush();
+
+            _writeBuffer[_writePosition++] = value;
+        }
+
+        public void Flush(bool arg = true)
         {
             if (_writePosition == 0)
                 return;
@@ -228,7 +234,7 @@ namespace KiwiNet.Core.Network
             if (errorCode != (int)SocketError.WouldBlock)
             {
                 _writePosition = 0;
-                _unkFlag = false;
+                _isActive = false;
                 return;
             }
 
@@ -239,20 +245,30 @@ namespace KiwiNet.Core.Network
                 _writePosition -= totalBytesSent;
             }
 
-            // TODO: flag argument?
+            if (arg == false)
+            {
+                // TODO: more stuff here?
+                return;
+            }
 
-            // TODO: throw Network::OperationWouldBlock if bool at 0x57 is set?
+            if (_throwIfWouldBlock)
+                throw new Exception("Network::OperationWouldBlock");
 
             // Not sure if this part is correct (or even reachable)
             try
             {
                 Socket[] sockets = [_socket];
-                Socket.Select(sockets, null, null, 0);
+                Socket.Select(null, sockets, null, 0);
             }
             catch (SocketException e)
             {
                 if (e.ErrorCode != (int)SocketError.Interrupted)
+                {
                     Logger.Error($"Select returned a fatal error. Error Code: {e.ErrorCode}");
+                    _socket.Disconnect(false);
+                    _isActive = false;
+                    _isConnected = false;
+                }
             }
         }
     }

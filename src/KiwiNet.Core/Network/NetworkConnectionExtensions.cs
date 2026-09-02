@@ -6,9 +6,21 @@ namespace KiwiNet.Core.Network
 {
     public static class NetworkConnectionExtensions
     {
-        public static string ReadString(this NetworkConnection stream, Encoding encoding)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool ReadBool(this NetworkConnection connection)
         {
-            short length = stream.Read<short>();
+            return connection.Read<byte>() != 0;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void WriteBool(this NetworkConnection connection, bool value)
+        {
+            connection.Write((byte)(value ? 1 : 0));
+        }
+
+        public static string ReadString(this NetworkConnection connection, Encoding encoding)
+        {
+            short length = connection.Read<short>();
             if (length == 0)
                 return string.Empty;
 
@@ -16,21 +28,22 @@ namespace KiwiNet.Core.Network
             // so we don't need to worry about our buffer being too large.
             int numBytes = encoding.GetMaxByteCount(length);
             Span<byte> buffer = stackalloc byte[numBytes];
-            stream.Read(buffer);
+            connection.Read(buffer);
             string str = Encoding.Unicode.GetString(buffer);
             return str;
         }
 
-        public static string ReadString(this NetworkConnection stream)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static string ReadString(this NetworkConnection connection)
         {
-            return stream.ReadString(Encoding.Unicode);
+            return connection.ReadString(Encoding.Unicode);
         }
 
-        public static void WriteString(this NetworkConnection stream, string str, Encoding encoding)
+        public static void WriteString(this NetworkConnection connection, string str, Encoding encoding)
         {
             int length = str.Length;
             Debug.Assert(length <= short.MaxValue);
-            stream.Write((short)length);
+            connection.Write((short)length);
 
             if (length == 0)
                 return;
@@ -38,13 +51,13 @@ namespace KiwiNet.Core.Network
             int numBytes = encoding.GetByteCount(str);
             Span<byte> buffer = stackalloc byte[numBytes];
             encoding.GetBytes(str, buffer);
-            stream.Write(buffer);
+            connection.Write(buffer);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void WriteString(this NetworkConnection stream, string str)
+        public static void WriteString(this NetworkConnection connection, string str)
         {
-            stream.WriteString(str, Encoding.Unicode);
+            connection.WriteString(str, Encoding.Unicode);
         }
     }
 }

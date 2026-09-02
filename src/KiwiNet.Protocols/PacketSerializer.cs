@@ -67,7 +67,7 @@ namespace KiwiNet.Protocols
 
             if (connection.IsTruncated)
             {
-                if (connection.GetAvailableReadCapacity() == 0)
+                if (connection.GetAvailableReceiveCapacity() == 0)
                     throw new Exception("Received a packet that is too large to deserialize");
 
                 connection.CancelRead();
