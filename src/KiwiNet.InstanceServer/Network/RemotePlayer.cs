@@ -44,8 +44,15 @@ namespace KiwiNet.InstanceServer.Network
 
         public void Send(Packet packet)
         {
-            Connection.Write((byte)packet.Id);
+            Connection.Write(packet.Id);
             packet.Serialize(Connection);
+            Connection.Flush();
+        }
+
+        public void SendObjectAdd(GameObject gameObject)
+        {
+            Connection.Write((byte)GameObjectPacketId.InstanceClientObjectAdd);
+            gameObject.Serialize(Connection);
             Connection.Flush();
         }
 
@@ -237,13 +244,8 @@ namespace KiwiNet.InstanceServer.Network
             // this is where the server disconnects the client if the hashes don't match
             // InstanceClientForcedDisconnectionWarningPacketId -> BackendError.TerrainGenerationOutOfSync
 
-            // FIXME: pass NetworkConnection to component serialization
-            using MemoryStream ms = new();
-            Player.Serialize(ms);
-            byte[] blob = ms.ToArray();
-            Connection.Write((byte)GameObjectPacketId.InstanceClientObjectAdd);
-            Connection.Write(blob);
-            Connection.Flush();
+            // TODO: some kind of area of interest system
+            SendObjectAdd(Player);
 
             var skills = PacketFactory.Get<InstanceClientBoundSkillList>();
             skills.Id = (byte)PacketId.InstanceClientBoundSkillListId;

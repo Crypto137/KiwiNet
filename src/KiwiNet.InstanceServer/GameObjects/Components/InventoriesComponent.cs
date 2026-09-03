@@ -1,4 +1,4 @@
-﻿using KiwiNet.Protocols;
+﻿using KiwiNet.Core.Network;
 
 namespace KiwiNet.InstanceServer.GameObjects.Components
 {
@@ -6,12 +6,12 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
     {
         public const int NumInventories = 37;
 
-        public override void Serialize(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
             for (int i = 0; i < NumInventories; i++)
             {
                 int count = 0;
-                PacketIO.WriteInt32(stream, count);
+                connection.Write(count);
                 for (int j = 0; j < count; j++)
                 {
                     // TODO: item serialization for each inventory

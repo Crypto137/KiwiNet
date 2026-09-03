@@ -1,5 +1,5 @@
 ﻿using KiwiNet.Core.Math;
-using KiwiNet.Protocols;
+using KiwiNet.Core.Network;
 using System.Numerics;
 
 namespace KiwiNet.InstanceServer.GameObjects.Components
@@ -28,7 +28,7 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
         public bool Flag232 { get; set; }
         public bool Flag235 { get; set; }
 
-        public override void Serialize(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
             PositionedSerializeFlags flags = PositionedSerializeFlags.None;
 
@@ -41,16 +41,16 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
             if (Dword64 != int.MaxValue)
                 flags |= PositionedSerializeFlags.HasExtraData;
 
-            PacketIO.WriteInt32(stream, GridPosition.X);
-            PacketIO.WriteInt32(stream, GridPosition.Y);
-            PacketIO.WriteFloat(stream, Rotation);
-            PacketIO.WriteByte(stream, (byte)flags);
-            PacketIO.WriteFloat(stream, Scale);
+            connection.Write(GridPosition.X);
+            connection.Write(GridPosition.Y);
+            connection.Write(Rotation);
+            connection.Write((byte)flags);
+            connection.Write(Scale);
 
             if (flags.HasFlag(PositionedSerializeFlags.HasExtraData))
             {
-                PacketIO.WriteInt32(stream, Dword64);
-                PacketIO.WriteFloat(stream, HeightOffset);
+                connection.Write(Dword64);
+                connection.Write(HeightOffset);
             }
 
             // the client converts integer grid cell to float coordinates here

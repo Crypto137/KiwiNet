@@ -1,4 +1,4 @@
-﻿using KiwiNet.Protocols;
+﻿using KiwiNet.Core.Network;
 using KiwiNet.Protocols.Common;
 
 namespace KiwiNet.InstanceServer.GameObjects.Components
@@ -13,19 +13,19 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
         public uint Unknown { get; set; }
         public byte[] QuestStates { get; } = new byte[16];   // 4 bits per quest? 32 quests total?
 
-        public override void Serialize(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteString(stream, Name);
-            PacketIO.WriteByte(stream, (byte)Class);
-            PacketIO.WriteUInt32(stream, Experience);
+            connection.Write(Name);
+            connection.Write((byte)Class);
+            connection.Write(Experience);
 
-            PacketIO.WriteInt32(stream, PassiveSkills.Count);
+            connection.Write(PassiveSkills.Count);
             foreach (uint passiveSkill in PassiveSkills)
-                PacketIO.WriteUInt32(stream, passiveSkill);
+                connection.Write(passiveSkill);
 
-            PacketIO.WriteBool(stream, IsWashedUp);
-            PacketIO.WriteUInt32(stream, Unknown);
-            stream.Write(QuestStates);
+            connection.Write(IsWashedUp);
+            connection.Write(Unknown);
+            connection.Write(QuestStates);
         }
     }
 }

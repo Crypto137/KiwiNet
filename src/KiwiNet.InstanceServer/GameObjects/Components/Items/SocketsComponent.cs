@@ -1,16 +1,16 @@
-﻿using KiwiNet.Protocols;
+﻿using KiwiNet.Core.Network;
 
 namespace KiwiNet.InstanceServer.GameObjects.Components.Items
 {
     public sealed class SocketsComponent : ComponentB
     {
-        public override void Serialize(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteInt32(stream, 0); // item count? socketed items?
-            PacketIO.WriteInt32(stream, 0); // count for vector of bytes, probably socket colors/links?
+            connection.Write(0);    // item count? socketed items?
+            connection.Write(0);    // count for vector of bytes, probably socket colors/links?
         }
 
-        public override void Deserialize(Stream stream)
+        public override void Deserialize(NetworkConnection connection)
         {
             throw new NotImplementedException();
         }

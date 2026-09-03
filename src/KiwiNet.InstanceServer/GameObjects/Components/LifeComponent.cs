@@ -1,4 +1,4 @@
-﻿using KiwiNet.Protocols;
+﻿using KiwiNet.Core.Network;
 
 namespace KiwiNet.InstanceServer.GameObjects.Components
 {
@@ -15,22 +15,22 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
 
         public readonly List<uint> Values2;
 
-        public void Serialize(Stream stream)
+        public void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteUInt32(stream, Field0);
+            connection.Write(Field0);
 
-            PacketIO.WriteUInt32(stream, Field1);
-            PacketIO.WriteUInt32(stream, Field2);
-            PacketIO.WriteUInt32(stream, Field3);
-            PacketIO.WriteUInt32(stream, Field4);
-            PacketIO.WriteUInt32(stream, Field5);
+            connection.Write(Field1);
+            connection.Write(Field2);
+            connection.Write(Field3);
+            connection.Write(Field4);
+            connection.Write(Field5);
             // count for the first list of values appears to be not serialized and taken from buff definition
             foreach (uint value in Values1)
-                PacketIO.WriteUInt32(stream, value);
+                connection.Write(value);
 
-            PacketIO.WriteInt32(stream, Values2.Count);
+            connection.Write(Values2.Count);
             foreach (uint value in Values2)
-                PacketIO.WriteUInt32(stream, value);
+                connection.Write(value);
         }
     }
 
@@ -45,18 +45,18 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
 
         public List<BuffEntry> Buffs { get; } = new();
 
-        public override void Serialize(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteUInt32(stream, Life);
-            PacketIO.WriteUInt32(stream, Mana);
-            PacketIO.WriteUInt32(stream, EnergyShield);
-            PacketIO.WriteUInt32(stream, UnkField);
+            connection.Write(Life);
+            connection.Write(Mana);
+            connection.Write(EnergyShield);
+            connection.Write(UnkField);
 
-            PacketIO.WriteByte(stream, UnkFlag);
+            connection.Write(UnkFlag);
 
-            PacketIO.WriteInt32(stream, Buffs.Count);
+            connection.Write(Buffs.Count);
             foreach (BuffEntry buff in Buffs)
-                buff.Serialize(stream);
+                buff.Serialize(connection);
         }
     }
 }

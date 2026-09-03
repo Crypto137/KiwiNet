@@ -1,4 +1,4 @@
-﻿using KiwiNet.Protocols;
+﻿using KiwiNet.Core.Network;
 
 namespace KiwiNet.InstanceServer.GameObjects.Components
 {
@@ -6,13 +6,13 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
     {
         public string AOFilePath { get; set; }
 
-        public override void Serialize(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
             // Optional .ao file path, probably an override
             bool hasFilePath = AOFilePath != null;
-            PacketIO.WriteBool(stream, hasFilePath);
+            connection.Write(hasFilePath);
             if (hasFilePath)
-                PacketIO.WriteString(stream, AOFilePath);
+                connection.Write(AOFilePath);
         }
     }
 }

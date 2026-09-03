@@ -1,15 +1,15 @@
-﻿using KiwiNet.Protocols;
+﻿using KiwiNet.Core.Network;
 
 namespace KiwiNet.InstanceServer.GameObjects.Components.Items
 {
     public sealed class BaseComponent : ComponentB
     {
-        public override void Serialize(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteByte(stream, 0);
+            connection.Write((byte)0);
         }
 
-        public override void Deserialize(Stream stream)
+        public override void Deserialize(NetworkConnection connection)
         {
             throw new NotImplementedException();
         }

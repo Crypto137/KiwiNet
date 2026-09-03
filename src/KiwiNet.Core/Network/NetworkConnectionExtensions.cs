@@ -61,5 +61,10 @@ namespace KiwiNet.Core.Network
         {
             connection.Write(str, Encoding.Unicode);
         }
+
+        public static void Write<T>(this NetworkConnection connection, T obj) where T: INetworkSerializable
+        {
+            obj.Serialize(connection);
+        }
     }
 }

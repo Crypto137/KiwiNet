@@ -1,4 +1,4 @@
-﻿using KiwiNet.Protocols;
+﻿using KiwiNet.Core.Network;
 
 namespace KiwiNet.InstanceServer.GameObjects.Components.Items
 {
@@ -6,14 +6,14 @@ namespace KiwiNet.InstanceServer.GameObjects.Components.Items
     {
         public int QualityPct { get; set; }
 
-        public override void Serialize(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteInt32(stream, QualityPct);
+            connection.Write(QualityPct);
         }
 
-        public override void Deserialize(Stream stream)
+        public override void Deserialize(NetworkConnection connection)
         {
-            QualityPct = PacketIO.ReadInt32(stream);
+            QualityPct = connection.Read<int>();
         }
     }
 }

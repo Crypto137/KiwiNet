@@ -1,4 +1,4 @@
-﻿using KiwiNet.Protocols;
+﻿using KiwiNet.Core.Network;
 
 namespace KiwiNet.InstanceServer.GameObjects.Components.Items
 {
@@ -14,19 +14,19 @@ namespace KiwiNet.InstanceServer.GameObjects.Components.Items
     {
         public Rarity Rarity { get; set; }
 
-        public override void Serialize(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteUInt32(stream, 0);
-            PacketIO.WriteUInt32(stream, 0);
-            PacketIO.WriteUInt32(stream, 0);
-            PacketIO.WriteUInt32(stream, 0);
+            connection.Write(0);
+            connection.Write(0);
+            connection.Write(0);
+            connection.Write(0);
 
-            PacketIO.WriteByte(stream, (byte)Rarity);
-            PacketIO.WriteUInt32(stream, 0);
-            PacketIO.WriteUInt32(stream, 0);
+            connection.Write((byte)Rarity);
+            connection.Write(0);
+            connection.Write(0);
         }
 
-        public override void Deserialize(Stream stream)
+        public override void Deserialize(NetworkConnection connection)
         {
             throw new NotImplementedException();
         }

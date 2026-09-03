@@ -1,4 +1,4 @@
-﻿using KiwiNet.Protocols;
+﻿using KiwiNet.Core.Network;
 
 namespace KiwiNet.InstanceServer.GameObjects.Components
 {
@@ -25,12 +25,12 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
         public readonly byte Field3;
         public readonly uint Field4;
 
-        public void Serialize(Stream stream)
+        public void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteInt16(stream, Field0);
-            PacketIO.WriteByte(stream, Field3); // <- byte at offset 3 is written before 2, this is client-accurate
-            PacketIO.WriteByte(stream, Field2);
-            PacketIO.WriteUInt32(stream, Field4);
+            connection.Write(Field0);
+            connection.Write(Field3); // <- byte at offset 3 is written before 2, this is client-accurate
+            connection.Write(Field2);
+            connection.Write(Field4);
         }
     }
 
@@ -46,30 +46,30 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
         public readonly ActorStruct ActorStruct24;
         public readonly byte Field32;
 
-        public void Serialize(Stream stream)
+        public void Serialize(NetworkConnection connection)
         {
-            ActorStruct24.Serialize(stream);
-            PacketIO.WriteInt16(stream, (short)Flags);
+            ActorStruct24.Serialize(connection);
+            connection.Write((short)Flags);
 
             if (Flags.HasFlag(ActorStructExtraFlags.Flag9))
-                PacketIO.WriteInt16(stream, Field20);
+                connection.Write(Field20);
 
             if (Flags.HasFlag(ActorStructExtraFlags.Flag1))
-                PacketIO.WriteUInt32(stream, Field4);
+                connection.Write(Field4);
 
             if (Flags.HasFlag(ActorStructExtraFlags.Flag2))
-                PacketIO.WriteUInt32(stream, Field8);
+                connection.Write(Field8);
 
             if (Flags.HasFlag(ActorStructExtraFlags.Flag3))
-                PacketIO.WriteUInt32(stream, Field12);
+                connection.Write(Field12);
 
             if (Flags.HasFlag(ActorStructExtraFlags.Flag4))
-                PacketIO.WriteUInt32(stream, Field16);
+                connection.Write(Field16);
 
             if (Flags.HasFlag(ActorStructExtraFlags.Flag0))
-                PacketIO.WriteUInt32(stream, Field0);
+                connection.Write(Field0);
 
-            PacketIO.WriteByte(stream, Field32);
+            connection.Write(Field32);
         }
     }
 
@@ -78,35 +78,35 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
         public List<ActorStructWithExtra> DataList1 { get; } = new();
         public List<ActorStruct> DataList2 { get; } = new();
 
-        public override void Serialize(Stream stream)
+        public override void Serialize(NetworkConnection connection)
         {
             // call Serialize2 (aka probably SerializeUpdate)
-            PacketIO.WriteByte(stream, 0);
+            connection.Write((byte)0);
 
             bool hasSkillData = false;
-            PacketIO.WriteBool(stream, hasSkillData);
+            connection.Write(hasSkillData);
             if (hasSkillData)
             {
-                PacketIO.WriteUInt32(stream, 300);  // grid x
-                PacketIO.WriteUInt32(stream, 540);  // grid y
+                connection.Write(300);  // grid x
+                connection.Write(540);  // grid y
 
-                PacketIO.WriteInt16(stream, unchecked((short)0xB188));  // skill id
-                PacketIO.WriteInt16(stream, 0);
-                PacketIO.WriteUInt32(stream, 0);    // can be 0
-                PacketIO.WriteUInt32(stream, 0);
-                PacketIO.WriteUInt32(stream, 0);
-                PacketIO.WriteByte(stream, 0);
+                connection.Write((ushort)0xB188);   // skill hash
+                connection.Write((ushort)0);
+                connection.Write(0);                // can be 0
+                connection.Write(0);
+                connection.Write(0);
+                connection.Write((byte)0);
             }
 
-            PacketIO.WriteByte(stream, 0);
+            connection.Write((byte)0);
 
-            PacketIO.WriteInt16(stream, (short)DataList1.Count);
+            connection.Write((short)DataList1.Count);
             foreach (ActorStructWithExtra entry in DataList1)
-                entry.Serialize(stream);
+                entry.Serialize(connection);
 
-            PacketIO.WriteInt16(stream, (short)DataList2.Count);
+            connection.Write((short)DataList2.Count);
             foreach (ActorStruct entry in DataList2)
-                entry.Serialize(stream);
+                entry.Serialize(connection);
         }
     }
 }

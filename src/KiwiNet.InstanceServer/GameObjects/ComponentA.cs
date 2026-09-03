@@ -1,14 +1,16 @@
-﻿namespace KiwiNet.InstanceServer.GameObjects
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.InstanceServer.GameObjects
 {
     // temp name, used for components that have serialize update methods
     public abstract class ComponentA : Component
     {
-        public abstract void Serialize(Stream stream);
+        public abstract void Serialize(NetworkConnection connection);
 
-        //public abstract void Deserialize(Stream stream);
+        //public abstract void Deserialize(NetworkConnection connection);
 
-        //public abstract void SerializeUpdate(Stream stream);
+        //public abstract void SerializeUpdate(NetworkConnection connection);
 
-        //public abstract void DeserializeUpdate(Stream stream);
+        //public abstract void DeserializeUpdate(NetworkConnection connection);
     }
 }

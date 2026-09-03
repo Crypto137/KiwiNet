@@ -1,12 +1,12 @@
-﻿using KiwiNet.InstanceServer.GameObjects.Components;
-using KiwiNet.Protocols;
+﻿using KiwiNet.Core.Network;
+using KiwiNet.InstanceServer.GameObjects.Components;
 
 namespace KiwiNet.InstanceServer.GameObjects
 {
     public class GameObject
     {
         private readonly List<KeyValuePair<uint, uint>> _unkList = new();
-        private readonly List<Component> _components = new();
+        private readonly List<ComponentA> _components = new();
 
         public uint Template { get; private set; }
         public uint Id { get; private set; }
@@ -25,7 +25,7 @@ namespace KiwiNet.InstanceServer.GameObjects
             positioned.Rotation = settings.Rotation;
         }
 
-        public T GetOrCreateComponent<T>() where T: Component, new()
+        public T GetOrCreateComponent<T>() where T: ComponentA, new()
         {
             // temp stuff just for testing now
             foreach (Component existingComponent in _components)
@@ -50,28 +50,25 @@ namespace KiwiNet.InstanceServer.GameObjects
             return null;
         }
 
-        public void Serialize(Stream stream)
+        public void Serialize(NetworkConnection connection)
         {
-            PacketIO.WriteUInt32(stream, Template);
-            PacketIO.WriteUInt32(stream, Id);   // probably id, not sure yet
+            connection.Write(Template);
+            connection.Write(Id);
 
-            PacketIO.WriteByte(stream, (byte)_unkList.Count);
+            connection.Write((byte)_unkList.Count);
 
             if (_unkList.Count > 0)
             {
                 foreach (var kvp in _unkList)
                 {
-                    PacketIO.WriteUInt32(stream, kvp.Key);
-                    PacketIO.WriteUInt32(stream, kvp.Value);
+                    connection.Write(kvp.Key);
+                    connection.Write(kvp.Value);
                 }
             }
             else
             {
-                foreach (Component component in _components)
-                {
-                    if (component is ComponentA componentA)
-                        componentA.Serialize(stream);
-                }
+                foreach (ComponentA component in _components)
+                    component.Serialize(connection);
             }
         }
     }

@@ -17,25 +17,17 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
         {
             RemotePlayer player = (RemotePlayer)invoker;
 
-            List<ComponentB> components =
-            [
-                new BaseComponent(),
-                new ModsComponent(),
-                new QualityComponent(),
-                new SocketsComponent(),
-            ];
-
-            using MemoryStream stream = new();
-            PacketIO.WriteUInt32(stream, HashUtility.MurmurHash2("Metadata/Items/Weapons/OneHandWeapons/OneHandSwords/OneHandSword1"));
-            foreach (ComponentB component in components)
-                component.Serialize(stream);
-            byte[] blob = stream.ToArray();
+            ItemData item = new(HashUtility.MurmurHash2("Metadata/Items/Weapons/OneHandWeapons/OneHandSwords/OneHandSword1"));
+            item.GetOrCreateComponent<BaseComponent>();
+            item.GetOrCreateComponent<ModsComponent>();
+            item.GetOrCreateComponent<QualityComponent>();
+            item.GetOrCreateComponent<SocketsComponent>();
 
             InstanceClientChatMessagePacket packet = PacketFactory.Get<InstanceClientChatMessagePacket>();
             packet.Id = (byte)PacketId.InstanceClientChatMessagePacketId;
             packet.Name = "Server";
             packet.Text = "item link test _";
-            packet.Items.Add((packet.Text.IndexOf('_'), blob));
+            packet.Items.Add((packet.Text.IndexOf('_'), item));
             player.Send(packet);
 
             return string.Empty;
