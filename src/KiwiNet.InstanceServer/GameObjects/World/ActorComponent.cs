@@ -80,7 +80,11 @@ namespace KiwiNet.InstanceServer.GameObjects.World
 
         public override void Serialize(NetworkConnection connection)
         {
-            // call Serialize2 (aka probably SerializeUpdate)
+            SerializeUpdate(connection);
+        }
+
+        public override void SerializeUpdate(NetworkConnection connection)
+        {
             connection.Write((byte)0);
 
             bool hasSkillData = false;

@@ -1,10 +1,8 @@
-﻿using KiwiNet.Core.Network;
-using KiwiNet.Core.Utils;
+﻿using KiwiNet.Core.Utils;
 using KiwiNet.InstanceServer.GameObjects;
 using KiwiNet.InstanceServer.GameObjects.Items;
+using KiwiNet.InstanceServer.GameObjects.World;
 using KiwiNet.InstanceServer.Network;
-using KiwiNet.Protocols;
-using KiwiNet.Protocols.Instance;
 
 namespace KiwiNet.InstanceServer.Commands.Implementations
 {
@@ -12,31 +10,40 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
     [CommandGroup]
     public static class DebugCommands
     {
+        private static uint ItemIdCount = 1000000;
+
         [CommandHandler("test")]
         public static string Test(object invoker, ReadOnlySpan<string> args)
         {
             RemotePlayer player = (RemotePlayer)invoker;
 
-            ItemObject item = new();
+            WorldObject worldItem = new();
 
+            GameObjectSettings worldSettings = new()
+            {
+                Template = HashUtility.MurmurHash2("Metadata/MiscellaneousObjects/WorldItem"),
+                Id = ItemIdCount++,
+                GridPosition = player.Player.GetComponent<PositionedComponent>().GridPosition,
+            };
+
+            worldItem.Initialize(ref worldSettings);
+            worldItem.GetOrCreateComponent<AnimatedComponent>();
+            WorldItemComponent worldItemComponent = worldItem.GetOrCreateComponent<WorldItemComponent>();
+
+            worldItemComponent.Item = new();
             GameObjectSettings itemSettings = new()
             {
                 Template = HashUtility.MurmurHash2("Metadata/Items/Weapons/OneHandWeapons/OneHandSwords/OneHandSword1"),
             };
 
-            item.Initialize(ref itemSettings);
+            worldItemComponent.Item.Initialize(ref itemSettings);
 
-            item.GetOrCreateComponent<BaseComponent>();
-            item.GetOrCreateComponent<ModsComponent>();
-            item.GetOrCreateComponent<QualityComponent>();
-            item.GetOrCreateComponent<SocketsComponent>();
+            worldItemComponent.Item.GetOrCreateComponent<BaseComponent>();
+            worldItemComponent.Item.GetOrCreateComponent<ModsComponent>();
+            worldItemComponent.Item.GetOrCreateComponent<QualityComponent>();
+            worldItemComponent.Item.GetOrCreateComponent<SocketsComponent>();
 
-            InstanceClientChatMessagePacket packet = PacketFactory.Get<InstanceClientChatMessagePacket>();
-            packet.Id = (byte)PacketId.InstanceClientChatMessagePacketId;
-            packet.Name = "Server";
-            packet.Text = "item link test _";
-            packet.Items.Add((packet.Text.IndexOf('_'), item));
-            player.Send(packet);
+            player.SendWorldObjectAdd(worldItem);
 
             return string.Empty;
         }

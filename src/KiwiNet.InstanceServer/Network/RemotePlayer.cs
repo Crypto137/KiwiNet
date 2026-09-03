@@ -49,9 +49,9 @@ namespace KiwiNet.InstanceServer.Network
             Connection.Flush();
         }
 
-        public void SendObjectAdd(WorldObject worldObject)
+        public void SendWorldObjectAdd(WorldObject worldObject)
         {
-            Connection.Write((byte)GameObjectPacketId.InstanceClientObjectAdd);
+            Connection.Write((byte)GameObjectPacketId.InstanceClientWorldObjectAdd);
             worldObject.Serialize(Connection);
             Connection.Flush();
         }
@@ -207,7 +207,12 @@ namespace KiwiNet.InstanceServer.Network
 
         private void OnSkillTargetLocation(Packet packet)
         {
-            Logger.Debug($"OnSkillTargetLocation(): {packet}");
+            ClientInstanceSkillTargetLocation skillTargetLocation = (ClientInstanceSkillTargetLocation)packet;
+
+            Logger.Debug($"OnSkillTargetLocation(): {skillTargetLocation}");
+
+            PositionedComponent playerPosition = Player.GetComponent<PositionedComponent>();
+            playerPosition.SetPosition(new((int)skillTargetLocation.GridPositionX, (int)skillTargetLocation.GridPositionY));
         }
 
         private void OnAllocatePassiveSkillPoint(Packet packet)
@@ -245,7 +250,7 @@ namespace KiwiNet.InstanceServer.Network
             // InstanceClientForcedDisconnectionWarningPacketId -> BackendError.TerrainGenerationOutOfSync
 
             // TODO: some kind of area of interest system
-            SendObjectAdd(Player);
+            SendWorldObjectAdd(Player);
 
             var skills = PacketFactory.Get<InstanceClientBoundSkillList>();
             skills.Id = (byte)PacketId.InstanceClientBoundSkillListId;

@@ -4,9 +4,9 @@ namespace KiwiNet.InstanceServer.GameObjects
 {
     public enum GameObjectPacketId
     {
-        InstanceClientObjectAdd = 100,
-        InstanceClientObjectUpdate,
-        InstanceClientObjectRemove,
+        InstanceClientWorldObjectAdd = 100,
+        InstanceClientWorldObjectUpdate,
+        InstanceClientWorldObjectRemove,
     }
 
     public class GameObjectManager
