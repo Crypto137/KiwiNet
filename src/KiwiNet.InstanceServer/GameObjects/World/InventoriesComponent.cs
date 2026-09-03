@@ -1,8 +1,8 @@
 ﻿using KiwiNet.Core.Network;
 
-namespace KiwiNet.InstanceServer.GameObjects.Components
+namespace KiwiNet.InstanceServer.GameObjects.World
 {
-    public sealed class InventoriesComponent : ComponentA
+    public sealed class InventoriesComponent : WorldComponent
     {
         public const int NumInventories = 37;
 

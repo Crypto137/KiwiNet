@@ -2,8 +2,7 @@
 
 namespace KiwiNet.InstanceServer.GameObjects
 {
-    // temp name, used for components that have serialize update methods
-    public abstract class ComponentA : Component
+    public abstract class WorldComponent : Component
     {
         public abstract void Serialize(NetworkConnection connection);
 

@@ -1,8 +1,8 @@
 ﻿using KiwiNet.Core.Network;
 
-namespace KiwiNet.InstanceServer.GameObjects.Components
+namespace KiwiNet.InstanceServer.GameObjects.World
 {
-    public sealed class StatsComponent : ComponentA
+    public sealed class StatsComponent : WorldComponent
     {
         public override void Serialize(NetworkConnection connection)
         {

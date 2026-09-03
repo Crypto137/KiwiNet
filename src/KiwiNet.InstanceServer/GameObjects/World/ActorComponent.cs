@@ -1,6 +1,6 @@
 ﻿using KiwiNet.Core.Network;
 
-namespace KiwiNet.InstanceServer.GameObjects.Components
+namespace KiwiNet.InstanceServer.GameObjects.World
 {
     [Flags]
     public enum ActorStructExtraFlags : short
@@ -73,7 +73,7 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
         }
     }
 
-    public sealed class ActorComponent : ComponentA
+    public sealed class ActorComponent : WorldComponent
     {
         public List<ActorStructWithExtra> DataList1 { get; } = new();
         public List<ActorStruct> DataList2 { get; } = new();

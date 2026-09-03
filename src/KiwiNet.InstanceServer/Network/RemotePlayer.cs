@@ -7,7 +7,7 @@ using KiwiNet.InstanceServer.Areas;
 using KiwiNet.InstanceServer.Commands;
 using KiwiNet.InstanceServer.GameData;
 using KiwiNet.InstanceServer.GameObjects;
-using KiwiNet.InstanceServer.GameObjects.Components;
+using KiwiNet.InstanceServer.GameObjects.World;
 using KiwiNet.Protocols;
 using KiwiNet.Protocols.Common;
 using KiwiNet.Protocols.Instance;
@@ -25,7 +25,7 @@ namespace KiwiNet.InstanceServer.Network
         public NetworkConnection Connection { get; }
         public ClientSession Session { get; }
 
-        public GameObject Player { get; private set; }
+        public WorldObject Player { get; private set; }
 
         public RemotePlayer(Area area, NetworkConnection connection, ClientSession session)
         {
@@ -49,10 +49,10 @@ namespace KiwiNet.InstanceServer.Network
             Connection.Flush();
         }
 
-        public void SendObjectAdd(GameObject gameObject)
+        public void SendObjectAdd(WorldObject worldObject)
         {
             Connection.Write((byte)GameObjectPacketId.InstanceClientObjectAdd);
-            gameObject.Serialize(Connection);
+            worldObject.Serialize(Connection);
             Connection.Flush();
         }
 

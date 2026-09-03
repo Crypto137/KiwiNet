@@ -1,7 +1,7 @@
 ﻿using KiwiNet.Core.Network;
 using KiwiNet.Core.Utils;
 using KiwiNet.InstanceServer.GameObjects;
-using KiwiNet.InstanceServer.GameObjects.Components.Items;
+using KiwiNet.InstanceServer.GameObjects.Items;
 using KiwiNet.InstanceServer.Network;
 using KiwiNet.Protocols;
 using KiwiNet.Protocols.Instance;
@@ -17,7 +17,15 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
         {
             RemotePlayer player = (RemotePlayer)invoker;
 
-            ItemData item = new(HashUtility.MurmurHash2("Metadata/Items/Weapons/OneHandWeapons/OneHandSwords/OneHandSword1"));
+            ItemObject item = new();
+
+            GameObjectSettings itemSettings = new()
+            {
+                Template = HashUtility.MurmurHash2("Metadata/Items/Weapons/OneHandWeapons/OneHandSwords/OneHandSword1"),
+            };
+
+            item.Initialize(ref itemSettings);
+
             item.GetOrCreateComponent<BaseComponent>();
             item.GetOrCreateComponent<ModsComponent>();
             item.GetOrCreateComponent<QualityComponent>();

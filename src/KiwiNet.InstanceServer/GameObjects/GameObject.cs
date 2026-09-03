@@ -1,31 +1,21 @@
-﻿using KiwiNet.Core.Network;
-using KiwiNet.InstanceServer.GameObjects.Components;
-
-namespace KiwiNet.InstanceServer.GameObjects
+﻿namespace KiwiNet.InstanceServer.GameObjects
 {
-    public class GameObject
+    public abstract class GameObject
     {
-        private readonly List<KeyValuePair<uint, uint>> _unkList = new();
-        private readonly List<ComponentA> _components = new();
+        protected readonly List<Component> _components = new();
 
         public uint Template { get; private set; }
-        public uint Id { get; private set; }
 
         public GameObject()
         {
         }
 
-        public void Initialize(ref GameObjectSettings settings)
+        public virtual void Initialize(ref GameObjectSettings settings)
         {
             Template = settings.Template;
-            Id = settings.Id;
-
-            PositionedComponent positioned = GetOrCreateComponent<PositionedComponent>();
-            positioned.SetPosition(settings.GridPosition);
-            positioned.Rotation = settings.Rotation;
         }
 
-        public T GetOrCreateComponent<T>() where T: ComponentA, new()
+        public T GetOrCreateComponent<T>() where T: Component, new()
         {
             // temp stuff just for testing now
             foreach (Component existingComponent in _components)
@@ -48,28 +38,6 @@ namespace KiwiNet.InstanceServer.GameObjects
             }
 
             return null;
-        }
-
-        public void Serialize(NetworkConnection connection)
-        {
-            connection.Write(Template);
-            connection.Write(Id);
-
-            connection.Write((byte)_unkList.Count);
-
-            if (_unkList.Count > 0)
-            {
-                foreach (var kvp in _unkList)
-                {
-                    connection.Write(kvp.Key);
-                    connection.Write(kvp.Value);
-                }
-            }
-            else
-            {
-                foreach (ComponentA component in _components)
-                    component.Serialize(connection);
-            }
         }
     }
 }

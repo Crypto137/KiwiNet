@@ -2,7 +2,7 @@
 using KiwiNet.Core.Network;
 using System.Numerics;
 
-namespace KiwiNet.InstanceServer.GameObjects.Components
+namespace KiwiNet.InstanceServer.GameObjects.World
 {
     [Flags]
     public enum PositionedSerializeFlags : byte
@@ -13,7 +13,7 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
         HasExtraData = 1 << 2,
     }
 
-    public sealed class PositionedComponent : ComponentA
+    public sealed class PositionedComponent : WorldComponent
     {
         public const float WorldUnitsPerGridCell = 1000f / 92f; // 0x412DE9BD or 10.869565
 

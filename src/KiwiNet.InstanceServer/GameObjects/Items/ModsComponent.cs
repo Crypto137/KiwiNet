@@ -1,6 +1,6 @@
 ﻿using KiwiNet.Core.Network;
 
-namespace KiwiNet.InstanceServer.GameObjects.Components.Items
+namespace KiwiNet.InstanceServer.GameObjects.Items
 {
     public enum Rarity : byte
     {
@@ -10,7 +10,7 @@ namespace KiwiNet.InstanceServer.GameObjects.Components.Items
         Unique,
     }
 
-    public sealed class ModsComponent : ComponentB
+    public sealed class ModsComponent : ItemComponent
     {
         public Rarity Rarity { get; set; }
 
@@ -24,11 +24,6 @@ namespace KiwiNet.InstanceServer.GameObjects.Components.Items
             connection.Write((byte)Rarity);
             connection.Write(0);
             connection.Write(0);
-        }
-
-        public override void Deserialize(NetworkConnection connection)
-        {
-            throw new NotImplementedException();
         }
     }
 }

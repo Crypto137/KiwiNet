@@ -1,9 +1,9 @@
 ﻿using KiwiNet.Core.Network;
 using KiwiNet.Protocols.Common;
 
-namespace KiwiNet.InstanceServer.GameObjects.Components
+namespace KiwiNet.InstanceServer.GameObjects.World
 {
-    public sealed class PlayerComponent : ComponentA
+    public sealed class PlayerComponent : WorldComponent
     {
         public string Name { get; set; } = string.Empty;
         public CharacterClass Class { get; set; }

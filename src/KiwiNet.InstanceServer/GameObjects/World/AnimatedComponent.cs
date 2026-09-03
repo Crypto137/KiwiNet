@@ -1,8 +1,8 @@
 ﻿using KiwiNet.Core.Network;
 
-namespace KiwiNet.InstanceServer.GameObjects.Components
+namespace KiwiNet.InstanceServer.GameObjects.World
 {
-    public sealed class AnimatedComponent : ComponentA
+    public sealed class AnimatedComponent : WorldComponent
     {
         public string AOFilePath { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿using KiwiNet.Core.Network;
 
-namespace KiwiNet.InstanceServer.GameObjects.Components
+namespace KiwiNet.InstanceServer.GameObjects.World
 {
     public readonly struct BuffEntry
     {
@@ -34,7 +34,7 @@ namespace KiwiNet.InstanceServer.GameObjects.Components
         }
     }
 
-    public sealed class LifeComponent : ComponentA
+    public sealed class LifeComponent : WorldComponent
     {
         public uint Life { get; set; }
         public uint Mana { get; set; }

@@ -1,8 +1,8 @@
 ﻿using KiwiNet.Core.Network;
 
-namespace KiwiNet.InstanceServer.GameObjects.Components
+namespace KiwiNet.InstanceServer.GameObjects.World
 {
-    public sealed class PathfindingComponent : ComponentA
+    public sealed class PathfindingComponent : WorldComponent
     {
         public override void Serialize(NetworkConnection connection)
         {
