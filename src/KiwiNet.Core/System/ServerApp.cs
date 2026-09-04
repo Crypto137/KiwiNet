@@ -29,12 +29,14 @@ namespace KiwiNet.Core.System
 
         public virtual void Run()
         {
-            ConfigManager.Instance.Initialize(_configName);
-
             if (_isRunning)
-                throw new($"{GetType().Name} is already running.");
+                throw new InvalidOperationException($"{GetType().Name} is already running.");
 
             _isRunning = true;
+
+            PrintBanner();
+
+            ConfigManager.Instance.Initialize(_configName);
 
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
@@ -93,6 +95,18 @@ namespace KiwiNet.Core.System
             {
                 Logger.Error($"Caught unhandled exception:\n{exception}");
             }
+        }
+
+        private void PrintBanner()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(@"  _  ___          _   _   _      _   ");
+            Console.WriteLine(@" | |/ (_)_      _(_) | \ | | ___| |_ ");
+            Console.WriteLine(@" | ' /| \ \ /\ / / | |  \| |/ _ \ __|");
+            Console.WriteLine(@" | . \| |\ V  V /| | | |\  |  __/ |_ ");
+            Console.WriteLine(@" |_|\_\_| \_/\_/ |_| |_| \_|\___|\__|");
+            Console.WriteLine();
+            Console.ResetColor();
         }
     }
 }
