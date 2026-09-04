@@ -8,7 +8,7 @@ namespace KiwiNet.Protocols.Instance
         public string WorldAreaId { get; set; } = string.Empty; // id column in the WorldAreas table
         public string League { get; set; } = string.Empty;      // league name
         public uint Seed { get; set; }                          // DRLG seed
-        public List<uint> Field4 { get; } = new();              // hashes of things to preload?
+        public List<uint> ObjectTemplates { get; } = new();     // murmur2 hashes of object templates to preload
 
         public override void Serialize(NetworkConnection connection)
         {
@@ -16,9 +16,9 @@ namespace KiwiNet.Protocols.Instance
             connection.Write(WorldAreaId);
             connection.Write(League);
             connection.Write(Seed);
-            connection.Write((short)Field4.Count);
-            foreach (uint value in Field4)
-                connection.Write(value);
+            connection.Write((short)ObjectTemplates.Count);
+            foreach (uint objectTemplate in ObjectTemplates)
+                connection.Write(objectTemplate);
         }
     }
 }
