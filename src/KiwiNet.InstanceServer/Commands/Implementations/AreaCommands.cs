@@ -1,6 +1,6 @@
 ﻿using KiwiNet.Core.Math;
 using KiwiNet.InstanceServer.Network;
-using KiwiNet.InstanceServer.GameData;
+using KiwiNet.InstanceServer.Resources.Tables;
 
 namespace KiwiNet.InstanceServer.Commands.Implementations
 {

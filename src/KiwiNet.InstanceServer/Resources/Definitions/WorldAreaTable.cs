@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KiwiNet.InstanceServer.GameData
+﻿namespace KiwiNet.InstanceServer.Resources.Tables
 {
-    public class WorldAreaTable
+    public class WorldAreaTable : IResourceData
     {
         // TODO: replace this with .dat files
         private static readonly IReadOnlyList<string> ValidAreasIds = [
@@ -198,6 +192,16 @@ namespace KiwiNet.InstanceServer.GameData
         public static bool IsValidAreaId(string areaId)
         {
             return ValidAreasIds.Contains(areaId);
+        }
+
+        public void Load(string filePath)
+        {
+            // TODO: load table from .dat file
+        }
+
+        public void Free()
+        {
+
         }
     }
 }
