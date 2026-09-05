@@ -16,32 +16,44 @@ Components are serialized over the network in the order their templates are stor
 
 ## Components
 
-### Common
+### World
 
-#### World
+#### Common
 
-| Name                  | Description                                                                        |
-| --------------------- | ---------------------------------------------------------------------------------- |
-| Actor                 | Allows objects to use actions.                                                     |
-| Animated              |                                                                                    |
-| AreaTransition        | Interactable objects that allow moving to a different area.                        |
-| BaseEvents            |                                                                                    |
-| Chest                 | Used for containers that can drop items.                                           |
-| Inventories           | A collection of inventories.                                                       |
-| Life                  | Contains life, energy shield, mana, and buffs.                                     |
-| LimitedLifespan       |                                                                                    |
-| NPC                   |                                                                                    |
-| ObjectMagicProperties |                                                                                    |
-| Pathfinding           |                                                                                    |
-| Player                | Player specific data (character name, experience, allocated passive skills, etc.). |
-| Positioned            | Defines spatial properties (position, rotation, scale).                            |
-| Projectile            |                                                                                    |
-| Shrine                |                                                                                    |
-| Stats                 |                                                                                    |
-| Transitionable        |                                                                                    |
-| WorldItem             | Represents an item object in the game world.                                       |
+| Name                                     | Description                                                                        |
+| ---------------------------------------- | ---------------------------------------------------------------------------------- |
+| Actor                                    | Allows objects to use actions.                                                     |
+| Animated                                 |                                                                                    |
+| AreaTransition                           | Interactable objects that allow moving to a different area.                        |
+| BaseEvents                               |                                                                                    |
+| Chest                                    | Used for containers that can drop items.                                           |
+| Inventories                              | A collection of inventories.                                                       |
+| Life                                     | Contains life, energy shield, mana, and buffs.                                     |
+| LimitedLifespan                          |                                                                                    |
+| NPC                                      |                                                                                    |
+| ObjectMagicProperties                    |                                                                                    |
+| Pathfinding                              |                                                                                    |
+| Player                                   | Player specific data (character name, experience, allocated passive skills, etc.). |
+| [Positioned](./Components/Positioned.md) | Defines spatial properties (position, rotation, scale).                            |
+| Projectile                               |                                                                                    |
+| Shrine                                   |                                                                                    |
+| Stats                                    |                                                                                    |
+| Transitionable                           |                                                                                    |
+| WorldItem                                | Represents an item object in the game world.                                       |
 
-#### Item
+#### Client
+
+| Name             | Description |
+| ---------------- | ----------- |
+| ClientNPC        |             |
+| ClientWorldItem  |             |
+| Portal           |             |
+| ProximityTrigger |             |
+| Render           |             |
+| RenderItem       |             |
+| Targetable       |             |
+
+### Item
 
 | Name                  | Description |
 | --------------------- | ----------- |
@@ -59,7 +71,9 @@ Components are serialized over the network in the order their templates are stor
 | Usable                |             |
 | Weapon                |             |
 
-#### Animated
+### Animated
+
+#### Common
 
 | Name                   | Description |
 | ---------------------- | ----------- |
@@ -67,27 +81,15 @@ Components are serialized over the network in the order their templates are stor
 | AttachedAnimatedObject |             |
 | Hull                   |             |
 
-### Client
-
-#### World
-
-| Name             | Description |
-| ---------------- | ----------- |
-| ClientNPC        |             |
-| ClientWorldItem  |             |
-| Portal           |             |
-| ProximityTrigger |             |
-| Render           |             |
-| RenderItem       |             |
-| Targetable       |             |
-
-#### Animated
+#### Client
 
 | Name                      | Description |
 | ------------------------- | ----------- |
+| AnimatedRender            |             |
 | BoneGroups                |             |
 | ClientAnimationController |             |
 | DecalEvents               |             |
+| EffectPack                |             |
 | Lights                    |             |
 | ParticleEffects           |             |
 | SkinMesh                  |             |

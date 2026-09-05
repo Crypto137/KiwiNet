@@ -5,10 +5,10 @@ namespace KiwiNet.InstanceServer.Resources.Objects.World
 {
     public sealed class PositionedComponentTemplate : ComponentTemplate
     {
-        public int Field0 { get; set; }
-        public bool Field1 { get; set; }
-        public bool Field2 { get; set; }
-        public float Field3 { get; set; }
+        public int ObjectSize { get; private set; } = 0;
+        public bool Blocking { get; private set; } = false;
+        public bool Static { get; private set; } = false;
+        public float Scale { get; private set; } = 1f;
 
         public override Component CreateComponent(GameObject owner)
         {
@@ -17,6 +17,42 @@ namespace KiwiNet.InstanceServer.Resources.Objects.World
             component.Initialize(this, owner);
 
             return component;
+        }
+
+        public override bool SetBoolVariable(string name, bool value)
+        {
+            if (name == "blocking")
+            {
+                Blocking = value;
+                return true;
+            }
+            else if (name == "static")
+            {
+                Static = value;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override bool SetIntVariable(string name, int value)
+        {
+            if (name == "scale")
+            {
+                Scale = value * BitConverter.UInt32BitsToSingle(0x3C23D70A); // 0.00999, probably compiler optimization of div by 100f
+                return true;
+            }
+            else if (name == "object_size")
+            {
+                ObjectSize = value - 1;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

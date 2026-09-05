@@ -9,14 +9,7 @@
             Template = new(filePath);
 
             // Positioned is always instantiated first before 
-            Template.Positioned = new()
-            {
-                Field0 = 0,
-                Field1 = false,
-                Field2 = false,
-                Field3 = 1f,
-            };
-
+            Template.Positioned = new();
             Template.AddComponent(Template.Positioned, "Positioned");
         }
 
