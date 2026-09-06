@@ -35,8 +35,8 @@ Components are serialized over the network in the order their templates are stor
 | Pathfinding                              |                                                                                    |
 | Player                                   | Player specific data (character name, experience, allocated passive skills, etc.). |
 | [Positioned](./Components/Positioned.md) | Defines spatial properties (position, rotation, scale).                            |
-| Projectile                               |                                                                                    |
-| Shrine                                   |                                                                                    |
+| Projectile                               | Mentioned in game data, but no code to parse it.                                   |
+| Shrine                                   | Mentioned in game data, but no code to parse it.                                   |
 | Stats                                    |                                                                                    |
 | Transitionable                           |                                                                                    |
 | WorldItem                                | Represents an item object in the game world.                                       |

@@ -1,22 +1,16 @@
-﻿using KiwiNet.InstanceServer.GameObjects;
-using KiwiNet.InstanceServer.GameObjects.World;
+﻿using KiwiNet.InstanceServer.GameObjects.World;
 
 namespace KiwiNet.InstanceServer.Resources.Objects.World
 {
-    public sealed class PositionedComponentTemplate : ComponentTemplate
+    public sealed class PositionedComponentTemplate : ComponentTemplate<PositionedComponent>
     {
         public int ObjectSize { get; private set; } = 0;
         public bool Blocking { get; private set; } = false;
         public bool Static { get; private set; } = false;
         public float Scale { get; private set; } = 1f;
 
-        public override Component CreateComponent(GameObject owner)
+        public PositionedComponentTemplate(GameObjectTemplate gameObjectTemplate) : base(gameObjectTemplate)
         {
-            PositionedComponent component = new();
-
-            component.Initialize(this, owner);
-
-            return component;
         }
 
         public override bool SetBoolVariable(string name, bool value)
@@ -53,6 +47,19 @@ namespace KiwiNet.InstanceServer.Resources.Objects.World
             {
                 return false;
             }
+        }
+    }
+
+    public sealed class PositionedComponentTemplateFactory : ComponentTemplateFactory
+    {
+        public override ComponentTemplate Allocate(GameObjectTemplate gameObjectTemplate)
+        {
+            return new PositionedComponentTemplate(gameObjectTemplate);
+        }
+
+        public override string GetName()
+        {
+            return "Positioned";
         }
     }
 }
