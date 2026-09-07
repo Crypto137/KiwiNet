@@ -24,7 +24,7 @@ namespace KiwiNet.InstanceServer.GameObjects
         private static void InitializeCommonItemObjectTemplates()
         {
             // Init factories, this will also populate ItemComponentTemplateRegistry
-            _ = ItemComponentTemplateFactoryCollection.Instance;
+            _ = ItemCommonComponentTemplateFactoryCollection.Instance;
 
             ComponentTemplateParseParams.ItemParams.CommonFileExtension = "ot";
             ComponentTemplateParseParams.ItemParams.CommonRegistry = ComponentTemplateRegistry.ItemCommon;
@@ -45,7 +45,7 @@ namespace KiwiNet.InstanceServer.GameObjects
         private static void InitializeCommonWorldObjectTemplates()
         {
             // Init factories, this will also populate WorldComponentTemplateRegistry
-            _ = WorldComponentTemplateFactoryCollection.Instance;
+            _ = WorldCommonComponentTemplateFactoryCollection.Instance;
 
             ComponentTemplateParseParams.WorldParams.CommonFileExtension = "ot";
             ComponentTemplateParseParams.WorldParams.CommonRegistry = ComponentTemplateRegistry.WorldCommon;
@@ -66,7 +66,7 @@ namespace KiwiNet.InstanceServer.GameObjects
         private static void InitializeCommonAnimationObjectTemplates()
         {
             // Init factories, this will also populate WorldComponentTemplateRegistry
-            _ = AnimationComponentTemplateFactoryCollection.Instance;
+            _ = AnimationCommonComponentTemplateFactoryCollection.Instance;
 
             ComponentTemplateParseParams.AnimationParams.CommonFileExtension = "ao";
             ComponentTemplateParseParams.AnimationParams.CommonRegistry = ComponentTemplateRegistry.AnimationCommon;
