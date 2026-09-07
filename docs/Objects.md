@@ -66,8 +66,10 @@ Components are serialized over the network in the order their templates are stor
 | Mods                  |             |
 | Quality               |             |
 | Quest                 |             |
+| Shield                |             |
 | SkillGem              |             |
 | Sockets               |             |
+| Stack                 |             |
 | Usable                |             |
 | Weapon                |             |
 
