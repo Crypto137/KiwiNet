@@ -2,7 +2,7 @@
 {
     public interface IResourceData
     {
-        public void Load(string filePath);
+        public void Load(string fileName);
 
         public void Free();
     }

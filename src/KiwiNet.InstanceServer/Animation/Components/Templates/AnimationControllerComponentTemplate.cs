@@ -11,6 +11,10 @@ namespace KiwiNet.InstanceServer.Animation.Components.Templates
 
     public sealed class AnimationControllerComponentTemplateFactory : ComponentTemplateFactory
     {
+        public AnimationControllerComponentTemplateFactory(ComponentTemplateRegistry registry) : base(registry)
+        {
+        }
+
         public override ComponentTemplate Allocate(GameObjectTemplate gameObjectTemplate)
         {
             return new AnimationControllerComponentTemplate(gameObjectTemplate);

@@ -11,6 +11,10 @@ namespace KiwiNet.InstanceServer.Items.Components.Templates
 
     public sealed class WeaponComponentTemplateFactory : ComponentTemplateFactory
     {
+        public WeaponComponentTemplateFactory(ComponentTemplateRegistry registry) : base(registry)
+        {
+        }
+
         public override ComponentTemplate Allocate(GameObjectTemplate gameObjectTemplate)
         {
             return new WeaponComponentTemplate(gameObjectTemplate);

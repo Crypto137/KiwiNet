@@ -7,7 +7,7 @@ namespace KiwiNet.InstanceServer.WorldObjects
     {
         public PositionedComponentTemplate Positioned { get; set; }
 
-        public WorldObjectTemplate(string filePath) : base(filePath)
+        public WorldObjectTemplate(string fileName) : base(fileName)
         {
         }
     }

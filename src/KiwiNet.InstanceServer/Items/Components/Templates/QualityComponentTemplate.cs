@@ -11,6 +11,10 @@ namespace KiwiNet.InstanceServer.Items.Components.Templates
 
     public sealed class QualityComponentTemplateFactory : ComponentTemplateFactory
     {
+        public QualityComponentTemplateFactory(ComponentTemplateRegistry registry) : base(registry)
+        {
+        }
+
         public override ComponentTemplate Allocate(GameObjectTemplate gameObjectTemplate)
         {
             return new QualityComponentTemplate(gameObjectTemplate);

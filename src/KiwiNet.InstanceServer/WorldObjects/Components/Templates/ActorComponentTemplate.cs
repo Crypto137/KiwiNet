@@ -11,6 +11,10 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
 
     public sealed class ActorComponentTemplateFactory : ComponentTemplateFactory
     {
+        public ActorComponentTemplateFactory(ComponentTemplateRegistry registry) : base(registry)
+        {
+        }
+
         public override ComponentTemplate Allocate(GameObjectTemplate gameObjectTemplate)
         {
             return new ActorComponentTemplate(gameObjectTemplate);

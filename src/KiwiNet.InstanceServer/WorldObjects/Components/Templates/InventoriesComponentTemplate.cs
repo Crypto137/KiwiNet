@@ -11,6 +11,10 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
 
     public sealed class InventoriesComponentTemplateFactory : ComponentTemplateFactory
     {
+        public InventoriesComponentTemplateFactory(ComponentTemplateRegistry registry) : base(registry)
+        {
+        }
+
         public override ComponentTemplate Allocate(GameObjectTemplate gameObjectTemplate)
         {
             return new InventoriesComponentTemplate(gameObjectTemplate);

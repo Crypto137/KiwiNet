@@ -11,6 +11,10 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
 
     public sealed class ObjectMagicPropertiesComponentTemplateFactory : ComponentTemplateFactory
     {
+        public ObjectMagicPropertiesComponentTemplateFactory(ComponentTemplateRegistry registry) : base(registry)
+        {
+        }
+
         public override ComponentTemplate Allocate(GameObjectTemplate gameObjectTemplate)
         {
             return new ObjectMagicPropertiesComponentTemplate(gameObjectTemplate);

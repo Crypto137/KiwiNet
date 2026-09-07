@@ -11,6 +11,10 @@ namespace KiwiNet.InstanceServer.Items.Components.Templates
 
     public sealed class AttributeRequirementsComponentTemplateFactory : ComponentTemplateFactory
     {
+        public AttributeRequirementsComponentTemplateFactory(ComponentTemplateRegistry registry) : base(registry)
+        {
+        }
+
         public override ComponentTemplate Allocate(GameObjectTemplate gameObjectTemplate)
         {
             return new AttributeRequirementsComponentTemplate(gameObjectTemplate);

@@ -6,9 +6,9 @@ namespace KiwiNet.InstanceServer.WorldObjects
     {
         public WorldObjectTemplate Template { get; private set; }
 
-        public void Load(string filePath)
+        public void Load(string fileName)
         {
-            Template = new(filePath);
+            Template = new(fileName);
 
             // Positioned is always instantiated first before 
             Template.Positioned = new(Template);

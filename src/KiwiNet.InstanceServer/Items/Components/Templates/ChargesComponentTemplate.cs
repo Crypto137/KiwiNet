@@ -11,6 +11,10 @@ namespace KiwiNet.InstanceServer.Items.Components.Templates
 
     public sealed class ChargesComponentTemplateFactory : ComponentTemplateFactory
     {
+        public ChargesComponentTemplateFactory(ComponentTemplateRegistry registry) : base(registry)
+        {
+        }
+
         public override ComponentTemplate Allocate(GameObjectTemplate gameObjectTemplate)
         {
             return new ChargesComponentTemplate(gameObjectTemplate);

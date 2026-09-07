@@ -11,6 +11,10 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
 
     public sealed class ChestComponentTemplateFactory : ComponentTemplateFactory
     {
+        public ChestComponentTemplateFactory(ComponentTemplateRegistry registry) : base(registry)
+        {
+        }
+
         public override ComponentTemplate Allocate(GameObjectTemplate gameObjectTemplate)
         {
             return new ChestComponentTemplate(gameObjectTemplate);

@@ -1,5 +1,6 @@
 ﻿using KiwiNet.Core.System;
 using KiwiNet.InstanceServer.Areas;
+using KiwiNet.InstanceServer.GameObjects;
 using KiwiNet.InstanceServer.Network;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
@@ -40,6 +41,8 @@ namespace KiwiNet.InstanceServer
         {
             if (OperatingSystem.IsWindows())
                 _ = WinMM.TimeBeginPeriod(1);
+
+            GameObjectSystem.Initialize();
 
             AreaManager.Initialize();
             return ClientLobby.Initialize() &&

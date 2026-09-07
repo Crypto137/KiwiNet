@@ -11,6 +11,10 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
 
     public sealed class LimitedLifespanComponentTemplateFactory : ComponentTemplateFactory
     {
+        public LimitedLifespanComponentTemplateFactory(ComponentTemplateRegistry registry) : base(registry)
+        {
+        }
+
         public override ComponentTemplate Allocate(GameObjectTemplate gameObjectTemplate)
         {
             return new LimitedLifespanComponentTemplate(gameObjectTemplate);
