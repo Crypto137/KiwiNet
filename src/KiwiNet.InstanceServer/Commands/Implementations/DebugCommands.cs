@@ -1,8 +1,9 @@
 ﻿using KiwiNet.Core.Utils;
 using KiwiNet.InstanceServer.GameObjects;
-using KiwiNet.InstanceServer.GameObjects.Items;
-using KiwiNet.InstanceServer.GameObjects.World;
+using KiwiNet.InstanceServer.Items.Components;
 using KiwiNet.InstanceServer.Network;
+using KiwiNet.InstanceServer.WorldObjects;
+using KiwiNet.InstanceServer.WorldObjects.Components;
 
 namespace KiwiNet.InstanceServer.Commands.Implementations
 {

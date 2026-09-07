@@ -1,0 +1,22 @@
+﻿using KiwiNet.Core.Network;
+
+namespace KiwiNet.InstanceServer.WorldObjects.Components
+{
+    public sealed class InventoriesComponent : WorldComponent
+    {
+        public const int NumInventories = 37;
+
+        public override void Serialize(NetworkConnection connection)
+        {
+            for (int i = 0; i < NumInventories; i++)
+            {
+                int count = 0;
+                connection.Write(count);
+                for (int j = 0; j < count; j++)
+                {
+                    // TODO: item serialization for each inventory
+                }
+            }
+        }
+    }
+}

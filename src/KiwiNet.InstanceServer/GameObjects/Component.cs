@@ -1,6 +1,4 @@
-﻿using KiwiNet.InstanceServer.Resources.Objects;
-
-namespace KiwiNet.InstanceServer.GameObjects
+﻿namespace KiwiNet.InstanceServer.GameObjects
 {
     public abstract class Component
     {
