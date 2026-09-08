@@ -49,10 +49,37 @@ namespace KiwiNet.Core.Utils
             token = sb.ToString();
         }
 
-        public static bool ExtractString(TextReader reader, out string str)
+        public static bool GetDelimitedString(TextReader reader, char delimiter, out string str)
         {
             str = string.Empty;
             StringBuilder sb = new();
+
+            int count = 0;
+            while (count < int.MaxValue)
+            {
+                int peek = reader.Peek();
+                if (peek == -1)
+                    return false;
+
+                char c = (char)peek;
+                if (c == delimiter)
+                {
+                    reader.Read();
+                    str = sb.ToString();
+                    return true;
+                }
+
+                sb.Append(c);
+                count++;
+                reader.Read();
+            }
+
+            return false;
+        }
+
+        public static bool ExtractStringLiteral(TextReader reader, out string str)
+        {
+            str = string.Empty;
 
             SkipWhiteSpace(reader);
 
@@ -67,27 +94,7 @@ namespace KiwiNet.Core.Utils
 
             reader.Read();
 
-            int count = 0;
-            while (count < int.MaxValue)
-            {
-                peek = reader.Peek();
-                if (peek == -1)
-                    return false;
-
-                c = (char)peek;
-                if (c == StringLiteralDelimiter)
-                {
-                    reader.Read();
-                    str = sb.ToString();
-                    return true;
-                }
-
-                sb.Append(c);
-                count++;
-                reader.Read();
-            }
-
-            return false;
+            return GetDelimitedString(reader, StringLiteralDelimiter, out str);
         }
 
         public static bool MatchToken(TextReader reader, string expectedToken)

@@ -1,6 +1,7 @@
 ﻿using KiwiNet.Core.Logging;
 using KiwiNet.InstanceServer.Animation;
 using KiwiNet.InstanceServer.Items;
+using KiwiNet.InstanceServer.Resources;
 using KiwiNet.InstanceServer.WorldObjects;
 
 namespace KiwiNet.InstanceServer.GameObjects
@@ -8,6 +9,9 @@ namespace KiwiNet.InstanceServer.GameObjects
     public static class GameObjectSystem
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
+
+        public static ResourceHandle<CSVTable> ItemObjectCSVTable { get; private set; }
+        public static ResourceHandle<CSVTable> WorldObjectCSVTable { get; private set; }
 
         public static void Initialize()
         {
@@ -25,6 +29,19 @@ namespace KiwiNet.InstanceServer.GameObjects
         {
             // Init factories, this will also populate ItemComponentTemplateRegistry
             _ = ItemCommonComponentTemplateFactoryCollection.Instance;
+
+            using ResourceHandle<CSVTable> itemObjectTable = ResourceManager.Get<CSVTable>("Data/BaseItemTypes.csv");
+            if (itemObjectTable != ItemObjectCSVTable)
+            {
+                if (ItemObjectCSVTable != null)
+                {
+                    ItemObjectCSVTable.DecrementRefCount();
+                    ItemObjectCSVTable = null;
+                }
+
+                ItemObjectCSVTable = itemObjectTable;
+                ItemObjectCSVTable.IncrementRefCount();
+            }
 
             ComponentTemplateParseParams.Item.CommonFileExtension = "ot";
             ComponentTemplateParseParams.Item.CommonRegistry = ComponentTemplateRegistry.ItemCommon;
@@ -46,6 +63,19 @@ namespace KiwiNet.InstanceServer.GameObjects
         {
             // Init factories, this will also populate WorldComponentTemplateRegistry
             _ = WorldCommonComponentTemplateFactoryCollection.Instance;
+
+            using ResourceHandle<CSVTable> worldObjectTable = ResourceManager.Get<CSVTable>("Metadata/objects.csv");
+            if (worldObjectTable != WorldObjectCSVTable)
+            {
+                if (WorldObjectCSVTable != null)
+                {
+                    WorldObjectCSVTable.DecrementRefCount();
+                    WorldObjectCSVTable = null;
+                }
+
+                WorldObjectCSVTable = worldObjectTable;
+                WorldObjectCSVTable.IncrementRefCount();
+            }
 
             ComponentTemplateParseParams.World.CommonFileExtension = "ot";
             ComponentTemplateParseParams.World.CommonRegistry = ComponentTemplateRegistry.WorldCommon;

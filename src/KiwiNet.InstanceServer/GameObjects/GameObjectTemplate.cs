@@ -64,8 +64,6 @@ namespace KiwiNet.InstanceServer.GameObjects
         private void ParseComponentTemplate(StreamReader reader, string fileName, string fileExtension,
             ComponentTemplateRegistry componentTemplateRegistry, ComponentTemplateParseParams @params)
         {
-            StringBuilder sb = new();
-
             // Check version
             if (ParseUtility.MatchToken(reader, "version") == false)
                 throw new ResourceException("Error: Expected version");
@@ -77,7 +75,7 @@ namespace KiwiNet.InstanceServer.GameObjects
             if (ParseUtility.MatchToken(reader, "extends") == false)
                 throw new ResourceException("Error: Expected extends");
 
-            if (ParseUtility.ExtractString(reader, out string superclass) == false)
+            if (ParseUtility.ExtractStringLiteral(reader, out string superclass) == false)
                 throw new ResourceException("Error: Could not extract superclass");
 
             if (string.Equals(superclass, "nothing", StringComparison.Ordinal) == false)
