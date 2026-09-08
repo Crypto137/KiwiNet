@@ -7,8 +7,8 @@
         public string ServerFileExtension { get; set; }
         public ComponentTemplateRegistry ServerRegistry { get; set; }
 
-        public static ComponentTemplateParseParams ItemParams { get; } = new();
-        public static ComponentTemplateParseParams WorldParams { get; } = new();
-        public static ComponentTemplateParseParams AnimationParams { get; } = new();
+        public static ComponentTemplateParseParams Item { get; } = new();
+        public static ComponentTemplateParseParams World { get; } = new();
+        public static ComponentTemplateParseParams Animation { get; } = new();
     }
 }

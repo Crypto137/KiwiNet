@@ -1,6 +1,6 @@
 ﻿namespace KiwiNet.InstanceServer.Resources.Tables
 {
-    public class WorldAreaTable : IResourceData
+    public class WorldAreaTable : IResource
     {
         // TODO: replace this with .dat files
         private static readonly IReadOnlyList<string> ValidAreasIds = [

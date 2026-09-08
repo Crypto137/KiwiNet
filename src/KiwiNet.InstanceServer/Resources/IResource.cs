@@ -1,6 +1,6 @@
 ﻿namespace KiwiNet.InstanceServer.Resources
 {
-    public interface IResourceData
+    public interface IResource
     {
         public void Load(string fileName);
 

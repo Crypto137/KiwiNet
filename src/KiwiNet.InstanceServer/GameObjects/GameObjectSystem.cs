@@ -26,8 +26,8 @@ namespace KiwiNet.InstanceServer.GameObjects
             // Init factories, this will also populate ItemComponentTemplateRegistry
             _ = ItemCommonComponentTemplateFactoryCollection.Instance;
 
-            ComponentTemplateParseParams.ItemParams.CommonFileExtension = "ot";
-            ComponentTemplateParseParams.ItemParams.CommonRegistry = ComponentTemplateRegistry.ItemCommon;
+            ComponentTemplateParseParams.Item.CommonFileExtension = "ot";
+            ComponentTemplateParseParams.Item.CommonRegistry = ComponentTemplateRegistry.ItemCommon;
 
             Logger.Trace($"Registered {ComponentTemplateRegistry.ItemCommon.Definitions.Count} common item components");
         }
@@ -36,8 +36,8 @@ namespace KiwiNet.InstanceServer.GameObjects
         {
             // not sure if there are any server-specific item components
 
-            ComponentTemplateParseParams.ItemParams.ServerFileExtension = "ots";
-            ComponentTemplateParseParams.ItemParams.ServerRegistry = ComponentTemplateRegistry.ItemServer;
+            ComponentTemplateParseParams.Item.ServerFileExtension = "ots";
+            ComponentTemplateParseParams.Item.ServerRegistry = ComponentTemplateRegistry.ItemServer;
 
             Logger.Trace($"Registered {ComponentTemplateRegistry.ItemServer.Definitions.Count} server item components");
         }
@@ -47,8 +47,8 @@ namespace KiwiNet.InstanceServer.GameObjects
             // Init factories, this will also populate WorldComponentTemplateRegistry
             _ = WorldCommonComponentTemplateFactoryCollection.Instance;
 
-            ComponentTemplateParseParams.WorldParams.CommonFileExtension = "ot";
-            ComponentTemplateParseParams.WorldParams.CommonRegistry = ComponentTemplateRegistry.WorldCommon;
+            ComponentTemplateParseParams.World.CommonFileExtension = "ot";
+            ComponentTemplateParseParams.World.CommonRegistry = ComponentTemplateRegistry.WorldCommon;
 
             Logger.Trace($"Registered {ComponentTemplateRegistry.WorldCommon.Definitions.Count} common world components");
         }
@@ -57,8 +57,8 @@ namespace KiwiNet.InstanceServer.GameObjects
         {
             // TODO?: ots file for server-specific components for world objects
 
-            ComponentTemplateParseParams.WorldParams.ServerFileExtension = "ots";
-            ComponentTemplateParseParams.WorldParams.ServerRegistry = ComponentTemplateRegistry.WorldServer;
+            ComponentTemplateParseParams.World.ServerFileExtension = "ots";
+            ComponentTemplateParseParams.World.ServerRegistry = ComponentTemplateRegistry.WorldServer;
 
             Logger.Trace($"Registered {ComponentTemplateRegistry.WorldServer.Definitions.Count} server world components");
         }
@@ -68,8 +68,8 @@ namespace KiwiNet.InstanceServer.GameObjects
             // Init factories, this will also populate WorldComponentTemplateRegistry
             _ = AnimationCommonComponentTemplateFactoryCollection.Instance;
 
-            ComponentTemplateParseParams.AnimationParams.CommonFileExtension = "ao";
-            ComponentTemplateParseParams.AnimationParams.CommonRegistry = ComponentTemplateRegistry.AnimationCommon;
+            ComponentTemplateParseParams.Animation.CommonFileExtension = "ao";
+            ComponentTemplateParseParams.Animation.CommonRegistry = ComponentTemplateRegistry.AnimationCommon;
 
             Logger.Trace($"Registered {ComponentTemplateRegistry.AnimationCommon.Definitions.Count} common animation components");
         }
@@ -78,8 +78,8 @@ namespace KiwiNet.InstanceServer.GameObjects
         {
             // not sure if there are any server-specific animation components
 
-            ComponentTemplateParseParams.AnimationParams.ServerFileExtension = "aos";
-            ComponentTemplateParseParams.AnimationParams.ServerRegistry = null;
+            ComponentTemplateParseParams.Animation.ServerFileExtension = "aos";
+            ComponentTemplateParseParams.Animation.ServerRegistry = null;
 
             Logger.Trace($"Registered {ComponentTemplateRegistry.AnimationServer.Definitions.Count} server animation components");
         }

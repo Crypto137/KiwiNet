@@ -3,38 +3,38 @@
     public sealed class ResourceManager
     {
         // The client appears to store resources in a linked list? It's easier for us to use a dictionary for now.
-        private readonly Dictionary<string, Resource> _resources = new(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, ResourceHandle> _resources = new(StringComparer.OrdinalIgnoreCase);
 
         public static ResourceManager Instance { get; } = new();
 
         private ResourceManager() { }
 
-        public Resource<T> GetResource<T>(string filePath) where T : IResourceData, new()
+        public ResourceHandle<T> GetResource<T>(string filePath) where T : IResource, new()
         {
-            if (_resources.TryGetValue(filePath, out Resource resource) == false)
+            if (_resources.TryGetValue(filePath, out ResourceHandle resource) == false)
                 return null;
 
-            return (Resource<T>)resource;
+            return (ResourceHandle<T>)resource;
         }
 
-        public void AddResource(Resource resource)
+        public void AddResource(ResourceHandle resource)
         {
-            _resources.Add(resource.FilePath, resource);
+            _resources.Add(resource.FileName, resource);
         }
 
-        public void RemoveResource(Resource resource)
+        public void RemoveResource(ResourceHandle resource)
         {
-            _resources.Remove(resource.FilePath);
+            _resources.Remove(resource.FileName);
             resource.Free();
         }
 
-        public static Resource<T> Get<T>(string filePath) where T : IResourceData, new()
+        public static ResourceHandle<T> Get<T>(string filePath) where T : IResource, new()
         {
-            Resource<T> resource = Instance.GetResource<T>(filePath);
+            ResourceHandle<T> resource = Instance.GetResource<T>(filePath);
 
             if (resource == null)
             {
-                resource = new Resource<T>(filePath, Instance);
+                resource = new ResourceHandle<T>(filePath, Instance);
                 Instance.AddResource(resource);
             }
 

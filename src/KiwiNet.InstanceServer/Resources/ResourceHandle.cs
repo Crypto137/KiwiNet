@@ -1,19 +1,19 @@
 ﻿namespace KiwiNet.InstanceServer.Resources
 {
     /// <summary>
-    /// Type-agnostic data for <see cref="Resource{T}"/>.
+    /// Type-agnostic data for <see cref="ResourceHandle{T}"/>.
     /// </summary>
-    public abstract class Resource : IDisposable
+    public abstract class ResourceHandle : IDisposable
     {
-        private readonly string _filePath;
+        private readonly string _fileName;
         private int _refCount;
         private readonly ResourceManager _resourceManager;
 
-        public string FilePath { get => _filePath; }
+        public string FileName { get => _fileName; }
 
-        public Resource(string filePath, ResourceManager resourceManager)
+        public ResourceHandle(string filePath, ResourceManager resourceManager)
         {
-            _filePath = filePath;
+            _fileName = filePath;
             _refCount = 0;
             _resourceManager = resourceManager;
         }
@@ -38,20 +38,20 @@
     }
 
     /// <summary>
-    /// A ref-counted instance of <see cref="IResourceData"/> containing loaded game data.
+    /// A ref-counted instance of <see cref="IResource"/> containing loaded game data.
     /// </summary>
-    public class Resource<T> : Resource where T : IResourceData, new()
+    public class ResourceHandle<T> : ResourceHandle where T : IResource, new()
     {
-        public T Data { get; } = new();
+        public T Resource { get; } = new();
 
-        public Resource(string filePath, ResourceManager resourceManager) : base(filePath, resourceManager)
+        public ResourceHandle(string filePath, ResourceManager resourceManager) : base(filePath, resourceManager)
         {
-            Data.Load(filePath);
+            Resource.Load(filePath);
         }
 
         public override void Free()
         {
-            Data.Free();
+            Resource.Free();
         }
     }
 }
