@@ -1,7 +1,12 @@
-﻿namespace KiwiNet.InstanceServer.GameObjects
+﻿using KiwiNet.Core.Logging;
+
+namespace KiwiNet.InstanceServer.GameObjects
 {
     public abstract class ComponentTemplate
     {
+        // FIXME: clean up debug logging and return false for non-existent variables when everything is working properly
+        private static readonly Logger Logger = LogManager.CreateLogger();
+
         protected readonly GameObjectTemplate _gameObjectTemplate;
 
         public ComponentTemplate(GameObjectTemplate gameObjectTemplate)
@@ -13,22 +18,26 @@
 
         public virtual bool SetBoolVariable(string name, bool value)
         {
-            return false;
+            Logger.Debug($"{GetType().Name}.SetBoolVariable(): {name} = {value}");
+            return true;
         }
 
         public virtual bool SetFloatVariable(string name, float value)
         {
-            return false;
+            Logger.Debug($"{GetType().Name}.SetFloatVariable(): {name} = {value}");
+            return true;
         }
 
         public virtual bool SetStringVariable(string name, string value)
         {
-            return false;
+            Logger.Debug($"{GetType().Name}.SetStringVariable(): {name} = {value}");
+            return true;
         }
 
         public virtual bool SetIntVariable(string name, int value)
         {
-            return false;
+            Logger.Debug($"{GetType().Name}.SetIntVariable(): {name} = {value}");
+            return true;
         }
 
         public virtual void GetDependencies(List<string> dependencies)

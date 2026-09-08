@@ -19,6 +19,6 @@
 
         public abstract string GetName();
 
-        public virtual void PopulateFromResource(ComponentTemplate componentTemplate) { }
+        public virtual void PopulateFromResource(ComponentTemplate componentTemplate, string fileName) { }
     }
 }
