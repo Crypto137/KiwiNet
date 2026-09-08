@@ -30,8 +30,8 @@ namespace KiwiNet.InstanceServer.GameObjects
             // Init factories, this will also populate ItemComponentTemplateRegistry
             _ = ItemCommonComponentTemplateFactoryCollection.Instance;
 
-            using ResourceHandle<CSVTable> itemObjectTable = ResourceManager.Get<CSVTable>("Data/BaseItemTypes.csv");
-            if (itemObjectTable != ItemObjectCSVTable)
+            using ResourceHandle<CSVTable> itemObjectCSVTable = ResourceManager.Get<CSVTable>("Data/BaseItemTypes.csv");
+            if (itemObjectCSVTable != ItemObjectCSVTable)
             {
                 if (ItemObjectCSVTable != null)
                 {
@@ -39,7 +39,7 @@ namespace KiwiNet.InstanceServer.GameObjects
                     ItemObjectCSVTable = null;
                 }
 
-                ItemObjectCSVTable = itemObjectTable;
+                ItemObjectCSVTable = itemObjectCSVTable;
                 ItemObjectCSVTable.IncrementRefCount();
             }
 
@@ -64,8 +64,8 @@ namespace KiwiNet.InstanceServer.GameObjects
             // Init factories, this will also populate WorldComponentTemplateRegistry
             _ = WorldCommonComponentTemplateFactoryCollection.Instance;
 
-            using ResourceHandle<CSVTable> worldObjectTable = ResourceManager.Get<CSVTable>("Metadata/objects.csv");
-            if (worldObjectTable != WorldObjectCSVTable)
+            using ResourceHandle<CSVTable> worldObjectCSVTable = ResourceManager.Get<CSVTable>("Metadata/objects.csv");
+            if (worldObjectCSVTable != WorldObjectCSVTable)
             {
                 if (WorldObjectCSVTable != null)
                 {
@@ -73,7 +73,7 @@ namespace KiwiNet.InstanceServer.GameObjects
                     WorldObjectCSVTable = null;
                 }
 
-                WorldObjectCSVTable = worldObjectTable;
+                WorldObjectCSVTable = worldObjectCSVTable;
                 WorldObjectCSVTable.IncrementRefCount();
             }
 

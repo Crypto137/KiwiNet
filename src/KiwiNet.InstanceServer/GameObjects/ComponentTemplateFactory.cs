@@ -19,6 +19,6 @@
 
         public abstract string GetName();
 
-        public virtual void PopulateFromResource(ComponentTemplate componentTemplate, string fileName) { }
+        public virtual void ApplyTableData(ComponentTemplate componentTemplate, string fileName) { }
     }
 }

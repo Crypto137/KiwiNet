@@ -10,5 +10,7 @@
         public static ComponentTemplateParseParams Item { get; } = new();
         public static ComponentTemplateParseParams World { get; } = new();
         public static ComponentTemplateParseParams Animation { get; } = new();
+
+        private ComponentTemplateParseParams() { }
     }
 }

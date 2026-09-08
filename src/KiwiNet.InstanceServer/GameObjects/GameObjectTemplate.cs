@@ -92,7 +92,7 @@ namespace KiwiNet.InstanceServer.GameObjects
                 LoadComponentTemplatesInternal(superclass, fileExtension, componentTemplateRegistry, @params);
 
             for (int i = 0; i < NumCommonComponents; i++)
-                PopulateResourceComponent(componentTemplateRegistry, i, fileName);
+                ApplyTableData(componentTemplateRegistry, i, fileName);
 
             // Components
             while (true)
@@ -126,8 +126,8 @@ namespace KiwiNet.InstanceServer.GameObjects
                             throw new ResourceException($"Error: Dependency {dependency} of {componentName} not satisfied");
                     }
 
-                    // Populate from resource data
-                    PopulateResourceComponent(componentTemplateRegistry, Components.Count - 1, fileName);
+                    // Apply .dat tables
+                    ApplyTableData(componentTemplateRegistry, Components.Count - 1, fileName);
                 }
 
                 // Begin reading component variables
@@ -209,7 +209,7 @@ namespace KiwiNet.InstanceServer.GameObjects
             }
         }
 
-        private void PopulateResourceComponent(ComponentTemplateRegistry componentTemplateRegistry, int index, string fileName)
+        private void ApplyTableData(ComponentTemplateRegistry componentTemplateRegistry, int index, string fileName)
         {
             ComponentTemplate component = Components[index];
             
@@ -223,7 +223,7 @@ namespace KiwiNet.InstanceServer.GameObjects
                 }
             }
 
-            componentTemplateRegistry.Definitions[name].Factory.PopulateFromResource(component, fileName);
+            componentTemplateRegistry.Definitions[name].Factory.ApplyTableData(component, fileName);
         }
 
         private (ComponentTemplate, string) AllocateComponentTemplate(string name, ComponentTemplateRegistry componentTemplateRegistry)

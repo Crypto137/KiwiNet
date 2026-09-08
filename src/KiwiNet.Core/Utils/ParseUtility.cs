@@ -2,6 +2,9 @@
 
 namespace KiwiNet.Core.Utils
 {
+    /// <summary>
+    /// Provides functionality for parsing various plain text formats from a <see cref="TextReader"/>.
+    /// </summary>
     public static class ParseUtility
     {
         // TODO: optimize StringBuilder / string allocations here?
@@ -24,10 +27,8 @@ namespace KiwiNet.Core.Utils
             }
         }
 
-        public static void GetNextToken(TextReader reader, out string token)
+        public static void GetNextToken(TextReader reader, StringBuilder sb)
         {
-            StringBuilder sb = new();
-
             SkipWhiteSpace(reader);
 
             int count = 0;
@@ -45,15 +46,17 @@ namespace KiwiNet.Core.Utils
                 count++;
                 reader.Read();
             }
+        }
 
+        public static void GetNextToken(TextReader reader, out string token)
+        {
+            StringBuilder sb = new();
+            GetNextToken(reader, sb);
             token = sb.ToString();
         }
 
-        public static bool GetDelimitedString(TextReader reader, char delimiter, out string str)
+        public static bool GetDelimitedString(TextReader reader, char delimiter, StringBuilder sb)
         {
-            str = string.Empty;
-            StringBuilder sb = new();
-
             int count = 0;
             while (count < int.MaxValue)
             {
@@ -65,7 +68,6 @@ namespace KiwiNet.Core.Utils
                 if (c == delimiter)
                 {
                     reader.Read();
-                    str = sb.ToString();
                     return true;
                 }
 
@@ -75,6 +77,22 @@ namespace KiwiNet.Core.Utils
             }
 
             return false;
+        }
+
+        public static bool GetDelimitedString(TextReader reader, char delimiter, out string str)
+        {
+            StringBuilder sb = new();
+
+            if (GetDelimitedString(reader, delimiter, sb))
+            {
+                str = sb.ToString();
+                return true;
+            }
+            else
+            {
+                str = string.Empty;
+                return false;
+            }
         }
 
         public static bool ExtractStringLiteral(TextReader reader, out string str)
