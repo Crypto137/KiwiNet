@@ -63,8 +63,16 @@ namespace KiwiNet.Core.Network
 
             try
             {
-                bytesReceived = _socket.Receive(_readBuffer, _receivePosition, length, SocketFlags.None);
-                errorCode = 0;
+                if (_socket.Available > 0)
+                {
+                    bytesReceived = _socket.Receive(_readBuffer, _receivePosition, length, SocketFlags.None);
+                    errorCode = 0;
+                }
+                else
+                {
+                    bytesReceived = -1;
+                    errorCode = (int)SocketError.WouldBlock;
+                }
             }
             catch (SocketException e)
             {
