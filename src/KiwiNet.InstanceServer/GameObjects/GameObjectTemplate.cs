@@ -4,18 +4,28 @@ using System.Text;
 
 namespace KiwiNet.InstanceServer.GameObjects
 {
-    public class GameObjectTemplate
+    public abstract class GameObjectTemplate : IResource
     {
-        public string FileName { get; }
-        public uint Hash { get; }
+        public string FileName { get; private set; }
+        public uint Hash { get; private set; }
         public List<ComponentTemplate> Components { get; } = new();
         public Dictionary<string, int> ComponentIndicesByName { get; } = new(8, StringComparer.OrdinalIgnoreCase);
         public int NumCommonComponents { get; private set; }
 
-        public GameObjectTemplate(string filePath)
+        public GameObjectTemplate()
         {
-            FileName = filePath;
-            Hash = HashUtility.MurmurHash2(filePath);
+        }
+
+        public void Initialize(string fileName)
+        {
+            FileName = fileName;
+            Hash = HashUtility.MurmurHash2(fileName);
+        }
+
+        public abstract void Load(string fileName);
+
+        public virtual void Free()
+        {
         }
 
         public void LoadComponentTemplates(string fileName, ComponentTemplateParseParams @params)
