@@ -4,9 +4,11 @@ namespace KiwiNet.InstanceServer.Items.Components
 {
     public sealed class StackComponent : ItemComponent
     {
+        public int Quantity { get; set; }
+
         public override void Serialize(NetworkConnection connection)
         {
-            // TODO
+            connection.Write(Quantity);
         }
     }
 }

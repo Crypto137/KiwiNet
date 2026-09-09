@@ -1,6 +1,7 @@
 ﻿using KiwiNet.Core.Math;
 using KiwiNet.InstanceServer.GameObjects;
 using KiwiNet.InstanceServer.Items;
+using KiwiNet.InstanceServer.Items.Components;
 using KiwiNet.InstanceServer.Network;
 using KiwiNet.InstanceServer.Resources;
 using KiwiNet.InstanceServer.WorldObjects;
@@ -28,6 +29,9 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
 
             ItemObject item = new();
             item.Initialize(itemTemplate);
+            StackComponent stack = item.GetComponent<StackComponent>();
+            if (stack != null)
+                stack.Quantity = 1;
 
             // Create and send WorldItem
             using ResourceHandle<WorldObjectTable> worldObjectTable = ResourceManager.Get<WorldObjectTable>(GameObjectSystem.WorldObjectTableFile);
