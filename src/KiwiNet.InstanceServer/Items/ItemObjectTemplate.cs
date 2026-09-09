@@ -2,7 +2,11 @@
 
 namespace KiwiNet.InstanceServer.Items
 {
-    public class ItemObjectTemplate : GameObjectTemplate
+    public sealed class ItemObjectTable : GameObjectTable<ItemObjectTemplate>
+    {
+    }
+
+    public sealed class ItemObjectTemplate : GameObjectTemplate
     {
         public override void Load(string fileName)
         {

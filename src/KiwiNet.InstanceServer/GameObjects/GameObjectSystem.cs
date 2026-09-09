@@ -8,18 +8,25 @@ namespace KiwiNet.InstanceServer.GameObjects
 {
     public static class GameObjectSystem
     {
-        public const string ItemObjectTableFile = "Data/BaseItemTypes.csv";
-        public const string WorldObjectTableFile = "Metadata/objects.csv";
+        public const string ItemObjectCSVTableFile = "Data/BaseItemTypes.csv";
+        public const string WorldObjectCSVTableFile = "Metadata/objects.csv";
+
+        public const string ItemObjectTableFile = "Data/BaseItemTypes.csvf";
+        public const string WorldObjectTableFile = "Metadata/objects.csvf";
 
         private static readonly Logger Logger = LogManager.CreateLogger();
 
-        public static ResourceHandle<CSVTable> ItemObjectCSVTable { get; private set; }
-        public static ResourceHandle<CSVTable> WorldObjectCSVTable { get; private set; }
+        // static references to resources that need to be always loaded
+        private static ResourceHandle<CSVTable> _itemObjectCSVTable;
+        private static ResourceHandle<CSVTable> _worldObjectCSVTable;
+
+        private static ResourceHandle<ItemObjectTable> _itemObjectTable;
+        private static ResourceHandle<WorldObjectTable> _worldObjectTable;
 
         public static bool Initialize()
         {
             // TODO: check relative to the actual instance server directory rather than the current working directory.
-            if (File.Exists(ItemObjectTableFile) == false || File.Exists(WorldObjectTableFile) == false)
+            if (File.Exists(ItemObjectCSVTableFile) == false || File.Exists(WorldObjectCSVTableFile) == false)
             {
                 Logger.Fatal("Game data not found! Make sure you extracted Data and Metadata directories from Content.ggpk and placed them in the instance server directory.");
                 return false;
@@ -34,6 +41,16 @@ namespace KiwiNet.InstanceServer.GameObjects
             InitializeCommonAnimationObjectTemplates();
             //InitializeServerAnimationObjectTemplates();
 
+            {
+                using ResourceHandle<WorldObjectTable> worldObjectTable = ResourceManager.Get<WorldObjectTable>(WorldObjectTableFile);
+                SetStaticResource(ref _worldObjectTable, worldObjectTable);
+            }
+
+            {
+                using ResourceHandle<ItemObjectTable> itemObjectTable = ResourceManager.Get<ItemObjectTable>(ItemObjectTableFile);
+                SetStaticResource(ref _itemObjectTable, itemObjectTable);
+            }
+
             return true;
         }
 
@@ -42,18 +59,8 @@ namespace KiwiNet.InstanceServer.GameObjects
             // Init factories, this will also populate ItemComponentTemplateRegistry
             _ = ItemCommonComponentTemplateFactoryCollection.Instance;
 
-            using ResourceHandle<CSVTable> itemObjectCSVTable = ResourceManager.Get<CSVTable>(ItemObjectTableFile);
-            if (itemObjectCSVTable != ItemObjectCSVTable)
-            {
-                if (ItemObjectCSVTable != null)
-                {
-                    ItemObjectCSVTable.DecrementRefCount();
-                    ItemObjectCSVTable = null;
-                }
-
-                ItemObjectCSVTable = itemObjectCSVTable;
-                ItemObjectCSVTable.IncrementRefCount();
-            }
+            using ResourceHandle<CSVTable> itemObjectCSVTable = ResourceManager.Get<CSVTable>(ItemObjectCSVTableFile);
+            SetStaticResource(ref _itemObjectCSVTable, itemObjectCSVTable);
 
             ComponentTemplateParseParams.Item.CommonFileExtension = "ot";
             ComponentTemplateParseParams.Item.CommonRegistry = ComponentTemplateRegistry.ItemCommon;
@@ -76,18 +83,8 @@ namespace KiwiNet.InstanceServer.GameObjects
             // Init factories, this will also populate WorldComponentTemplateRegistry
             _ = WorldCommonComponentTemplateFactoryCollection.Instance;
 
-            using ResourceHandle<CSVTable> worldObjectCSVTable = ResourceManager.Get<CSVTable>(WorldObjectTableFile);
-            if (worldObjectCSVTable != WorldObjectCSVTable)
-            {
-                if (WorldObjectCSVTable != null)
-                {
-                    WorldObjectCSVTable.DecrementRefCount();
-                    WorldObjectCSVTable = null;
-                }
-
-                WorldObjectCSVTable = worldObjectCSVTable;
-                WorldObjectCSVTable.IncrementRefCount();
-            }
+            using ResourceHandle<CSVTable> worldObjectCSVTable = ResourceManager.Get<CSVTable>(WorldObjectCSVTableFile);
+            SetStaticResource(ref _worldObjectCSVTable, worldObjectCSVTable);
 
             ComponentTemplateParseParams.World.CommonFileExtension = "ot";
             ComponentTemplateParseParams.World.CommonRegistry = ComponentTemplateRegistry.WorldCommon;
@@ -124,6 +121,16 @@ namespace KiwiNet.InstanceServer.GameObjects
             ComponentTemplateParseParams.Animation.ServerRegistry = null;
 
             Logger.Trace($"Registered {ComponentTemplateRegistry.AnimationServer.Definitions.Count} server animation components");
+        }
+
+        private static void SetStaticResource<T>(ref ResourceHandle<T> staticResourceRef, ResourceHandle<T> newResource) where T: IResource, new()
+        {
+            if (newResource == staticResourceRef)
+                return;
+
+            staticResourceRef?.DecrementRefCount();
+            staticResourceRef = newResource;
+            staticResourceRef?.IncrementRefCount();
         }
     }
 }

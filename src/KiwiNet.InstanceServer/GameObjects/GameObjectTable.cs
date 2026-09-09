@@ -1,0 +1,48 @@
+﻿using KiwiNet.Core.Utils;
+using KiwiNet.InstanceServer.Resources;
+
+namespace KiwiNet.InstanceServer.GameObjects
+{
+    public abstract class GameObjectTable<T> : IResource where T: GameObjectTemplate, new()
+    {
+        private readonly Dictionary<string, string> _shortNameToNameLookup = new();
+        private readonly Dictionary<uint, string> _hashToNameLookup = new();
+
+        public void Load(string fileName)
+        {
+            fileName = fileName[..^1];  // .csvf -> .csv
+
+            using ResourceHandle<CSVTable> csvTableHandle = ResourceManager.Get<CSVTable>(fileName);
+            CSVTable csvTable = csvTableHandle.Resource;
+
+            if (csvTable.NumRows > 1)
+            {
+                for (int i = 1; i < csvTable.NumRows; i++)
+                {
+                    string entry = csvTable.Entries[i * csvTable.NumColumns];
+                    uint hash = HashUtility.MurmurHash2(entry);
+                    _hashToNameLookup.Add(hash, entry);
+
+                    int delimiterIndex = entry.LastIndexOf('/');
+                    string shortName = delimiterIndex != -1
+                        ? entry.Substring(delimiterIndex + 1, entry.Length - delimiterIndex - 1)
+                        : entry;
+
+                    _shortNameToNameLookup.Add(shortName, entry);
+                }
+            }
+        }
+
+        public void Free()
+        {
+        }
+
+        public ResourceHandle<T> GetTemplate(uint hash)
+        {
+            if (_hashToNameLookup.TryGetValue(hash, out string fileName) == false)
+                return null;
+
+            return ResourceManager.Get<T>(fileName);
+        }
+    }
+}

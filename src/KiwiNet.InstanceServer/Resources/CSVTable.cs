@@ -8,11 +8,11 @@ namespace KiwiNet.InstanceServer.Resources
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
 
-        private readonly List<string> _entries = new();
-        private int _numColumns;
-        private int _numRows;
-        private readonly Dictionary<string, int> _columnIndex = new(StringComparer.Ordinal);
-        private readonly Dictionary<string, int> _rowIndex = new(StringComparer.Ordinal);
+        public List<string> Entries { get; } = new();
+        public int NumColumns { get; private set; }
+        public int NumRows { get; private set; }
+        public Dictionary<string, int> ColumnIndex { get; private set; } = new(StringComparer.Ordinal);
+        public Dictionary<string, int> RowIndex { get; private set; } = new(StringComparer.Ordinal);
 
         public CSVTable() { }
 
@@ -22,23 +22,23 @@ namespace KiwiNet.InstanceServer.Resources
             
             LoadFile(fileName);
 
-            _numRows = _entries.Count / _numColumns;
+            NumRows = Entries.Count / NumColumns;
 
             // Build column index
-            for (int i = 0; i < _numColumns; i++)
+            for (int i = 0; i < NumColumns; i++)
             {
-                string columnName = _entries[i];
-                if (_columnIndex.TryAdd(columnName, i) == false)
+                string columnName = Entries[i];
+                if (ColumnIndex.TryAdd(columnName, i) == false)
                     throw new ResourceException($"Duplicate column name: {columnName}");
             }
 
             // Build row index (if we have any data rows)
-            if (_numRows > 1)
+            if (NumRows > 1)
             {
-                for (int i = 1; i < _numRows; i++)
+                for (int i = 1; i < NumRows; i++)
                 {
-                    string rowName = _entries[i * _numColumns];
-                    if (_rowIndex.TryAdd(rowName, i) == false)
+                    string rowName = Entries[i * NumColumns];
+                    if (RowIndex.TryAdd(rowName, i) == false)
                         throw new ResourceException($"Duplicate row name: {rowName}");
                 }
             }
@@ -63,26 +63,26 @@ namespace KiwiNet.InstanceServer.Resources
 
             ParseRow(headerRow, parsedEntries);
 
-            if (_entries.Count == 0)
+            if (Entries.Count == 0)
             {
                 // This is a top level table, so it can define the column structure.
-                _numColumns = parsedEntries.Count;
-                _entries.AddRange(parsedEntries);
+                NumColumns = parsedEntries.Count;
+                Entries.AddRange(parsedEntries);
             }
             else
             {
                 // This is a child table, so it needs to match the structure defined by the top level parent.
                 int childCount = parsedEntries.Count;
 
-                if (childCount != _numColumns)
+                if (childCount != NumColumns)
                     throw new ResourceException("Child table has the wrong number of columns.");
 
                 if (childCount > 0)
                 {
                     for (int i = 0; i < childCount; i++)
                     {
-                        if (string.Equals(parsedEntries[i], _entries[i], StringComparison.Ordinal) == false)
-                            throw new ResourceException($"{parsedEntries[i]} in child table does not match parent column: {_entries[i]}.");
+                        if (string.Equals(parsedEntries[i], Entries[i], StringComparison.Ordinal) == false)
+                            throw new ResourceException($"{parsedEntries[i]} in child table does not match parent column: {Entries[i]}.");
                     }
                 }
             }
@@ -100,10 +100,10 @@ namespace KiwiNet.InstanceServer.Resources
                     continue;
                 }
 
-                if (parsedEntries.Count != _numColumns)
+                if (parsedEntries.Count != NumColumns)
                     throw new ResourceException("Inconsistent number of values on a row.");
 
-                _entries.AddRange(parsedEntries);
+                Entries.AddRange(parsedEntries);
             }
         }
 

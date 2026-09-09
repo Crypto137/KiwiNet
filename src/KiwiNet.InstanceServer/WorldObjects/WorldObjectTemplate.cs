@@ -3,6 +3,10 @@ using KiwiNet.InstanceServer.WorldObjects.Components.Templates;
 
 namespace KiwiNet.InstanceServer.WorldObjects
 {
+    public sealed class WorldObjectTable : GameObjectTable<WorldObjectTemplate>
+    {
+    }
+
     public sealed class WorldObjectTemplate : GameObjectTemplate
     {
         public PositionedComponentTemplate Positioned { get; set; }
