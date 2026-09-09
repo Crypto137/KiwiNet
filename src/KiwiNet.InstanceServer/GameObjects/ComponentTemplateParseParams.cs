@@ -1,7 +1,10 @@
-﻿namespace KiwiNet.InstanceServer.GameObjects
+﻿using KiwiNet.InstanceServer.Resources;
+
+namespace KiwiNet.InstanceServer.GameObjects
 {
     public class ComponentTemplateParseParams
     {
+        public CSVTable CSVTable { get; set; } // FIXME
         public string CommonFileExtension { get; set; }
         public ComponentTemplateRegistry CommonRegistry { get; set; }
         public string ServerFileExtension { get; set; }

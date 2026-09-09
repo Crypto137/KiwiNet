@@ -62,6 +62,7 @@ namespace KiwiNet.InstanceServer.GameObjects
             using ResourceHandle<CSVTable> itemObjectCSVTable = ResourceManager.Get<CSVTable>(ItemObjectCSVTableFile);
             SetStaticResource(ref _itemObjectCSVTable, itemObjectCSVTable);
 
+            ComponentTemplateParseParams.Item.CSVTable = _itemObjectCSVTable.Resource;  // FIXME
             ComponentTemplateParseParams.Item.CommonFileExtension = "ot";
             ComponentTemplateParseParams.Item.CommonRegistry = ComponentTemplateRegistry.ItemCommon;
 
@@ -86,6 +87,7 @@ namespace KiwiNet.InstanceServer.GameObjects
             using ResourceHandle<CSVTable> worldObjectCSVTable = ResourceManager.Get<CSVTable>(WorldObjectCSVTableFile);
             SetStaticResource(ref _worldObjectCSVTable, worldObjectCSVTable);
 
+            ComponentTemplateParseParams.World.CSVTable = _worldObjectCSVTable.Resource;    // FIXME
             ComponentTemplateParseParams.World.CommonFileExtension = "ot";
             ComponentTemplateParseParams.World.CommonRegistry = ComponentTemplateRegistry.WorldCommon;
 

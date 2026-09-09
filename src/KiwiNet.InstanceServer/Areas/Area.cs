@@ -1,7 +1,7 @@
 ﻿using KiwiNet.Core.Logging;
 using KiwiNet.Core.System;
-using KiwiNet.InstanceServer.GameObjects;
 using KiwiNet.InstanceServer.Network;
+using KiwiNet.InstanceServer.WorldObjects;
 
 namespace KiwiNet.InstanceServer.Areas
 {
@@ -25,7 +25,7 @@ namespace KiwiNet.InstanceServer.Areas
         internal static Area Current;
 
         public AreaManager AreaManager { get; }
-        public GameObjectManager GameObjectManager { get; }
+        public WorldObjectManager GameObjectManager { get; }
         public RemotePlayerManager RemotePlayerManager { get; }
 
         public uint InstanceId { get; private set; }

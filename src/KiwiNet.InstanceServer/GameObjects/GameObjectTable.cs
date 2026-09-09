@@ -44,5 +44,13 @@ namespace KiwiNet.InstanceServer.GameObjects
 
             return ResourceManager.Get<T>(fileName);
         }
+
+        public ResourceHandle<T> GetTemplate(string shortName)
+        {
+            if (_shortNameToNameLookup.TryGetValue(shortName, out string fileName) == false)
+                return null;
+
+            return ResourceManager.Get<T>(fileName);
+        }
     }
 }

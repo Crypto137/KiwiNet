@@ -1,20 +1,25 @@
 ﻿using KiwiNet.Core.Network;
 using KiwiNet.InstanceServer.GameObjects;
+using KiwiNet.InstanceServer.Resources;
 
 namespace KiwiNet.InstanceServer.Items
 {
-    public sealed class ItemObject : GameObject, INetworkSerializable
+    public sealed class ItemObject : GameObject<ItemObjectTemplate>, INetworkSerializable
     {
+        public override void Initialize(ResourceHandle<ItemObjectTemplate> templateHandle)
+        {
+            InitializeComponents(templateHandle);
+
+            foreach (Component component in _components)
+                component.PostInitialize();
+        }
+
         public void Serialize(NetworkConnection connection)
         {
-            connection.Write(Template);
+            connection.Write(_template.Resource.Hash);
 
-            // World components should probably not be allowed on item objects?
             foreach (Component component in _components)
-            {
-                if (component is ItemComponent itemComponent)
-                    itemComponent.Serialize(connection);
-            }
+                ((ItemComponent)component).Serialize(connection);
         }
     }
 }

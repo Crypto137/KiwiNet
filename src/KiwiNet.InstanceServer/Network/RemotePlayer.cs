@@ -6,6 +6,7 @@ using KiwiNet.Core.Utils;
 using KiwiNet.InstanceServer.Areas;
 using KiwiNet.InstanceServer.Commands;
 using KiwiNet.InstanceServer.GameObjects;
+using KiwiNet.InstanceServer.Resources;
 using KiwiNet.InstanceServer.Resources.Tables;
 using KiwiNet.InstanceServer.WorldObjects;
 using KiwiNet.InstanceServer.WorldObjects.Components;
@@ -52,7 +53,7 @@ namespace KiwiNet.InstanceServer.Network
 
         public void SendWorldObjectAdd(WorldObject worldObject)
         {
-            Connection.Write((byte)GameObjectPacketId.InstanceClientWorldObjectAdd);
+            Connection.Write((byte)WorldObjectPacketId.InstanceClientWorldObjectAdd);
             worldObject.Serialize(Connection);
             Connection.Flush();
         }
@@ -62,21 +63,23 @@ namespace KiwiNet.InstanceServer.Network
             GameConfig config = ConfigManager.Get<GameConfig>();
 
             // TODO: create Player game object via GameObjectManager, load persistent data here
-            Player = new();
+            Player = new() { Id = 0x1 };
 
-            GameObjectSettings settings = new()
+            using ResourceHandle<WorldObjectTable> worldObjectTable = ResourceManager.Get<WorldObjectTable>(GameObjectSystem.WorldObjectTableFile);
+            
+            ResourceHandle<WorldObjectTemplate> playerTemplate = worldObjectTable.Resource.GetTemplate(config.CharacterTemplate);
+            if (playerTemplate == null)
             {
-                Template = HashUtility.MurmurHash2(config.CharacterTemplate),
-                Id = 0x1,
-                GridPosition = Session.StartPosition,
-            };
+                Logger.Warn($"{config.CharacterTemplate} is not a valid character template, falling back to Str");
+                playerTemplate = worldObjectTable.Resource.GetTemplate("Str");
+            }
 
-            // component order is strict for serialization
-            Player.Initialize(ref settings);    // Positioned instantiated in Initialize()
-            Player.GetOrCreateComponent<LifeComponent>().Life = 100;
-            Player.GetOrCreateComponent<AnimatedComponent>();
+            Player.Initialize(playerTemplate);
 
-            PlayerComponent playerComponent = Player.GetOrCreateComponent<PlayerComponent>();
+            Player.Positioned.SetPosition(Session.StartPosition);
+            Player.GetComponent<LifeComponent>().Life = 100;
+
+            PlayerComponent playerComponent = Player.GetComponent<PlayerComponent>();
             playerComponent.Name = Session.CharacterName;
             if (Area.WorldAreaId == "1_1_1")
             {
@@ -84,8 +87,7 @@ namespace KiwiNet.InstanceServer.Network
                 //playerComponent.IsWashedUp = true;
             }
 
-            Player.GetOrCreateComponent<InventoriesComponent>();
-            Player.GetOrCreateComponent<ActorComponent>();
+            playerTemplate.DecrementRefCount();
 
             //---
 

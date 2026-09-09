@@ -8,6 +8,6 @@ namespace KiwiNet.InstanceServer
         public int WorldAreaSeed { get; private set; } = 666;
         public int StartPositionX { get; private set; } = 300;
         public int StartPositionY { get; private set; } = 540;
-        public string CharacterTemplate { get; private set; } = "Metadata/Characters/StrDexInt/StrDexInt";
+        public string CharacterTemplate { get; private set; } = "Str";
     }
 }

@@ -1,34 +1,32 @@
 ﻿using KiwiNet.Core.Network;
 using KiwiNet.InstanceServer.GameObjects;
+using KiwiNet.InstanceServer.Resources;
 using KiwiNet.InstanceServer.WorldObjects.Components;
 
 namespace KiwiNet.InstanceServer.WorldObjects
 {
-    public sealed class WorldObject : GameObject
+    public sealed class WorldObject : GameObject<WorldObjectTemplate>
     {
         private readonly List<KeyValuePair<uint, uint>> _unkList = new();
 
-        private PositionedComponent _positioned;
+        public uint Id { get; set; }
+        public PositionedComponent Positioned { get; private set; }
 
-        public uint Id { get; private set; }
+        public WorldObject() { }
 
-        public override void Initialize(ref GameObjectSettings settings)
+        public override void Initialize(ResourceHandle<WorldObjectTemplate> templateHandle)
         {
-            base.Initialize(ref settings);
+            InitializeComponents(templateHandle);
 
-            Id = settings.Id;
+            Positioned = GetComponent<PositionedComponent>();
 
-            // The client looks up the Positioned component and saves a pointer to it in the constructor,
-            // indicating that all world objects are probably expected to have it.
-            // It appears the client does some kind of component name -> vector index lookup
-            _positioned = GetOrCreateComponent<PositionedComponent>();
-            _positioned.SetPosition(settings.GridPosition);
-            _positioned.Rotation = settings.Rotation;
+            foreach (Component component in _components)
+                component.PostInitialize();
         }
 
         public void Serialize(NetworkConnection connection)
         {
-            connection.Write(Template);
+            connection.Write(_template.Resource.Hash);
             connection.Write(Id);
 
             connection.Write((byte)_unkList.Count);
@@ -39,11 +37,7 @@ namespace KiwiNet.InstanceServer.WorldObjects
             }
 
             foreach (Component component in _components)
-            {
-                // Not sure yet if item components are allowed on world objects
-                if (component is WorldComponent worldComponent)
-                    worldComponent.Serialize(connection);
-            }
+                ((WorldComponent)component).Serialize(connection);
         }
     }
 }

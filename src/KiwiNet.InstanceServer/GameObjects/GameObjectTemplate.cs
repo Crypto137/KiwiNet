@@ -65,13 +65,29 @@ namespace KiwiNet.InstanceServer.GameObjects
         {
             string filePath = $"{fileName}.{fileExtension}";
 
-            // the client gets a file from GGPK and uses std::wistream to read it here
-            if (File.Exists(filePath) == false)
+            // The client gets a file from GGPK and uses std::wistream to read it here
+            if (File.Exists(filePath))
+            {
+                using StreamReader reader = new(filePath, Encoding.Unicode);
+                ParseComponentTemplate(reader, fileName, fileExtension, componentTemplateRegistry, @params);
+            }
+            else
+            {
+                // Some files are "virtual" and just copy data from the parent without having an actual file
+                // FIXME: figure out the proper way to handle this
+                CSVTable csvTable = @params.CSVTable;
+                if (csvTable != null && csvTable.RowIndex.TryGetValue(fileName, out int rowIndex))
+                {
+                    string superclass = csvTable.Entries[rowIndex * csvTable.NumColumns + 1];
+                    if (superclass != "nothing")
+                    {
+                        LoadComponentTemplatesInternal(superclass, fileExtension, componentTemplateRegistry, @params);
+                        return;
+                    }
+                }
+
                 throw new ResourceException($"{filePath} is non virtual and does not have a physical file");
-
-            using StreamReader reader = new(filePath, Encoding.Unicode);
-
-            ParseComponentTemplate(reader, fileName, fileExtension, componentTemplateRegistry, @params);
+            }
         }
 
         private void ParseComponentTemplate(StreamReader reader, string fileName, string fileExtension,
