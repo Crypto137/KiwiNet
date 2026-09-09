@@ -4,16 +4,29 @@ namespace KiwiNet.InstanceServer.GameObjects
 {
     public class ComponentTemplateParseParams
     {
-        public CSVTable CSVTable { get; set; } // FIXME
         public string CommonFileExtension { get; set; }
         public ComponentTemplateRegistry CommonRegistry { get; set; }
         public string ServerFileExtension { get; set; }
         public ComponentTemplateRegistry ServerRegistry { get; set; }
+        public ResourceHandle<CSVTable> ObjectTable { get; set; }
 
         public static ComponentTemplateParseParams Item { get; } = new();
         public static ComponentTemplateParseParams World { get; } = new();
         public static ComponentTemplateParseParams Animation { get; } = new();
 
         private ComponentTemplateParseParams() { }
+
+        public string GetSuperclass(string fileName)
+        {
+            if (ObjectTable == null)
+                return null;
+
+            CSVTable table = ObjectTable.Resource;
+
+            if (table.RowIndex.TryGetValue(fileName, out int row) == false)
+                return null;
+
+            return table.GetEntry(1, row);
+        }
     }
 }

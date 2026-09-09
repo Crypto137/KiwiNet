@@ -10,7 +10,7 @@ namespace KiwiNet.InstanceServer.GameObjects
         public uint Hash { get; private set; }
         public List<ComponentTemplate> Components { get; } = new();
         public Dictionary<string, int> ComponentIndicesByName { get; } = new(8, StringComparer.OrdinalIgnoreCase);
-        public int NumCommonComponents { get; private set; }
+        public int TableComponentOffset { get; private set; }
 
         public GameObjectTemplate()
         {
@@ -32,7 +32,9 @@ namespace KiwiNet.InstanceServer.GameObjects
         {
             // Load common components (recursive)
             LoadComponentTemplatesInternal(fileName, @params.CommonFileExtension, @params.CommonRegistry, @params);
-            NumCommonComponents = Components.Count;
+
+            // Move offset to avoid table data reapplication for common components when loading client/server specific components.
+            TableComponentOffset = Components.Count;
 
             // Load client/server specific components (recursive)
             if (@params.ServerRegistry != null)
@@ -74,19 +76,13 @@ namespace KiwiNet.InstanceServer.GameObjects
             else
             {
                 // Some files are "virtual" and just copy data from the parent without having an actual file
-                // FIXME: figure out the proper way to handle this
-                CSVTable csvTable = @params.CSVTable;
-                if (csvTable != null && csvTable.RowIndex.TryGetValue(fileName, out int rowIndex))
-                {
-                    string superclass = csvTable.Entries[rowIndex * csvTable.NumColumns + 1];
-                    if (superclass != "nothing")
-                    {
-                        LoadComponentTemplatesInternal(superclass, fileExtension, componentTemplateRegistry, @params);
-                        return;
-                    }
-                }
+                string superclass = @params.GetSuperclass(fileName);
+                if (superclass == null || superclass == "nothing")
+                    throw new ResourceException($"{filePath} is non virtual and does not have a physical file");
 
-                throw new ResourceException($"{filePath} is non virtual and does not have a physical file");
+                LoadComponentTemplatesInternal(superclass, fileExtension, componentTemplateRegistry, @params);
+                for (int i = TableComponentOffset; i < Components.Count; i++)
+                    ApplyTableData(componentTemplateRegistry, i, fileName);
             }
         }
 
@@ -110,7 +106,7 @@ namespace KiwiNet.InstanceServer.GameObjects
             if (string.Equals(superclass, "nothing", StringComparison.Ordinal) == false)
                 LoadComponentTemplatesInternal(superclass, fileExtension, componentTemplateRegistry, @params);
 
-            for (int i = 0; i < NumCommonComponents; i++)
+            for (int i = TableComponentOffset; i < Components.Count; i++)
                 ApplyTableData(componentTemplateRegistry, i, fileName);
 
             // Components

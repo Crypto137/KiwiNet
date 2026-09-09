@@ -48,6 +48,27 @@ namespace KiwiNet.InstanceServer.Resources
         {
         }
 
+        public static void ThrowOutOfRangeException(int? column, int? row)
+        {
+            string message = "Datatable out of range.";
+
+            if (column != null)
+                message += $" Column: {column.Value}";
+
+            if (row != null)
+                message += $" Row: {row.Value}";
+
+            throw new IndexOutOfRangeException(message);
+        }
+
+        public string GetEntry(int column, int row)
+        {
+            if (column >= NumColumns || row >= NumRows)
+                ThrowOutOfRangeException(column, row);
+
+            return Entries[row * NumColumns + column];
+        }
+
         private void LoadFile(string fileName)
         {
             // the client gets a file from GGPK and uses std::wistream to read it here

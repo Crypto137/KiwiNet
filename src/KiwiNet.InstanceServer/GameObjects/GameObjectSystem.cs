@@ -17,9 +17,6 @@ namespace KiwiNet.InstanceServer.GameObjects
         private static readonly Logger Logger = LogManager.CreateLogger();
 
         // static references to resources that need to be always loaded
-        private static ResourceHandle<CSVTable> _itemObjectCSVTable;
-        private static ResourceHandle<CSVTable> _worldObjectCSVTable;
-
         private static ResourceHandle<ItemObjectTable> _itemObjectTable;
         private static ResourceHandle<WorldObjectTable> _worldObjectTable;
 
@@ -33,13 +30,11 @@ namespace KiwiNet.InstanceServer.GameObjects
             }
 
             InitializeCommonItemObjectTemplates();
-            //InitializeServerItemObjectTemplates();
 
             InitializeCommonWorldObjectTemplates();
-            //InitializeServerWorldObjectTemplates();
+            InitializeServerWorldObjectTemplates();
             
             InitializeCommonAnimationObjectTemplates();
-            //InitializeServerAnimationObjectTemplates();
 
             {
                 using ResourceHandle<WorldObjectTable> worldObjectTable = ResourceManager.Get<WorldObjectTable>(WorldObjectTableFile);
@@ -56,73 +51,53 @@ namespace KiwiNet.InstanceServer.GameObjects
 
         private static void InitializeCommonItemObjectTemplates()
         {
-            // Init factories, this will also populate ItemComponentTemplateRegistry
+            // Init factories, this will also populate ComponentTemplateRegistry.ItemCommon
             _ = ItemCommonComponentTemplateFactoryCollection.Instance;
 
+            ComponentTemplateParseParams parseParams = ComponentTemplateParseParams.Item;
+
             using ResourceHandle<CSVTable> itemObjectCSVTable = ResourceManager.Get<CSVTable>(ItemObjectCSVTableFile);
-            SetStaticResource(ref _itemObjectCSVTable, itemObjectCSVTable);
+            parseParams.ObjectTable?.DecrementRefCount();
+            parseParams.ObjectTable = itemObjectCSVTable;
+            parseParams.ObjectTable?.IncrementRefCount();
 
-            ComponentTemplateParseParams.Item.CSVTable = _itemObjectCSVTable.Resource;  // FIXME
-            ComponentTemplateParseParams.Item.CommonFileExtension = "ot";
-            ComponentTemplateParseParams.Item.CommonRegistry = ComponentTemplateRegistry.ItemCommon;
-
-            Logger.Trace($"Registered {ComponentTemplateRegistry.ItemCommon.Definitions.Count} common item components");
-        }
-
-        private static void InitializeServerItemObjectTemplates()
-        {
-            // not sure if there are any server-specific item components
-
-            ComponentTemplateParseParams.Item.ServerFileExtension = "ots";
-            ComponentTemplateParseParams.Item.ServerRegistry = ComponentTemplateRegistry.ItemServer;
-
-            Logger.Trace($"Registered {ComponentTemplateRegistry.ItemServer.Definitions.Count} server item components");
+            parseParams.CommonFileExtension = "ot";
+            parseParams.CommonRegistry = ComponentTemplateRegistry.ItemCommon;
         }
 
         private static void InitializeCommonWorldObjectTemplates()
         {
-            // Init factories, this will also populate WorldComponentTemplateRegistry
+            // Init factories, this will also populate ComponentTemplateRegistry.WorldCommon
             _ = WorldCommonComponentTemplateFactoryCollection.Instance;
 
+            ComponentTemplateParseParams parseParams = ComponentTemplateParseParams.World;
+
             using ResourceHandle<CSVTable> worldObjectCSVTable = ResourceManager.Get<CSVTable>(WorldObjectCSVTableFile);
-            SetStaticResource(ref _worldObjectCSVTable, worldObjectCSVTable);
+            parseParams.ObjectTable?.DecrementRefCount();
+            parseParams.ObjectTable = worldObjectCSVTable;
+            parseParams.ObjectTable?.IncrementRefCount();
 
-            ComponentTemplateParseParams.World.CSVTable = _worldObjectCSVTable.Resource;    // FIXME
-            ComponentTemplateParseParams.World.CommonFileExtension = "ot";
-            ComponentTemplateParseParams.World.CommonRegistry = ComponentTemplateRegistry.WorldCommon;
-
-            Logger.Trace($"Registered {ComponentTemplateRegistry.WorldCommon.Definitions.Count} common world components");
+            parseParams.CommonFileExtension = "ot";
+            parseParams.CommonRegistry = ComponentTemplateRegistry.WorldCommon;
         }
 
         private static void InitializeServerWorldObjectTemplates()
         {
             // TODO?: ots file for server-specific components for world objects
 
-            ComponentTemplateParseParams.World.ServerFileExtension = "ots";
-            ComponentTemplateParseParams.World.ServerRegistry = ComponentTemplateRegistry.WorldServer;
-
-            Logger.Trace($"Registered {ComponentTemplateRegistry.WorldServer.Definitions.Count} server world components");
+            //ComponentTemplateParseParams.World.ServerFileExtension = "ots";
+            //ComponentTemplateParseParams.World.ServerRegistry = ComponentTemplateRegistry.WorldServer;
         }
 
         private static void InitializeCommonAnimationObjectTemplates()
         {
-            // Init factories, this will also populate WorldComponentTemplateRegistry
+            // Init factories, this will also populate ComponentTemplateRegistry.AnimationCommon
             _ = AnimationCommonComponentTemplateFactoryCollection.Instance;
 
-            ComponentTemplateParseParams.Animation.CommonFileExtension = "ao";
-            ComponentTemplateParseParams.Animation.CommonRegistry = ComponentTemplateRegistry.AnimationCommon;
+            ComponentTemplateParseParams parseParams = ComponentTemplateParseParams.Animation;
 
-            Logger.Trace($"Registered {ComponentTemplateRegistry.AnimationCommon.Definitions.Count} common animation components");
-        }
-
-        private static void InitializeServerAnimationObjectTemplates()
-        {
-            // not sure if there are any server-specific animation components
-
-            ComponentTemplateParseParams.Animation.ServerFileExtension = "aos";
-            ComponentTemplateParseParams.Animation.ServerRegistry = null;
-
-            Logger.Trace($"Registered {ComponentTemplateRegistry.AnimationServer.Definitions.Count} server animation components");
+            parseParams.CommonFileExtension = "ao";
+            parseParams.CommonRegistry = ComponentTemplateRegistry.AnimationCommon;
         }
 
         private static void SetStaticResource<T>(ref ResourceHandle<T> staticResourceRef, ResourceHandle<T> newResource) where T: IResource, new()
