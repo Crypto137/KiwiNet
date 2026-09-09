@@ -13,7 +13,7 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
     [CommandGroup]
     public static class CheatCommands
     {
-        private static uint ItemIdCount = 1000000;
+        private static uint NextSpawnedId = 1000000;
 
         [CommandHandler("item")]
         public static string Item(object invoker, ReadOnlySpan<string> args)
@@ -40,12 +40,42 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
             RemotePlayer player = (RemotePlayer)invoker;
             Vector2Int position = player.Player.Positioned.GridPosition;
 
-            WorldObject worldItem = new() { Id = ItemIdCount++ };
+            WorldObject worldItem = new() { Id = NextSpawnedId++ };
             worldItem.Initialize(worldItemTemplate);
             worldItem.Positioned.SetPosition(position);
             worldItem.GetComponent<WorldItemComponent>().Item = item;
 
             player.SendWorldObjectAdd(worldItem);
+
+            return string.Empty;
+        }
+
+        [CommandHandler("monster")]
+        public static string Monster(object invoker, ReadOnlySpan<string> args)
+        {
+            string shortName = args.Length > 0 ? args[0] : string.Empty;
+
+            using ResourceHandle<WorldObjectTable> worldObjectTable = ResourceManager.Get<WorldObjectTable>(GameObjectSystem.WorldObjectTableFile);
+            using ResourceHandle<WorldObjectTemplate> template = worldObjectTable.Resource.GetTemplate(shortName);
+
+            if (template == null)
+                return $"'{shortName}' is not a valid object name.";
+
+            if (template.FileName.Contains("Monsters") == false)
+                return $"'{shortName}' is not a monster.";
+
+            RemotePlayer player = (RemotePlayer)invoker;
+            Vector2Int position = player.Player.Positioned.GridPosition;
+
+            WorldObject monster = new() { Id = NextSpawnedId++ };
+            monster.Initialize(template);
+            monster.Positioned.SetPosition(position);
+
+            LifeComponent life = monster.GetComponent<LifeComponent>();
+            if (life != null)
+                life.Life = 100;
+
+            player.SendWorldObjectAdd(monster);
 
             return string.Empty;
         }
