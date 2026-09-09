@@ -66,6 +66,9 @@ namespace KiwiNet.InstanceServer.GameObjects
             string filePath = $"{fileName}.{fileExtension}";
 
             // the client gets a file from GGPK and uses std::wistream to read it here
+            if (File.Exists(filePath) == false)
+                throw new ResourceException($"{filePath} is non virtual and does not have a physical file");
+
             using StreamReader reader = new(filePath, Encoding.Unicode);
 
             ParseComponentTemplate(reader, fileName, fileExtension, componentTemplateRegistry, @params);

@@ -8,13 +8,23 @@ namespace KiwiNet.InstanceServer.GameObjects
 {
     public static class GameObjectSystem
     {
+        public const string ItemObjectTableFile = "Data/BaseItemTypes.csv";
+        public const string WorldObjectTableFile = "Metadata/objects.csv";
+
         private static readonly Logger Logger = LogManager.CreateLogger();
 
         public static ResourceHandle<CSVTable> ItemObjectCSVTable { get; private set; }
         public static ResourceHandle<CSVTable> WorldObjectCSVTable { get; private set; }
 
-        public static void Initialize()
+        public static bool Initialize()
         {
+            // TODO: check relative to the actual instance server directory rather than the current working directory.
+            if (File.Exists(ItemObjectTableFile) == false || File.Exists(WorldObjectTableFile) == false)
+            {
+                Logger.Fatal("Game data not found! Make sure you extracted Data and Metadata directories from Content.ggpk and placed them in the instance server directory.");
+                return false;
+            }
+
             InitializeCommonItemObjectTemplates();
             //InitializeServerItemObjectTemplates();
 
@@ -23,6 +33,8 @@ namespace KiwiNet.InstanceServer.GameObjects
             
             InitializeCommonAnimationObjectTemplates();
             //InitializeServerAnimationObjectTemplates();
+
+            return true;
         }
 
         private static void InitializeCommonItemObjectTemplates()
@@ -30,7 +42,7 @@ namespace KiwiNet.InstanceServer.GameObjects
             // Init factories, this will also populate ItemComponentTemplateRegistry
             _ = ItemCommonComponentTemplateFactoryCollection.Instance;
 
-            using ResourceHandle<CSVTable> itemObjectCSVTable = ResourceManager.Get<CSVTable>("Data/BaseItemTypes.csv");
+            using ResourceHandle<CSVTable> itemObjectCSVTable = ResourceManager.Get<CSVTable>(ItemObjectTableFile);
             if (itemObjectCSVTable != ItemObjectCSVTable)
             {
                 if (ItemObjectCSVTable != null)
@@ -64,7 +76,7 @@ namespace KiwiNet.InstanceServer.GameObjects
             // Init factories, this will also populate WorldComponentTemplateRegistry
             _ = WorldCommonComponentTemplateFactoryCollection.Instance;
 
-            using ResourceHandle<CSVTable> worldObjectCSVTable = ResourceManager.Get<CSVTable>("Metadata/objects.csv");
+            using ResourceHandle<CSVTable> worldObjectCSVTable = ResourceManager.Get<CSVTable>(WorldObjectTableFile);
             if (worldObjectCSVTable != WorldObjectCSVTable)
             {
                 if (WorldObjectCSVTable != null)

@@ -42,11 +42,18 @@ namespace KiwiNet.InstanceServer
             if (OperatingSystem.IsWindows())
                 _ = WinMM.TimeBeginPeriod(1);
 
-            GameObjectSystem.Initialize();
+            if (GameObjectSystem.Initialize() == false)
+                return false;
 
             AreaManager.Initialize();
-            return ClientLobby.Initialize() &&
-                   TcpServer.Initialize();
+
+            if (ClientLobby.Initialize() == false)
+                return false;
+
+            if (TcpServer.Initialize() == false)
+                return false;
+
+            return true;
         }
 
         protected override void DisposeSystems()

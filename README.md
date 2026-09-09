@@ -12,7 +12,7 @@ This is still very far from being "playable".
 
 - Basic login server functionality works: authentication, creating accounts, changing password, creating and deleting characters, sending instance server details.
 
-- Very very early and rudimentary instance server functionality: handling client connections, accepting credentials, sending terrain generation information.
+- Early instance server functionality: entering and exploring areas.
 
 ## Notes
 
@@ -21,6 +21,8 @@ This is still very far from being "playable".
 - Launch `Client.exe` with the `--nopatch` argument to bypass the patcher.
 
 - The archived client's GGPK file is missing the `Art\Textures\Interface` folder. The missing files can be added to the client directory without modifying the GGPK. `.mat` placeholders can be extracted from the GGPK with [VisualGGPK2](https://github.com/aianlinb/VisualGGPK2) and other tools, `.dds` and `.png` files can be substituted with arbitrary images.
+
+- The instance server requires `Data` and `Metadata` folders from the client's GGPK. They need to be extracted and placed in the instance server directory.
 
 - If the client freezes at the login screen, you need to block access to the `tyypo.com` domain.
   

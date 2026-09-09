@@ -46,7 +46,10 @@ namespace KiwiNet.Core.System
             try
             {
                 if (InitializeSystems() == false)
+                {
+                    Console.ReadLine();
                     return;
+                }
             }
             catch (Exception e)
             {
@@ -69,6 +72,7 @@ namespace KiwiNet.Core.System
             catch (Exception e)
             {
                 Logger.Error(e.ToString());
+                Console.ReadLine();
                 return;
             }
         }
