@@ -58,5 +58,24 @@ namespace KiwiNet.Core.Utils
 
             return h;
         }
+
+        /// <summary>
+        /// Semi-custom variation of the FNV-1a algorithm for producing 16-bit action hashes.
+        /// </summary>
+        public static ushort Fnv1a16(string input)
+        {
+            const uint FnvPrime = 0x1000193;
+
+            int length = Encoding.UTF8.GetByteCount(input);
+            Span<byte> data = stackalloc byte[length];
+            Encoding.UTF8.GetBytes(input, data);
+
+            uint hash = 0; // standard offset basis is 0x811C9DC5
+
+            for (int i = 0; i < length; i++)
+                hash = data[i] ^ (FnvPrime * hash);
+
+            return (ushort)((hash ^ (hash >> 16)) & 0xFFFF);
+        }
     }
 }

@@ -10,6 +10,7 @@ namespace KiwiNet.InstanceServer.WorldObjects
         private readonly List<KeyValuePair<uint, uint>> _unkList = new();
 
         public uint Id { get; set; }
+        public bool Attackable { get; set; }
         public PositionedComponent Positioned { get; private set; }
 
         public WorldObject() { }

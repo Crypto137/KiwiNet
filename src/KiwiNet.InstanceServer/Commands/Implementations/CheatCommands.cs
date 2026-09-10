@@ -21,8 +21,8 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
             string itemShortName = args.Length > 0 ? args[0] : string.Empty;
 
             // Create Item
-            using ResourceHandle<ItemRegistry> itemObjectTable = ResourceManager.Get<ItemRegistry>(ObjectSystem.ItemRegistryFile);
-            using ResourceHandle<ItemTemplate> itemTemplate = itemObjectTable.Resource.GetTemplate(itemShortName);
+            using ResourceHandle<ItemRegistry> itemRegistry = ResourceManager.Get<ItemRegistry>(ObjectSystem.ItemRegistryFile);
+            using ResourceHandle<ItemTemplate> itemTemplate = itemRegistry.Resource.GetTemplate(itemShortName);
 
             if (itemTemplate == null)
                 return $"'{itemShortName}' is not a valid item name.";
@@ -55,8 +55,8 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
         {
             string shortName = args.Length > 0 ? args[0] : string.Empty;
 
-            using ResourceHandle<WorldObjectRegistry> worldObjectTable = ResourceManager.Get<WorldObjectRegistry>(ObjectSystem.WorldObjectRegistryFile);
-            using ResourceHandle<WorldObjectTemplate> template = worldObjectTable.Resource.GetTemplate(shortName);
+            using ResourceHandle<WorldObjectRegistry> worldObjectRegistry = ResourceManager.Get<WorldObjectRegistry>(ObjectSystem.WorldObjectRegistryFile);
+            using ResourceHandle<WorldObjectTemplate> template = worldObjectRegistry.Resource.GetTemplate(shortName);
 
             if (template == null)
                 return $"'{shortName}' is not a valid object name.";
@@ -70,6 +70,7 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
             WorldObject monster = new() { Id = NextSpawnedId++ };
             monster.Initialize(template);
             monster.Positioned.SetPosition(position);
+            monster.Attackable = true;
 
             LifeComponent life = monster.GetComponent<LifeComponent>();
             if (life != null)

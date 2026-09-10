@@ -22,7 +22,7 @@ Components are serialized over the network in the order their templates are stor
 
 | Name                                     | Description                                                                        |
 | ---------------------------------------- | ---------------------------------------------------------------------------------- |
-| Actor                                    | Allows objects to use actions.                                                     |
+| [Actor](./Components/Actor.md)           | Allows objects to use actions.                                                     |
 | Animated                                 |                                                                                    |
 | AreaTransition                           | Interactable objects that allow moving to a different area.                        |
 | BaseEvents                               |                                                                                    |

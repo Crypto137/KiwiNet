@@ -1,4 +1,6 @@
-﻿using KiwiNet.Core.Network;
+﻿using KiwiNet.Core.Math;
+using KiwiNet.Core.Network;
+using System.Numerics;
 
 namespace KiwiNet.InstanceServer.WorldObjects.Components
 {
@@ -85,14 +87,15 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components
 
         public override void SerializeUpdate(NetworkConnection connection)
         {
-            connection.Write((byte)0);
+            connection.Write(((WorldObject)Owner).Attackable);
 
             bool hasSkillData = false;
             connection.Write(hasSkillData);
             if (hasSkillData)
             {
-                connection.Write(300);  // grid x
-                connection.Write(540);  // grid y
+                Vector2Int syncPosition = ((WorldObject)Owner).Positioned.GridPosition;
+                connection.Write(syncPosition.X);
+                connection.Write(syncPosition.Y);
 
                 connection.Write((ushort)0xB188);   // skill hash
                 connection.Write((ushort)0);
