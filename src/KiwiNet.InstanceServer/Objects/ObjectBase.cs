@@ -1,8 +1,8 @@
 ﻿using KiwiNet.InstanceServer.Resources;
 
-namespace KiwiNet.InstanceServer.GameObjects
+namespace KiwiNet.InstanceServer.Objects
 {
-    public abstract class GameObject
+    public abstract class ObjectBase
     {
         protected readonly List<Component> _components = new();
 
@@ -18,7 +18,7 @@ namespace KiwiNet.InstanceServer.GameObjects
         }
     }
 
-    public abstract class GameObject<TTemplate> : GameObject where TTemplate: GameObjectTemplate, new()
+    public abstract class ObjectBase<TTemplate> : ObjectBase where TTemplate: ObjectTemplate, new()
     {
         protected ResourceHandle<TTemplate> _template;
 

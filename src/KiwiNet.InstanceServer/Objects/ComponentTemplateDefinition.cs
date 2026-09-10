@@ -1,4 +1,4 @@
-﻿namespace KiwiNet.InstanceServer.GameObjects
+﻿namespace KiwiNet.InstanceServer.Objects
 {
     public class ComponentTemplateDefinition
     {

@@ -1,5 +1,5 @@
 ﻿using KiwiNet.InstanceServer.Animation.Components.Templates;
-using KiwiNet.InstanceServer.GameObjects;
+using KiwiNet.InstanceServer.Objects;
 
 namespace KiwiNet.InstanceServer.Animation
 {

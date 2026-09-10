@@ -1,5 +1,5 @@
 ﻿using KiwiNet.Core.Math;
-using KiwiNet.InstanceServer.GameObjects;
+using KiwiNet.InstanceServer.Objects;
 using KiwiNet.InstanceServer.Items;
 using KiwiNet.InstanceServer.Items.Components;
 using KiwiNet.InstanceServer.Network;
@@ -21,20 +21,20 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
             string itemShortName = args.Length > 0 ? args[0] : string.Empty;
 
             // Create Item
-            using ResourceHandle<ItemObjectTable> itemObjectTable = ResourceManager.Get<ItemObjectTable>(GameObjectSystem.ItemObjectTableFile);
-            using ResourceHandle<ItemObjectTemplate> itemTemplate = itemObjectTable.Resource.GetTemplate(itemShortName);
+            using ResourceHandle<ItemRegistry> itemObjectTable = ResourceManager.Get<ItemRegistry>(ObjectSystem.ItemRegistryFile);
+            using ResourceHandle<ItemTemplate> itemTemplate = itemObjectTable.Resource.GetTemplate(itemShortName);
 
             if (itemTemplate == null)
                 return $"'{itemShortName}' is not a valid item name.";
 
-            ItemObject item = new();
+            Item item = new();
             item.Initialize(itemTemplate);
             StackComponent stack = item.GetComponent<StackComponent>();
             if (stack != null)
                 stack.Quantity = 1;
 
             // Create and send WorldItem
-            using ResourceHandle<WorldObjectTable> worldObjectTable = ResourceManager.Get<WorldObjectTable>(GameObjectSystem.WorldObjectTableFile);
+            using ResourceHandle<WorldObjectRegistry> worldObjectTable = ResourceManager.Get<WorldObjectRegistry>(ObjectSystem.WorldObjectRegistryFile);
             using ResourceHandle<WorldObjectTemplate> worldItemTemplate = worldObjectTable.Resource.GetTemplate("WorldItem");
 
             RemotePlayer player = (RemotePlayer)invoker;
@@ -55,7 +55,7 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
         {
             string shortName = args.Length > 0 ? args[0] : string.Empty;
 
-            using ResourceHandle<WorldObjectTable> worldObjectTable = ResourceManager.Get<WorldObjectTable>(GameObjectSystem.WorldObjectTableFile);
+            using ResourceHandle<WorldObjectRegistry> worldObjectTable = ResourceManager.Get<WorldObjectRegistry>(ObjectSystem.WorldObjectRegistryFile);
             using ResourceHandle<WorldObjectTemplate> template = worldObjectTable.Resource.GetTemplate(shortName);
 
             if (template == null)

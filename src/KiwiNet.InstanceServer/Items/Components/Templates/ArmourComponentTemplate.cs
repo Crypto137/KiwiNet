@@ -1,10 +1,10 @@
-﻿using KiwiNet.InstanceServer.GameObjects;
+﻿using KiwiNet.InstanceServer.Objects;
 
 namespace KiwiNet.InstanceServer.Items.Components.Templates
 {
     public sealed class ArmourComponentTemplate : ComponentTemplate<ArmourComponent>
     {
-        public ArmourComponentTemplate(GameObjectTemplate gameObjectTemplate) : base(gameObjectTemplate)
+        public ArmourComponentTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)
         {
         }
     }
@@ -15,9 +15,9 @@ namespace KiwiNet.InstanceServer.Items.Components.Templates
         {
         }
 
-        public override ComponentTemplate Allocate(GameObjectTemplate gameObjectTemplate)
+        public override ComponentTemplate Allocate(ObjectTemplate objectTemplate)
         {
-            return new ArmourComponentTemplate(gameObjectTemplate);
+            return new ArmourComponentTemplate(objectTemplate);
         }
 
         public override string GetName()

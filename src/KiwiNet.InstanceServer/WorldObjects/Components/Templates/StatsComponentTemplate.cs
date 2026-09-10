@@ -1,10 +1,10 @@
-﻿using KiwiNet.InstanceServer.GameObjects;
+﻿using KiwiNet.InstanceServer.Objects;
 
 namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
 {
     public sealed class StatsComponentTemplate : ComponentTemplate<StatsComponent>
     {
-        public StatsComponentTemplate(GameObjectTemplate gameObjectTemplate) : base(gameObjectTemplate)
+        public StatsComponentTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)
         {
         }
     }
@@ -15,9 +15,9 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
         {
         }
 
-        public override ComponentTemplate Allocate(GameObjectTemplate gameObjectTemplate)
+        public override ComponentTemplate Allocate(ObjectTemplate objectTemplate)
         {
-            return new StatsComponentTemplate(gameObjectTemplate);
+            return new StatsComponentTemplate(objectTemplate);
         }
 
         public override string GetName()

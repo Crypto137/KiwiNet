@@ -4,7 +4,13 @@ using System.Text;
 
 namespace KiwiNet.InstanceServer.Resources
 {
-    public class CSVTable : IResource
+    /// <summary>
+    /// A CSV data table resource.
+    /// </summary>
+    /// <remarks>
+    /// It appears CSV tables were completely replaced with .dat tables in later versions of the game.
+    /// </remarks>
+    public class CsvDataTable : IResource
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
 
@@ -14,7 +20,7 @@ namespace KiwiNet.InstanceServer.Resources
         public Dictionary<string, int> ColumnIndex { get; private set; } = new(StringComparer.Ordinal);
         public Dictionary<string, int> RowIndex { get; private set; } = new(StringComparer.Ordinal);
 
-        public CSVTable() { }
+        public CsvDataTable() { }
 
         public void Load(string fileName)
         {

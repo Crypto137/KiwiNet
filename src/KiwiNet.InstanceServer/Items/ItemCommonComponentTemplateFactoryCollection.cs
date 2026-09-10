@@ -1,4 +1,4 @@
-﻿using KiwiNet.InstanceServer.GameObjects;
+﻿using KiwiNet.InstanceServer.Objects;
 using KiwiNet.InstanceServer.Items.Components.Templates;
 
 namespace KiwiNet.InstanceServer.Items

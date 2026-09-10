@@ -5,7 +5,7 @@ using KiwiNet.Core.Network;
 using KiwiNet.Core.Utils;
 using KiwiNet.InstanceServer.Areas;
 using KiwiNet.InstanceServer.Commands;
-using KiwiNet.InstanceServer.GameObjects;
+using KiwiNet.InstanceServer.Objects;
 using KiwiNet.InstanceServer.Resources;
 using KiwiNet.InstanceServer.Resources.Tables;
 using KiwiNet.InstanceServer.WorldObjects;
@@ -62,10 +62,10 @@ namespace KiwiNet.InstanceServer.Network
         {
             GameConfig config = ConfigManager.Get<GameConfig>();
 
-            // TODO: create Player game object via GameObjectManager, load persistent data here
+            // TODO: create the Player object via WorldObjectManager, load persistent data here
             Player = new() { Id = 0x1 };
 
-            using ResourceHandle<WorldObjectTable> worldObjectTable = ResourceManager.Get<WorldObjectTable>(GameObjectSystem.WorldObjectTableFile);
+            using ResourceHandle<WorldObjectRegistry> worldObjectTable = ResourceManager.Get<WorldObjectRegistry>(ObjectSystem.WorldObjectRegistryFile);
             
             ResourceHandle<WorldObjectTemplate> playerTemplate = worldObjectTable.Resource.GetTemplate(config.CharacterTemplate);
             if (playerTemplate == null)

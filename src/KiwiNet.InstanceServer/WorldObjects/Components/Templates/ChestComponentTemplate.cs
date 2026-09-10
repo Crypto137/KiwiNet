@@ -1,10 +1,10 @@
-﻿using KiwiNet.InstanceServer.GameObjects;
+﻿using KiwiNet.InstanceServer.Objects;
 
 namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
 {
     public sealed class ChestComponentTemplate : ComponentTemplate<ChestComponent>
     {
-        public ChestComponentTemplate(GameObjectTemplate gameObjectTemplate) : base(gameObjectTemplate)
+        public ChestComponentTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)
         {
         }
     }
@@ -15,9 +15,9 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
         {
         }
 
-        public override ComponentTemplate Allocate(GameObjectTemplate gameObjectTemplate)
+        public override ComponentTemplate Allocate(ObjectTemplate objectTemplate)
         {
-            return new ChestComponentTemplate(gameObjectTemplate);
+            return new ChestComponentTemplate(objectTemplate);
         }
 
         public override string GetName()

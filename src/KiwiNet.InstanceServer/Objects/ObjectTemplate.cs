@@ -2,9 +2,9 @@
 using KiwiNet.InstanceServer.Resources;
 using System.Text;
 
-namespace KiwiNet.InstanceServer.GameObjects
+namespace KiwiNet.InstanceServer.Objects
 {
-    public abstract class GameObjectTemplate : IResource
+    public abstract class ObjectTemplate : IResource
     {
         public string FileName { get; private set; }
         public uint Hash { get; private set; }
@@ -12,7 +12,7 @@ namespace KiwiNet.InstanceServer.GameObjects
         public Dictionary<string, int> ComponentIndicesByName { get; } = new(8, StringComparer.OrdinalIgnoreCase);
         public int TableComponentOffset { get; private set; }
 
-        public GameObjectTemplate()
+        public ObjectTemplate()
         {
         }
 

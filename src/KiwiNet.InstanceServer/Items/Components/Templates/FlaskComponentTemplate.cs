@@ -1,10 +1,10 @@
-﻿using KiwiNet.InstanceServer.GameObjects;
+﻿using KiwiNet.InstanceServer.Objects;
 
 namespace KiwiNet.InstanceServer.Items.Components.Templates
 {
     public sealed class FlaskComponentTemplate : ComponentTemplate<FlaskComponent>
     {
-        public FlaskComponentTemplate(GameObjectTemplate gameObjectTemplate) : base(gameObjectTemplate)
+        public FlaskComponentTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)
         {
         }
     }
@@ -15,9 +15,9 @@ namespace KiwiNet.InstanceServer.Items.Components.Templates
         {
         }
 
-        public override ComponentTemplate Allocate(GameObjectTemplate gameObjectTemplate)
+        public override ComponentTemplate Allocate(ObjectTemplate objectTemplate)
         {
-            return new FlaskComponentTemplate(gameObjectTemplate);
+            return new FlaskComponentTemplate(objectTemplate);
         }
 
         public override string GetName()

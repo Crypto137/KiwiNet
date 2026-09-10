@@ -1,4 +1,4 @@
-﻿namespace KiwiNet.InstanceServer.GameObjects
+﻿namespace KiwiNet.InstanceServer.Objects
 {
     public abstract class ComponentTemplateFactory
     {
@@ -15,7 +15,7 @@
             definition.Factory = this;
         }
 
-        public abstract ComponentTemplate Allocate(GameObjectTemplate gameObjectTemplate);
+        public abstract ComponentTemplate Allocate(ObjectTemplate objectTemplate);
 
         public abstract string GetName();
 

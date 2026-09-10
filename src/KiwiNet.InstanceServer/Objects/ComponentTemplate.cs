@@ -1,20 +1,20 @@
 ﻿using KiwiNet.Core.Logging;
 
-namespace KiwiNet.InstanceServer.GameObjects
+namespace KiwiNet.InstanceServer.Objects
 {
     public abstract class ComponentTemplate
     {
         // FIXME: clean up debug logging and return false for non-existent variables when everything is working properly
         private static readonly Logger Logger = LogManager.CreateLogger();
 
-        protected readonly GameObjectTemplate _gameObjectTemplate;
+        protected readonly ObjectTemplate _objectTemplate;
 
-        public ComponentTemplate(GameObjectTemplate gameObjectTemplate)
+        public ComponentTemplate(ObjectTemplate objectTemplate)
         {
-            _gameObjectTemplate = gameObjectTemplate;
+            _objectTemplate = objectTemplate;
         }
 
-        public abstract Component CreateComponent(GameObject owner);
+        public abstract Component CreateComponent(ObjectBase owner);
 
         public virtual bool SetBoolVariable(string name, bool value)
         {
@@ -51,11 +51,11 @@ namespace KiwiNet.InstanceServer.GameObjects
 
     public abstract class ComponentTemplate<T> : ComponentTemplate where T : Component, new()
     {
-        public ComponentTemplate(GameObjectTemplate gameObjectTemplate) : base(gameObjectTemplate)
+        public ComponentTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)
         {
         }
 
-        public override Component CreateComponent(GameObject owner)
+        public override Component CreateComponent(ObjectBase owner)
         {
             T component = new();
             component.Initialize(this, owner);

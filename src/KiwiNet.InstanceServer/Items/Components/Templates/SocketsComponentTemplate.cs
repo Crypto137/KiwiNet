@@ -1,10 +1,10 @@
-﻿using KiwiNet.InstanceServer.GameObjects;
+﻿using KiwiNet.InstanceServer.Objects;
 
 namespace KiwiNet.InstanceServer.Items.Components.Templates
 {
     public sealed class SocketsComponentTemplate : ComponentTemplate<SocketsComponent>
     {
-        public SocketsComponentTemplate(GameObjectTemplate gameObjectTemplate) : base(gameObjectTemplate)
+        public SocketsComponentTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)
         {
         }
     }
@@ -15,9 +15,9 @@ namespace KiwiNet.InstanceServer.Items.Components.Templates
         {
         }
 
-        public override ComponentTemplate Allocate(GameObjectTemplate gameObjectTemplate)
+        public override ComponentTemplate Allocate(ObjectTemplate objectTemplate)
         {
-            return new SocketsComponentTemplate(gameObjectTemplate);
+            return new SocketsComponentTemplate(objectTemplate);
         }
 
         public override string GetName()

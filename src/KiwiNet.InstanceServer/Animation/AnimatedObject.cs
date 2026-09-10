@@ -1,11 +1,11 @@
-﻿using KiwiNet.InstanceServer.GameObjects;
+﻿using KiwiNet.InstanceServer.Objects;
 using KiwiNet.InstanceServer.Resources;
 
 namespace KiwiNet.InstanceServer.Animation
 {
-    public sealed class AnimationObject : GameObject<AnimationObjectTemplate>
+    public sealed class AnimatedObject : ObjectBase<AnimatedObjectTemplate>
     {
-        public override void Initialize(ResourceHandle<AnimationObjectTemplate> templateHandle)
+        public override void Initialize(ResourceHandle<AnimatedObjectTemplate> templateHandle)
         {
             InitializeComponents(templateHandle);
 

@@ -1,4 +1,4 @@
-﻿using KiwiNet.InstanceServer.GameObjects;
+﻿using KiwiNet.InstanceServer.Objects;
 
 namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
 {
@@ -9,7 +9,7 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
         public bool Static { get; private set; } = false;
         public float Scale { get; private set; } = 1f;
 
-        public PositionedComponentTemplate(GameObjectTemplate gameObjectTemplate) : base(gameObjectTemplate)
+        public PositionedComponentTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)
         {
         }
 
@@ -56,9 +56,9 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
         {
         }
 
-        public override ComponentTemplate Allocate(GameObjectTemplate gameObjectTemplate)
+        public override ComponentTemplate Allocate(ObjectTemplate objectTemplate)
         {
-            return new PositionedComponentTemplate(gameObjectTemplate);
+            return new PositionedComponentTemplate(objectTemplate);
         }
 
         public override string GetName()

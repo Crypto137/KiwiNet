@@ -1,9 +1,9 @@
-﻿using KiwiNet.InstanceServer.GameObjects;
+﻿using KiwiNet.InstanceServer.Objects;
 using KiwiNet.InstanceServer.Resources;
 
 namespace KiwiNet.InstanceServer.Animation
 {
-    public sealed class AnimationObjectTemplate : GameObjectTemplate
+    public sealed class AnimatedObjectTemplate : ObjectTemplate
     {
         public override void Load(string fileName)
         {

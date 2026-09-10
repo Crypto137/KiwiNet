@@ -1,9 +1,9 @@
 ﻿using KiwiNet.Core.Utils;
 using KiwiNet.InstanceServer.Resources;
 
-namespace KiwiNet.InstanceServer.GameObjects
+namespace KiwiNet.InstanceServer.Objects
 {
-    public abstract class GameObjectTable<T> : IResource where T: GameObjectTemplate, new()
+    public abstract class ObjectRegistry<T> : IResource where T: ObjectTemplate, new()
     {
         private readonly Dictionary<string, string> _shortNameToNameLookup = new();
         private readonly Dictionary<uint, string> _hashToNameLookup = new();
@@ -12,8 +12,8 @@ namespace KiwiNet.InstanceServer.GameObjects
         {
             fileName = fileName[..^1];  // .csvf -> .csv
 
-            using ResourceHandle<CSVTable> csvTableHandle = ResourceManager.Get<CSVTable>(fileName);
-            CSVTable csvTable = csvTableHandle.Resource;
+            using ResourceHandle<CsvDataTable> csvTableHandle = ResourceManager.Get<CsvDataTable>(fileName);
+            CsvDataTable csvTable = csvTableHandle.Resource;
 
             if (csvTable.NumRows > 1)
             {

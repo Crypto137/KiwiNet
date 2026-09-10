@@ -1,10 +1,10 @@
-﻿using KiwiNet.InstanceServer.GameObjects;
+﻿using KiwiNet.InstanceServer.Objects;
 
 namespace KiwiNet.InstanceServer.Items.Components.Templates
 {
     public sealed class ModsComponentTemplate : ComponentTemplate<ModsComponent>
     {
-        public ModsComponentTemplate(GameObjectTemplate gameObjectTemplate) : base(gameObjectTemplate)
+        public ModsComponentTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)
         {
         }
     }
@@ -15,9 +15,9 @@ namespace KiwiNet.InstanceServer.Items.Components.Templates
         {
         }
 
-        public override ComponentTemplate Allocate(GameObjectTemplate gameObjectTemplate)
+        public override ComponentTemplate Allocate(ObjectTemplate objectTemplate)
         {
-            return new ModsComponentTemplate(gameObjectTemplate);
+            return new ModsComponentTemplate(objectTemplate);
         }
 
         public override string GetName()

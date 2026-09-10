@@ -1,4 +1,4 @@
-﻿namespace KiwiNet.InstanceServer.GameObjects
+﻿namespace KiwiNet.InstanceServer.Objects
 {
     /// <summary>
     /// Contains globally accessible collections of <see cref="ComponentTemplateDefinition"/>.

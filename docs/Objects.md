@@ -1,12 +1,12 @@
 # Objects
 
-Path of Exile uses a data-driven game object (entity) system inspired by Dungeon Siege (see [A Data-Driven Game Object System by Scott Bilas](https://www.youtube.com/watch?v=Eb4-0M2a9xE) for reference).
+Path of Exile uses a data-driven object system inspired by Dungeon Siege (see [A Data-Driven Game Object System by Scott Bilas](https://www.youtube.com/watch?v=Eb4-0M2a9xE) for reference).
 
 Objects are composed of components, which handle domain-specific functionality (pathfinding, animation, etc.). Objects are defined in object template (`.ot`) files. Additional client-specific components, such as `Render`, are defined in object template client (`.otc`) files. Both file types use a plain text format with the same syntax. Templates can inherit data from other objects to reduce duplication.
 
-There are at least three distinct subtypes of objects: world objects, item objects, and animation objects (names are deduced from behavior and may be inaccurate). They share the same template system, but are used in different contexts.
+There are at least three distinct subtypes of objects: world objects, items, and animated objects (names are deduced from behavior and may be inaccurate). They share the same template system, but are used in different contexts.
 
-World objects are objects that appear in the game world. They contain additional functionality needed for replicating data changes happening to previously serialized world objects to clients. World objects always have the `Positioned` component.
+World objects (also referred to as "game objects", "entities", or just "objects") are objects that appear in the game world. They contain additional functionality needed for replicating data changes happening to previously serialized world objects to clients. World objects always have the `Positioned` component.
 
 Item objects are used to define item specifications. They are not capable of being placed in the world on their own, and are generally used as data for other contexts (e.g. `WorldItem` and `Inventories` components in world objects).
 
@@ -55,6 +55,8 @@ Components are serialized over the network in the order their templates are stor
 
 ### Item
 
+#### Common
+
 | Name                  | Description |
 | --------------------- | ----------- |
 | Armour                |             |
@@ -72,6 +74,13 @@ Components are serialized over the network in the order their templates are stor
 | Stack                 |             |
 | Usable                |             |
 | Weapon                |             |
+
+#### Client
+
+| Name       | Description |
+| ---------- | ----------- |
+| BodyModel  |             |
+| RenderItem |             |
 
 ### Animated
 

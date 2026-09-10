@@ -1,6 +1,6 @@
 ﻿using KiwiNet.InstanceServer.Resources;
 
-namespace KiwiNet.InstanceServer.GameObjects
+namespace KiwiNet.InstanceServer.Objects
 {
     public class ComponentTemplateParseParams
     {
@@ -8,7 +8,7 @@ namespace KiwiNet.InstanceServer.GameObjects
         public ComponentTemplateRegistry CommonRegistry { get; set; }
         public string ServerFileExtension { get; set; }
         public ComponentTemplateRegistry ServerRegistry { get; set; }
-        public ResourceHandle<CSVTable> ObjectTable { get; set; }
+        public ResourceHandle<CsvDataTable> ObjectTable { get; set; }
 
         public static ComponentTemplateParseParams Item { get; } = new();
         public static ComponentTemplateParseParams World { get; } = new();
@@ -21,7 +21,7 @@ namespace KiwiNet.InstanceServer.GameObjects
             if (ObjectTable == null)
                 return null;
 
-            CSVTable table = ObjectTable.Resource;
+            CsvDataTable table = ObjectTable.Resource;
 
             if (table.RowIndex.TryGetValue(fileName, out int row) == false)
                 return null;

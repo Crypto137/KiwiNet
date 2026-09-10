@@ -1,10 +1,10 @@
-﻿using KiwiNet.InstanceServer.GameObjects;
+﻿using KiwiNet.InstanceServer.Objects;
 
 namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
 {
     public sealed class AnimatedComponentTemplate : ComponentTemplate<AnimatedComponent>
     {
-        public AnimatedComponentTemplate(GameObjectTemplate gameObjectTemplate) : base(gameObjectTemplate)
+        public AnimatedComponentTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)
         {
         }
     }
@@ -15,9 +15,9 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
         {
         }
 
-        public override ComponentTemplate Allocate(GameObjectTemplate gameObjectTemplate)
+        public override ComponentTemplate Allocate(ObjectTemplate objectTemplate)
         {
-            return new AnimatedComponentTemplate(gameObjectTemplate);
+            return new AnimatedComponentTemplate(objectTemplate);
         }
 
         public override string GetName()

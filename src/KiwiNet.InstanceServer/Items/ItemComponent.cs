@@ -1,5 +1,5 @@
 ﻿using KiwiNet.Core.Network;
-using KiwiNet.InstanceServer.GameObjects;
+using KiwiNet.InstanceServer.Objects;
 
 namespace KiwiNet.InstanceServer.Items
 {

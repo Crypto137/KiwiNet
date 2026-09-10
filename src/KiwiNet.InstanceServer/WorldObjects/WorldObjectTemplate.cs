@@ -1,13 +1,13 @@
-﻿using KiwiNet.InstanceServer.GameObjects;
+﻿using KiwiNet.InstanceServer.Objects;
 using KiwiNet.InstanceServer.WorldObjects.Components.Templates;
 
 namespace KiwiNet.InstanceServer.WorldObjects
 {
-    public sealed class WorldObjectTable : GameObjectTable<WorldObjectTemplate>
+    public sealed class WorldObjectRegistry : ObjectRegistry<WorldObjectTemplate>
     {
     }
 
-    public sealed class WorldObjectTemplate : GameObjectTemplate
+    public sealed class WorldObjectTemplate : ObjectTemplate
     {
         public PositionedComponentTemplate Positioned { get; set; }
         public bool Bool68 { get; set; }

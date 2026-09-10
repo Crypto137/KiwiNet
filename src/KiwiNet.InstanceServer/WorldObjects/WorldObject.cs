@@ -1,11 +1,11 @@
 ﻿using KiwiNet.Core.Network;
-using KiwiNet.InstanceServer.GameObjects;
+using KiwiNet.InstanceServer.Objects;
 using KiwiNet.InstanceServer.Resources;
 using KiwiNet.InstanceServer.WorldObjects.Components;
 
 namespace KiwiNet.InstanceServer.WorldObjects
 {
-    public sealed class WorldObject : GameObject<WorldObjectTemplate>
+    public sealed class WorldObject : ObjectBase<WorldObjectTemplate>
     {
         private readonly List<KeyValuePair<uint, uint>> _unkList = new();
 

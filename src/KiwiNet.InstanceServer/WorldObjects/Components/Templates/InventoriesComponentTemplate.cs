@@ -1,10 +1,10 @@
-﻿using KiwiNet.InstanceServer.GameObjects;
+﻿using KiwiNet.InstanceServer.Objects;
 
 namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
 {
     public sealed class InventoriesComponentTemplate : ComponentTemplate<InventoriesComponent>
     {
-        public InventoriesComponentTemplate(GameObjectTemplate gameObjectTemplate) : base(gameObjectTemplate)
+        public InventoriesComponentTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)
         {
         }
     }
@@ -15,9 +15,9 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
         {
         }
 
-        public override ComponentTemplate Allocate(GameObjectTemplate gameObjectTemplate)
+        public override ComponentTemplate Allocate(ObjectTemplate objectTemplate)
         {
-            return new InventoriesComponentTemplate(gameObjectTemplate);
+            return new InventoriesComponentTemplate(objectTemplate);
         }
 
         public override string GetName()

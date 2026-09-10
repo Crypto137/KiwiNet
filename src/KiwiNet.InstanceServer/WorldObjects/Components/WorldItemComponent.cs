@@ -5,7 +5,7 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components
 {
     public sealed class WorldItemComponent : WorldComponent
     {
-        public ItemObject Item { get; set; }
+        public Item Item { get; set; }
         public bool FlippyAnimationPlayed { get; set; }
 
         public override void Serialize(NetworkConnection connection)

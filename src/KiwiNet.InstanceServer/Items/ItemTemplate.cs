@@ -1,12 +1,12 @@
-﻿using KiwiNet.InstanceServer.GameObjects;
+﻿using KiwiNet.InstanceServer.Objects;
 
 namespace KiwiNet.InstanceServer.Items
 {
-    public sealed class ItemObjectTable : GameObjectTable<ItemObjectTemplate>
+    public sealed class ItemRegistry : ObjectRegistry<ItemTemplate>
     {
     }
 
-    public sealed class ItemObjectTemplate : GameObjectTemplate
+    public sealed class ItemTemplate : ObjectTemplate
     {
         public override void Load(string fileName)
         {
