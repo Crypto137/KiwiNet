@@ -6,7 +6,7 @@ namespace KiwiNet.InstanceServer.Items
 {
     public sealed class Item : ObjectBase<ItemTemplate>, INetworkSerializable
     {
-        public override void Initialize(ResourceHandle<ItemTemplate> templateHandle)
+        public void Initialize(ResourceHandle<ItemTemplate> templateHandle)
         {
             InitializeComponents(templateHandle);
 

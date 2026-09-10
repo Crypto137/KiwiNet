@@ -6,7 +6,7 @@ namespace KiwiNet.Protocols.Instance
     {
         public uint GridPositionX { get; set; }
         public uint GridPositionY { get; set; }
-        public short SkillId { get; set; }
+        public ushort SkillId { get; set; }
         public short Count { get; set; }
         public byte AttackInPlace { get; set; }
 
@@ -19,7 +19,7 @@ namespace KiwiNet.Protocols.Instance
         {
             GridPositionX = connection.Read<uint>();
             GridPositionY = connection.Read<uint>();
-            SkillId = connection.Read<short>();
+            SkillId = connection.Read<ushort>();
             Count = connection.Read<short>();
             AttackInPlace = connection.Read<byte>();
         }

@@ -5,7 +5,7 @@ namespace KiwiNet.InstanceServer.Animation
 {
     public sealed class AnimatedObject : ObjectBase<AnimatedObjectTemplate>
     {
-        public override void Initialize(ResourceHandle<AnimatedObjectTemplate> templateHandle)
+        public void Initialize(ResourceHandle<AnimatedObjectTemplate> templateHandle)
         {
             InitializeComponents(templateHandle);
 

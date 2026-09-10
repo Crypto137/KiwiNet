@@ -25,7 +25,7 @@ namespace KiwiNet.InstanceServer.Areas
         internal static Area Current;
 
         public AreaManager AreaManager { get; }
-        public WorldObjectManager WorldObjectManager { get; }
+        public WorldObjectManager ObjectManager { get; }
         public RemotePlayerManager RemotePlayerManager { get; }
 
         public uint InstanceId { get; private set; }
@@ -44,7 +44,7 @@ namespace KiwiNet.InstanceServer.Areas
         public Area(AreaManager areaManager)
         {
             AreaManager = areaManager;
-            WorldObjectManager = new(this);
+            ObjectManager = new();
             RemotePlayerManager = new(this);
         }
 

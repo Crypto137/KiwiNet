@@ -22,10 +22,6 @@ namespace KiwiNet.InstanceServer.Objects
     {
         protected ResourceHandle<TTemplate> _template;
 
-        public virtual void Initialize(ResourceHandle<TTemplate> templateHandle)
-        {
-        }
-
         protected void InitializeComponents(ResourceHandle<TTemplate> templateHandle)
         {
             _template = templateHandle;

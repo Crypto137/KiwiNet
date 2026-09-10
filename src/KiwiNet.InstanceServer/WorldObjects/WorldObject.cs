@@ -1,4 +1,5 @@
 ﻿using KiwiNet.Core.Network;
+using KiwiNet.InstanceServer.Areas;
 using KiwiNet.InstanceServer.Objects;
 using KiwiNet.InstanceServer.Resources;
 using KiwiNet.InstanceServer.WorldObjects.Components;
@@ -9,20 +10,38 @@ namespace KiwiNet.InstanceServer.WorldObjects
     {
         private readonly List<KeyValuePair<uint, uint>> _unkList = new();
 
+        public Area Area { get; private set; }
         public uint Id { get; set; }
+        public bool Destroyed { get; private set; }
         public bool Attackable { get; set; }
         public PositionedComponent Positioned { get; private set; }
 
         public WorldObject() { }
 
-        public override void Initialize(ResourceHandle<WorldObjectTemplate> templateHandle)
+        public override string ToString()
+        {
+            return $"[{Id}] {_template.FileName}";
+        }
+
+        public void Initialize(ResourceHandle<WorldObjectTemplate> templateHandle, Area area)
         {
             InitializeComponents(templateHandle);
 
+            Area = area;
+
             Positioned = GetComponent<PositionedComponent>();
+
+            Area.ObjectManager.AddObject(this);
 
             foreach (Component component in _components)
                 component.PostInitialize();
+        }
+
+        public void Destroy()
+        {
+            Destroyed = true;
+
+            Area.ObjectManager.RemoveObject(Id);
         }
 
         public void Serialize(NetworkConnection connection)

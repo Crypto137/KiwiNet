@@ -2,7 +2,7 @@
 using KiwiNet.Core.Logging;
 using KiwiNet.Core.Math;
 using KiwiNet.Core.Network;
-using KiwiNet.Core.Utils;
+using KiwiNet.Core.System;
 using KiwiNet.InstanceServer.Areas;
 using KiwiNet.InstanceServer.Commands;
 using KiwiNet.InstanceServer.Objects;
@@ -17,11 +17,23 @@ using System.Diagnostics;
 
 namespace KiwiNet.InstanceServer.Network
 {
-    public class RemotePlayer : IPacketHandler
+    public enum WorldObjectPacketId
+    {
+        InstanceClientWorldObjectAdd = 100,
+        InstanceClientWorldObjectUpdate,
+        InstanceClientWorldObjectRemove,
+    }
+
+    public class RemotePlayer : IPacketHandler, IWorldObjectEventSubscriber
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
 
         private readonly List<PacketSerializer> _packetSerializers;
+
+        private readonly Queue<(WorldObject, WorldObjectPacketId)> _pendingWorldObjects = new();
+
+        private TimeSpan _lastHeartbeatTime;
+        private bool _isDisconnected;
 
         public Area Area { get; }
         public NetworkConnection Connection { get; }
@@ -33,15 +45,57 @@ namespace KiwiNet.InstanceServer.Network
         {
             _packetSerializers = new() { new ClientGamePacketSerializer(this) };
 
+            _lastHeartbeatTime = Clock.UnixTime;
+
             Area = area;
             Connection = connection;
             Session = session;
+        }
+
+        public void Disconnect()
+        {
+            if (_isDisconnected)
+                return;
+
+            _isDisconnected = true;
+
+            Connection.Disconnect();
+            Area.ObjectManager.Subscribers.Remove(this);
+            Player?.Destroy();
+            Area.RemotePlayerManager.RemovePlayer(Connection);
         }
 
         public void Receive()
         {
             Connection.Receive();
             PacketSerializer.DeserializeAllPackets(Connection, _packetSerializers);
+
+            // delayed object sending to allow us to set objects up before they are sent, this should probably be handled with sleep/awake instead
+            while (_pendingWorldObjects.TryDequeue(out var pendingObject))
+            {
+                (WorldObject worldObject, WorldObjectPacketId packetId) = pendingObject;
+
+                switch (packetId)
+                {
+                    case WorldObjectPacketId.InstanceClientWorldObjectAdd:
+                        SendWorldObjectAdd(worldObject);
+                        break;
+
+                    case WorldObjectPacketId.InstanceClientWorldObjectUpdate:
+                        SendWorldObjectUpdate(worldObject);
+                        break;
+
+                    case WorldObjectPacketId.InstanceClientWorldObjectRemove:
+                        SendWorldObjectRemove(worldObject);
+                        break;
+                }
+            }
+
+            if ((Clock.UnixTime - _lastHeartbeatTime) > TimeSpan.FromSeconds(6))
+            {
+                Logger.Trace("Connection timed out");
+                Disconnect();
+            }
         }
 
         public void Send(Packet packet)
@@ -55,6 +109,18 @@ namespace KiwiNet.InstanceServer.Network
         {
             Connection.Write((byte)WorldObjectPacketId.InstanceClientWorldObjectAdd);
             worldObject.Serialize(Connection);
+            Connection.Flush();
+        }
+
+        public void SendWorldObjectUpdate(WorldObject worldObject)
+        {
+            // TODO
+        }
+
+        public void SendWorldObjectRemove(WorldObject worldObject)
+        {
+            Connection.Write((byte)WorldObjectPacketId.InstanceClientWorldObjectRemove);
+            Connection.Write(worldObject.Id);
             Connection.Flush();
         }
 
@@ -74,7 +140,7 @@ namespace KiwiNet.InstanceServer.Network
                 playerTemplate = worldObjectTable.Resource.GetTemplate("Str");
             }
 
-            Player.Initialize(playerTemplate);
+            Player.Initialize(playerTemplate, Area);
 
             Player.Positioned.SetPosition(Session.StartPosition);
             Player.GetComponent<LifeComponent>().Life = 100;
@@ -123,6 +189,22 @@ namespace KiwiNet.InstanceServer.Network
             return true;
         }
 
+        #region IWorldObjectEventSubscriber
+
+        public void OnObjectAdded(WorldObject worldObject)
+        {
+            // TODO: area of interest
+            _pendingWorldObjects.Enqueue((worldObject, WorldObjectPacketId.InstanceClientWorldObjectAdd));
+        }
+
+        public void OnObjectRemoved(WorldObject worldObject)
+        {
+            // TODO: area of interest
+            _pendingWorldObjects.Enqueue((worldObject, WorldObjectPacketId.InstanceClientWorldObjectRemove));
+        }
+
+        #endregion
+
         #region Message Handling
 
         public void HandlePacket(NetworkConnection connection, Packet packet)
@@ -131,8 +213,7 @@ namespace KiwiNet.InstanceServer.Network
 
             if (packet == null)
             {
-                Connection.Disconnect();
-                Area.RemotePlayerManager.RemovePlayer(Connection);
+                Disconnect();
                 return;
             }
 
@@ -140,6 +221,10 @@ namespace KiwiNet.InstanceServer.Network
             {
                 case PacketId.ClientInstanceChatMessagePacketId:
                     OnChatMessage(packet);
+                    break;
+
+                case PacketId.ClientInstanceQuitRequestPacketId:
+                    OnQuitRequest();
                     break;
 
                 case PacketId.ClientInstanceHeartbeatPacketId:
@@ -167,7 +252,7 @@ namespace KiwiNet.InstanceServer.Network
                     break;
 
                 default:
-                    Logger.Warn($"Unhandled packet [{(PacketId)packet.Id}] {packet.Id}");
+                    Logger.Warn($"Unhandled packet [{packet.Id}] {(PacketId)packet.Id}");
                     break;
             }
         }
@@ -192,8 +277,15 @@ namespace KiwiNet.InstanceServer.Network
             Send(reply);
         }
 
+        private void OnQuitRequest()
+        {
+            Logger.Trace("Received quit request");
+            Disconnect();
+        }
+
         private void OnHeartbeat()
         {
+            _lastHeartbeatTime = Clock.UnixTime;
             Send(PacketFactory.Get<SimplePacket>((byte)PacketId.InstanceClientHeartbeatReplyPacketId));
 #if DEBUG
             InstanceClientServerFrameDurationPacket serverFrameDuration = PacketFactory.Get<InstanceClientServerFrameDurationPacket>();
@@ -205,7 +297,19 @@ namespace KiwiNet.InstanceServer.Network
 
         private void OnSkillTargetEntity(Packet packet)
         {
+            ClientInstanceSkillTargetEntity skillTargetEntity = (ClientInstanceSkillTargetEntity)packet;
+
             Logger.Debug($"OnSkillTargetEntity(): {packet}");
+
+            if (skillTargetEntity.SkillId == 0xC266)
+            {
+                WorldObject worldObject = Area.ObjectManager.GetObject(skillTargetEntity.TargetId);
+                if (worldObject != null && worldObject.GetComponent<WorldItemComponent>() != null)
+                {
+                    // TODO: add to inventory
+                    worldObject.Destroy();
+                }
+            }
         }
 
         private void OnSkillTargetLocation(Packet packet)
@@ -253,7 +357,10 @@ namespace KiwiNet.InstanceServer.Network
             // InstanceClientForcedDisconnectionWarningPacketId -> BackendError.TerrainGenerationOutOfSync
 
             // TODO: some kind of area of interest system
-            SendWorldObjectAdd(Player);
+            WorldObjectManager objectManager = Area.ObjectManager;
+            foreach (WorldObject worldObject in objectManager)
+                SendWorldObjectAdd(worldObject);
+            objectManager.Subscribers.Add(this);
 
             var skills = PacketFactory.Get<InstanceClientBoundSkillList>();
             skills.Id = (byte)PacketId.InstanceClientBoundSkillListId;

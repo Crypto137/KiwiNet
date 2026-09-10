@@ -13,8 +13,6 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
     [CommandGroup]
     public static class CheatCommands
     {
-        private static uint NextSpawnedId = 1000000;
-
         [CommandHandler("item")]
         public static string Item(object invoker, ReadOnlySpan<string> args)
         {
@@ -40,12 +38,12 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
             RemotePlayer player = (RemotePlayer)invoker;
             Vector2Int position = player.Player.Positioned.GridPosition;
 
-            WorldObject worldItem = new() { Id = NextSpawnedId++ };
-            worldItem.Initialize(worldItemTemplate);
+            WorldObject worldItem = new();
+            worldItem.Initialize(worldItemTemplate, player.Area);
             worldItem.Positioned.SetPosition(position);
             worldItem.GetComponent<WorldItemComponent>().Item = item;
 
-            player.SendWorldObjectAdd(worldItem);
+            // TODO: awake object after it is set up?
 
             return string.Empty;
         }
@@ -67,8 +65,8 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
             RemotePlayer player = (RemotePlayer)invoker;
             Vector2Int position = player.Player.Positioned.GridPosition;
 
-            WorldObject monster = new() { Id = NextSpawnedId++ };
-            monster.Initialize(template);
+            WorldObject monster = new();
+            monster.Initialize(template, player.Area);
             monster.Positioned.SetPosition(position);
             monster.Attackable = true;
 
@@ -76,7 +74,7 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
             if (life != null)
                 life.Life = 100;
 
-            player.SendWorldObjectAdd(monster);
+            // TODO: awake object after it is set up?
 
             return string.Empty;
         }

@@ -15,6 +15,8 @@ namespace KiwiNet.LoginServer.Network
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
 
+        private static uint _currentSessionId = 0;
+
         private readonly List<PacketSerializer> _packetSerializers;
 
         private bool _isConnected;
@@ -235,7 +237,7 @@ namespace KiwiNet.LoginServer.Network
             Logger.Info($"Sending instance details for {chooseCharacter.Value}");
             LoginClientInstanceDetailsPacket instanceDetails = PacketFactory.Get<LoginClientInstanceDetailsPacket>();
             instanceDetails.Id = (byte)PacketId.LoginClientInstanceDetailsPacketId;
-            instanceDetails.SessionId = 0xDEADBEEF;
+            instanceDetails.SessionId = ++_currentSessionId;
             instanceDetails.WorldAreaId = "1_1_1";
             instanceDetails.Entries.Add(new(config.InstanceServer, $"{config.InstanceServerPort}"));
             Send(instanceDetails);
