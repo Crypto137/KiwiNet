@@ -28,47 +28,47 @@ namespace KiwiNet.InstanceServer.Items
             ComponentTemplateRegistry registry = ComponentTemplateRegistry.ItemCommon;
 
             // TODO: load Data/ComponentArmour.dat
-            ArmourFactory = new ArmourComponentTemplateFactory(registry);
+            ArmourFactory = new ArmourTemplateFactory(registry);
 
             // TODO: load Data/ComponentAttributeRequirements.dat
-            AttributeRequirementsFactory = new AttributeRequirementsComponentTemplateFactory(registry);
+            AttributeRequirementsFactory = new AttributeRequirementsTemplateFactory(registry);
 
             // TODO: load Data/BaseItemTypes.dat
-            BaseFactory = new BaseComponentTemplateFactory(registry);
+            BaseFactory = new BaseTemplateFactory(registry);
 
             // TODO: load Data/ComponentCharges.dat
-            ChargesFactory = new ChargesComponentTemplateFactory(registry);
+            ChargesFactory = new ChargesTemplateFactory(registry);
 
-            ModsFactory = new ModsComponentTemplateFactory(registry);
+            ModsFactory = new ModsTemplateFactory(registry);
 
-            QualityFactory = new QualityComponentTemplateFactory(registry);
+            QualityFactory = new QualityTemplateFactory(registry);
 
             // TODO: load Data/ComponentSkillGem.dat
-            SkillGemFactory = new SkillGemComponentTemplateFactory(registry);
+            SkillGemFactory = new SkillGemTemplateFactory(registry);
 
-            SocketsFactory = new SocketsComponentTemplateFactory(registry);
-
-            // TODO: load Data/CurrencyItems.dat
-            // TODO: load Data/BaseItemTypes.dat
-            StackFactory = new StackComponentTemplateFactory(registry);
+            SocketsFactory = new SocketsTemplateFactory(registry);
 
             // TODO: load Data/CurrencyItems.dat
             // TODO: load Data/BaseItemTypes.dat
-            UsableFactory = new UsableComponentTemplateFactory(registry);
+            StackFactory = new StackTemplateFactory(registry);
+
+            // TODO: load Data/CurrencyItems.dat
+            // TODO: load Data/BaseItemTypes.dat
+            UsableFactory = new UsableTemplateFactory(registry);
 
             // TODO: load Data/ComponentWeapon.dat
-            WeaponFactory = new WeaponComponentTemplateFactory(registry);
+            WeaponFactory = new WeaponTemplateFactory(registry);
 
-            LocalStatsFactory = new LocalStatsComponentTemplateFactory(registry);
+            LocalStatsFactory = new LocalStatsTemplateFactory(registry);
 
             // TODO: load Data/ComponentFlask.dat
-            FlaskFactory = new FlaskComponentTemplateFactory(registry);
+            FlaskFactory = new FlaskTemplateFactory(registry);
 
             // TODO: load Data/ShieldTypes.dat
             // TODO: load Data/BaseItemTypes.dat
-            ShieldFactory = new ShieldComponentTemplateFactory(registry);
+            ShieldFactory = new ShieldTemplateFactory(registry);
 
-            QuestFactory = new QuestComponentTemplateFactory(registry);
+            QuestFactory = new QuestTemplateFactory(registry);
         }
     }
 }

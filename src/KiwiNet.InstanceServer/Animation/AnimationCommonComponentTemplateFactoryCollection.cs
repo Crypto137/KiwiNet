@@ -16,11 +16,11 @@ namespace KiwiNet.InstanceServer.Animation
             ComponentTemplateRegistry registry = ComponentTemplateRegistry.AnimationCommon;
 
             // TODO: load amd_table
-            AnimationControllerFactory = new AnimationControllerComponentTemplateFactory(registry);
+            AnimationControllerFactory = new AnimationControllerTemplateFactory(registry);
 
-            AttachedAnimatedObjectFactory = new AttachedAnimatedObjectComponentTemplateFactory(registry);
+            AttachedAnimatedObjectFactory = new AttachedAnimatedObjectTemplateFactory(registry);
 
-            HullFactory = new HullComponentTemplateFactory(registry);
+            HullFactory = new HullTemplateFactory(registry);
         }
     }
 }

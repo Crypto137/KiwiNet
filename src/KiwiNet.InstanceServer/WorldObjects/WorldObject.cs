@@ -14,7 +14,7 @@ namespace KiwiNet.InstanceServer.WorldObjects
         public uint Id { get; set; }
         public bool Destroyed { get; private set; }
         public bool Attackable { get; set; }
-        public PositionedComponent Positioned { get; private set; }
+        public Positioned Positioned { get; private set; }
 
         public WorldObject() { }
 
@@ -29,7 +29,7 @@ namespace KiwiNet.InstanceServer.WorldObjects
 
             Area = area;
 
-            Positioned = GetComponent<PositionedComponent>();
+            Positioned = GetComponent<Positioned>();
 
             Area.ObjectManager.AddObject(this);
 

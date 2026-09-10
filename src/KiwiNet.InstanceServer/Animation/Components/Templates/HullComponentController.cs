@@ -2,27 +2,27 @@
 
 namespace KiwiNet.InstanceServer.Animation.Components.Templates
 {
-    public sealed class HullComponentTemplate : ComponentTemplate<HullComponent>
+    public sealed class HullTemplate : ComponentTemplate<Hull>
     {
-        public HullComponentTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)
+        public HullTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)
         {
         }
     }
 
-    public sealed class HullComponentTemplateFactory : ComponentTemplateFactory
+    public sealed class HullTemplateFactory : ComponentTemplateFactory
     {
-        public HullComponentTemplateFactory(ComponentTemplateRegistry registry) : base(registry)
+        public HullTemplateFactory(ComponentTemplateRegistry registry) : base(registry)
         {
         }
 
         public override ComponentTemplate Allocate(ObjectTemplate objectTemplate)
         {
-            return new HullComponentTemplate(objectTemplate);
+            return new HullTemplate(objectTemplate);
         }
 
         public override string GetName()
         {
-            return "Hull";
+            return nameof(Hull);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
 
             Item item = new();
             item.Initialize(itemTemplate);
-            StackComponent stack = item.GetComponent<StackComponent>();
+            Stack stack = item.GetComponent<Stack>();
             if (stack != null)
                 stack.Quantity = 1;
 
@@ -41,7 +41,7 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
             WorldObject worldItem = new();
             worldItem.Initialize(worldItemTemplate, player.Area);
             worldItem.Positioned.SetPosition(position);
-            worldItem.GetComponent<WorldItemComponent>().Item = item;
+            worldItem.GetComponent<WorldItem>().Item = item;
 
             // TODO: awake object after it is set up?
 
@@ -70,9 +70,9 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
             monster.Positioned.SetPosition(position);
             monster.Attackable = true;
 
-            LifeComponent life = monster.GetComponent<LifeComponent>();
+            Life life = monster.GetComponent<Life>();
             if (life != null)
-                life.Life = 100;
+                life.CurrentLife = 100;
 
             // TODO: awake object after it is set up?
 

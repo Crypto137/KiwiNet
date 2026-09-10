@@ -9,7 +9,7 @@ namespace KiwiNet.InstanceServer.WorldObjects
 
     public sealed class WorldObjectTemplate : ObjectTemplate
     {
-        public PositionedComponentTemplate Positioned { get; set; }
+        public PositionedTemplate Positioned { get; set; }
         public bool Bool68 { get; set; }
         public int Dword6C { get; set; }
 

@@ -143,13 +143,13 @@ namespace KiwiNet.InstanceServer.Network
             Player.Initialize(playerTemplate, Area);
 
             Player.Positioned.SetPosition(Session.StartPosition);
-            Player.GetComponent<LifeComponent>().Life = 100;
+            Player.GetComponent<Life>().CurrentLife = 100;
 
-            PlayerComponent playerComponent = Player.GetComponent<PlayerComponent>();
+            Player playerComponent = Player.GetComponent<Player>();
             playerComponent.Name = Session.CharacterName;
             if (Area.WorldAreaId == "1_1_1")
             {
-                Player.GetComponent<PositionedComponent>().Rotation = 3.14f;
+                Player.GetComponent<Positioned>().Rotation = 3.14f;
                 //playerComponent.IsWashedUp = true;
             }
 
@@ -272,7 +272,7 @@ namespace KiwiNet.InstanceServer.Network
 
             InstanceClientChatMessagePacket reply = PacketFactory.Get<InstanceClientChatMessagePacket>();
             reply.Id = (byte)PacketId.InstanceClientChatMessagePacketId;
-            reply.Name = Player.GetComponent<PlayerComponent>().Name;
+            reply.Name = Player.GetComponent<Player>().Name;
             reply.Text = chatMessage.Text;
             Send(reply);
         }
@@ -304,7 +304,7 @@ namespace KiwiNet.InstanceServer.Network
             if (skillTargetEntity.SkillId == 0xC266)
             {
                 WorldObject worldObject = Area.ObjectManager.GetObject(skillTargetEntity.TargetId);
-                if (worldObject != null && worldObject.GetComponent<WorldItemComponent>() != null)
+                if (worldObject != null && worldObject.GetComponent<WorldItem>() != null)
                 {
                     // TODO: add to inventory
                     worldObject.Destroy();
@@ -318,7 +318,7 @@ namespace KiwiNet.InstanceServer.Network
 
             Logger.Debug($"OnSkillTargetLocation(): {skillTargetLocation}");
 
-            PositionedComponent playerPosition = Player.GetComponent<PositionedComponent>();
+            Positioned playerPosition = Player.GetComponent<Positioned>();
             playerPosition.SetPosition(new((int)skillTargetLocation.GridPositionX, (int)skillTargetLocation.GridPositionY));
         }
 

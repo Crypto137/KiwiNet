@@ -29,44 +29,44 @@ namespace KiwiNet.InstanceServer.WorldObjects
             ComponentTemplateRegistry registry = ComponentTemplateRegistry.WorldCommon;
 
             // TODO: load Data/ComponentActor.dat
-            ActorFactory = new ActorComponentTemplateFactory(registry);
+            ActorFactory = new ActorTemplateFactory(registry);
 
             // TODO: load Data/ComponentAnimated.dat
-            AnimatedFactory = new AnimatedComponentTemplateFactory(registry);
+            AnimatedFactory = new AnimatedTemplateFactory(registry);
 
-            AreaTransitionFactory = new AreaTransitionComponentTemplateFactory(registry);
+            AreaTransitionFactory = new AreaTransitionTemplateFactory(registry);
 
             // TODO: load Data/ComponentChest.dat
-            ChestFactory = new ChestComponentTemplateFactory(registry);
+            ChestFactory = new ChestTemplateFactory(registry);
 
-            InventoriesFactory = new InventoriesComponentTemplateFactory(registry);
+            InventoriesFactory = new InventoriesTemplateFactory(registry);
 
-            LifeFactory = new LifeComponentTemplateFactory(registry);
+            LifeFactory = new LifeTemplateFactory(registry);
 
             // TODO: load Data/ComponentObjectMagicProperties.dat
-            ObjectMagicPropertiesFactory = new ObjectMagicPropertiesComponentTemplateFactory(registry);
+            ObjectMagicPropertiesFactory = new ObjectMagicPropertiesTemplateFactory(registry);
 
             // TODO: load Data/ComponentPathfinding.dat
-            PathfindingFactory = new PathfindingComponentTemplateFactory(registry);
+            PathfindingFactory = new PathfindingTemplateFactory(registry);
 
-            PlayerFactory = new PlayerComponentTemplateFactory(registry);
+            PlayerFactory = new PlayerTemplateFactory(registry);
 
             // TODO: load Data/ComponentPositioned.dat
-            PositionedFactory = new PositionedComponentTemplateFactory(registry);
+            PositionedFactory = new PositionedTemplateFactory(registry);
 
             // TODO: load Data/ComponentStats.dat
-            StatsFactory = new StatsComponentTemplateFactory(registry);
+            StatsFactory = new StatsTemplateFactory(registry);
 
-            WorldItemFactory = new WorldItemComponentTemplateFactory(registry);
+            WorldItemFactory = new WorldItemTemplateFactory(registry);
 
             // TODO: load Data/NPCs.dat
-            NPCFactory = new NPCComponentTemplateFactory(registry);
+            NPCFactory = new NPCTemplateFactory(registry);
 
-            LimitedLifespanFactory = new LimitedLifespanComponentTemplateFactory(registry);
+            LimitedLifespanFactory = new LimitedLifespanTemplateFactory(registry);
 
-            TransitionableFactory = new TransitionableComponentTemplateFactory(registry);
+            TransitionableFactory = new TransitionableTemplateFactory(registry);
 
-            BaseEventsFactory = new BaseEventsComponentTemplateFactory(registry);
+            BaseEventsFactory = new BaseEventsTemplateFactory(registry);
         }
     }
 }
