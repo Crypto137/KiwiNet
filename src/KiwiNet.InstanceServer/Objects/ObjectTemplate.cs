@@ -238,15 +238,13 @@ namespace KiwiNet.InstanceServer.Objects
                 }
             }
 
-            componentTemplateRegistry.Definitions[name].Factory.ApplyTableData(component, fileName);
+            componentTemplateRegistry.Factories[name].ApplyTableData(component, fileName);
         }
 
         private (ComponentTemplate, string) AllocateComponentTemplate(string name, ComponentTemplateRegistry componentTemplateRegistry)
         {
-            if (componentTemplateRegistry.Definitions.TryGetValue(name, out ComponentTemplateDefinition definition) == false)
+            if (componentTemplateRegistry.Factories.TryGetValue(name, out ComponentTemplateFactory factory) == false)
                 return (null, name);
-
-            ComponentTemplateFactory factory = definition.Factory;
 
             return (factory.Allocate(this), factory.GetName());
         }

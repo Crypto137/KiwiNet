@@ -1,11 +1,11 @@
 ﻿namespace KiwiNet.InstanceServer.Objects
 {
     /// <summary>
-    /// Contains globally accessible collections of <see cref="ComponentTemplateDefinition"/>.
+    /// Contains globally accessible collections of <see cref="ComponentTemplateFactory"/>.
     /// </summary>
     public sealed class ComponentTemplateRegistry
     {
-        public Dictionary<string, ComponentTemplateDefinition> Definitions { get; } = new(StringComparer.Ordinal);
+        public Dictionary<string, ComponentTemplateFactory> Factories { get; } = new(StringComparer.Ordinal);
 
         public static ComponentTemplateRegistry ItemCommon { get; } = new();
         public static ComponentTemplateRegistry ItemServer { get; } = new();
