@@ -5,22 +5,21 @@ namespace KiwiNet.InstanceServer.Objects
     public abstract class ObjectBase
     {
         protected readonly List<Component> _components = new();
-
-        public T GetComponent<T>() where T : Component
-        {
-            foreach (Component component in _components)
-            {
-                if (component is T typedComponent)
-                    return typedComponent;
-            }
-
-            return null;
-        }
     }
 
     public abstract class ObjectBase<TTemplate> : ObjectBase where TTemplate: ObjectTemplate, new()
     {
         protected ResourceHandle<TTemplate> _template;
+
+        public T GetComponent<T>() where T : Component
+        {
+            TTemplate template = _template.Resource;
+
+            if (template.ComponentIndicesByName.TryGetValue(typeof(T).Name, out int index) == false)
+                return default;
+
+            return (T)_components[index];
+        }
 
         protected void InitializeComponents(ResourceHandle<TTemplate> templateHandle)
         {
