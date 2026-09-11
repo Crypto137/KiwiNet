@@ -2,6 +2,11 @@
 
 `Actor` allows world objects to execute actions, such as moving and using skills.
 
+|              |                                                                                                    |
+| ------------ | -------------------------------------------------------------------------------------------------- |
+| Dependencies | [Pathfinding](./Pathfinding.md), [Stats](./Stats.md), [Life](./Life.md), [Animated](./Animated.md) |
+| Data Table   | `Data/ComponentActor.dat`                                                                          |
+
 ## Template Variables
 
 | Name                     | Type     | Note                                                       |
@@ -12,13 +17,3 @@
 | `main_hand_unarmed_type` | `string` | See the `ItemClass` enum for allowed values.               |
 | `off_hand_unarmed_type`  | `string` | See the `ItemClass` enum for allowed values.               |
 | `team`                   | `int`    |                                                            |
-
-## Dependencies
-
-- Pathfinding
-
-- Stats
-
-- Life
-
-- Animated

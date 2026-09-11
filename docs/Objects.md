@@ -20,26 +20,26 @@ Components are serialized over the network in the order their templates are stor
 
 #### Common
 
-| Name                                     | Description                                                                        |
-| ---------------------------------------- | ---------------------------------------------------------------------------------- |
-| [Actor](./Components/Actor.md)           | Allows objects to use actions.                                                     |
-| Animated                                 |                                                                                    |
-| AreaTransition                           | Interactable objects that allow moving to a different area.                        |
-| BaseEvents                               |                                                                                    |
-| Chest                                    | Used for containers that can drop items.                                           |
-| Inventories                              | A collection of inventories.                                                       |
-| Life                                     | Contains life, energy shield, mana, and buffs.                                     |
-| LimitedLifespan                          |                                                                                    |
-| NPC                                      |                                                                                    |
-| ObjectMagicProperties                    |                                                                                    |
-| Pathfinding                              |                                                                                    |
-| Player                                   | Player specific data (character name, experience, allocated passive skills, etc.). |
-| [Positioned](./Components/Positioned.md) | Defines spatial properties (position, rotation, scale).                            |
-| Projectile                               | Mentioned in game data, but no code to parse it.                                   |
-| Shrine                                   | Mentioned in game data, but no code to parse it.                                   |
-| Stats                                    |                                                                                    |
-| Transitionable                           |                                                                                    |
-| WorldItem                                | Represents an item object in the game world.                                       |
+| Name                                                           | Description                                                                        |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| [Actor](./Components/Actor.md)                                 | Allows objects to use actions.                                                     |
+| [Animated](./Components/Animated.md)                           |                                                                                    |
+| [AreaTransition](./Components/AreaTransition.md)               | Interactable objects that allow moving to a different area.                        |
+| [BaseEvents](./Components/BaseEvents.md)                       |                                                                                    |
+| [Chest](./Components/Chest.md)                                 | Used for containers that can drop items.                                           |
+| [Inventories](./Components/Inventories.md)                     | A collection of inventories.                                                       |
+| [Life](./Components/Life.md)                                   | Contains life, energy shield, mana, and buffs.                                     |
+| [LimitedLifespan](./Components/LimitedLifespan.md)             |                                                                                    |
+| [NPC](./Components/NPC.md)                                     |                                                                                    |
+| [ObjectMagicProperties](./Components/ObjectMagicProperties.md) |                                                                                    |
+| [Pathfinding](./Components/Pathfinding.md)                     |                                                                                    |
+| [Player](./Components/Player.md)                               | Player specific data (character name, experience, allocated passive skills, etc.). |
+| [Positioned](./Components/Positioned.md)                       | Defines spatial properties (position, rotation, scale).                            |
+| Projectile                                                     | Mentioned in game data, but no code to parse it.                                   |
+| Shrine                                                         | Mentioned in game data, but no code to parse it.                                   |
+| [Stats](./Components/Stats.md)                                 |                                                                                    |
+| [Transitionable](./Components/Transitionable.md)               |                                                                                    |
+| [WorldItem](./Components/WorldItem.md)                         | Represents an item object in the game world.                                       |
 
 #### Client
 
@@ -57,23 +57,23 @@ Components are serialized over the network in the order their templates are stor
 
 #### Common
 
-| Name                  | Description |
-| --------------------- | ----------- |
-| Armour                |             |
-| AttributeRequirements |             |
-| Base                  |             |
-| Charges               |             |
-| Flask                 |             |
-| LocalStats            |             |
-| Mods                  |             |
-| Quality               |             |
-| Quest                 |             |
-| Shield                |             |
-| SkillGem              |             |
-| Sockets               |             |
-| Stack                 |             |
-| Usable                |             |
-| Weapon                |             |
+| Name                                                           | Description |
+| -------------------------------------------------------------- | ----------- |
+| [Armour](./Components/Armour.md)                               |             |
+| [AttributeRequirements](./Components/AttributeRequirements.md) |             |
+| [Base](./Components/Base.md)                                   |             |
+| [Charges](./Components/Charges.md)                             |             |
+| [Flask](./Components/Flask.md)                                 |             |
+| [LocalStats](./Components/LocalStats.md)                       |             |
+| [Mods](./Components/Mods.md)                                   |             |
+| [Quality](./Components/Quality.md)                             |             |
+| [Quest](./Components/Quest.md)                                 |             |
+| [Shield](./Components/Shield.md)                               |             |
+| [SkillGem](./Components/SkillGem.md)                           |             |
+| [Sockets](./Components/Sockets.md)                             |             |
+| [Stack](./Components/Stack.md)                                 |             |
+| [Usable](./Components/Usable.md)                               |             |
+| [Weapon](./Components/Weapon.md)                               |             |
 
 #### Client
 
@@ -86,11 +86,11 @@ Components are serialized over the network in the order their templates are stor
 
 #### Common
 
-| Name                   | Description |
-| ---------------------- | ----------- |
-| AnimationController    |             |
-| AttachedAnimatedObject |             |
-| Hull                   |             |
+| Name                                                             | Description |
+| ---------------------------------------------------------------- | ----------- |
+| [AnimationController](./Components/AnimationController.md)       |             |
+| [AttachedAnimatedObject](./Components/AttachedAnimatedObject.md) |             |
+| [Hull](./Components/Hull.md)                                     |             |
 
 #### Client
 
