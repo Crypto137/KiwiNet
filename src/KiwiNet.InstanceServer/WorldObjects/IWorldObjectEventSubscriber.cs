@@ -2,12 +2,12 @@
 {
     public interface IWorldObjectEventSubscriber
     {
-        public void OnObjectAdded(WorldObject worldObject);
+        public void OnAddObject(WorldObject worldObject);
 
-        public void OnObjectRemoved(WorldObject worldObject);
+        public void OnRemoveObject(WorldObject worldObject);
 
-        //public void OnObjectAwake(WorldObject worldObject);
+        public void OnWakeObject(WorldObject worldObject);
 
-        // currently unknown fourth method
+        public void OnSleepObject(WorldObject worldObject);
     }
 }

@@ -30,8 +30,6 @@ namespace KiwiNet.InstanceServer.Network
 
         private readonly List<PacketSerializer> _packetSerializers;
 
-        private readonly Queue<(WorldObject, WorldObjectPacketId)> _pendingWorldObjects = new();
-
         private TimeSpan _lastHeartbeatTime;
         private bool _isDisconnected;
 
@@ -60,8 +58,14 @@ namespace KiwiNet.InstanceServer.Network
             _isDisconnected = true;
 
             Connection.Disconnect();
-            Area.ObjectManager.Subscribers.Remove(this);
-            Player?.Destroy();
+            Area.ObjectManager.RemoveSubscriber(this);
+
+            if (Player != null)
+            {
+                Player.Sleep();
+                Player.Destroy();
+            }
+
             Area.RemotePlayerManager.RemovePlayer(Connection);
         }
 
@@ -69,27 +73,6 @@ namespace KiwiNet.InstanceServer.Network
         {
             Connection.Receive();
             PacketSerializer.DeserializeAllPackets(Connection, _packetSerializers);
-
-            // delayed object sending to allow us to set objects up before they are sent, this should probably be handled with sleep/awake instead
-            while (_pendingWorldObjects.TryDequeue(out var pendingObject))
-            {
-                (WorldObject worldObject, WorldObjectPacketId packetId) = pendingObject;
-
-                switch (packetId)
-                {
-                    case WorldObjectPacketId.InstanceClientWorldObjectAdd:
-                        SendWorldObjectAdd(worldObject);
-                        break;
-
-                    case WorldObjectPacketId.InstanceClientWorldObjectUpdate:
-                        SendWorldObjectUpdate(worldObject);
-                        break;
-
-                    case WorldObjectPacketId.InstanceClientWorldObjectRemove:
-                        SendWorldObjectRemove(worldObject);
-                        break;
-                }
-            }
 
             if ((Clock.UnixTime - _lastHeartbeatTime) > TimeSpan.FromSeconds(6))
             {
@@ -141,6 +124,7 @@ namespace KiwiNet.InstanceServer.Network
             }
 
             Player.Initialize(playerTemplate, Area);
+            playerTemplate.DecrementRefCount();
 
             Player.Positioned.SetPosition(Session.StartPosition);
             Player.GetComponent<Life>().CurrentLife = 100;
@@ -153,7 +137,7 @@ namespace KiwiNet.InstanceServer.Network
                 //playerComponent.IsWashedUp = true;
             }
 
-            playerTemplate.DecrementRefCount();
+            Player.Wake();
 
             //---
 
@@ -191,16 +175,24 @@ namespace KiwiNet.InstanceServer.Network
 
         #region IWorldObjectEventSubscriber
 
-        public void OnObjectAdded(WorldObject worldObject)
+        public void OnAddObject(WorldObject worldObject)
         {
-            // TODO: area of interest
-            _pendingWorldObjects.Enqueue((worldObject, WorldObjectPacketId.InstanceClientWorldObjectAdd));
         }
 
-        public void OnObjectRemoved(WorldObject worldObject)
+        public void OnRemoveObject(WorldObject worldObject)
+        {
+        }
+
+        public void OnWakeObject(WorldObject worldObject)
         {
             // TODO: area of interest
-            _pendingWorldObjects.Enqueue((worldObject, WorldObjectPacketId.InstanceClientWorldObjectRemove));
+            SendWorldObjectAdd(worldObject);
+        }
+
+        public void OnSleepObject(WorldObject worldObject)
+        {
+            // TODO: area of interest
+            SendWorldObjectRemove(worldObject);
         }
 
         #endregion
@@ -307,6 +299,7 @@ namespace KiwiNet.InstanceServer.Network
                 if (worldObject != null && worldObject.GetComponent<WorldItem>() != null)
                 {
                     // TODO: add to inventory
+                    worldObject.Sleep();
                     worldObject.Destroy();
                 }
             }
@@ -360,7 +353,7 @@ namespace KiwiNet.InstanceServer.Network
             WorldObjectManager objectManager = Area.ObjectManager;
             foreach (WorldObject worldObject in objectManager)
                 SendWorldObjectAdd(worldObject);
-            objectManager.Subscribers.Add(this);
+            objectManager.AddSubscriber(this);
 
             var skills = PacketFactory.Get<InstanceClientBoundSkillList>();
             skills.Id = (byte)PacketId.InstanceClientBoundSkillListId;

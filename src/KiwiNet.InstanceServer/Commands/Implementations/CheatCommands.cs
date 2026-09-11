@@ -43,7 +43,7 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
             worldItem.Positioned.SetPosition(position);
             worldItem.GetComponent<WorldItem>().Item = item;
 
-            // TODO: awake object after it is set up?
+            worldItem.Wake();
 
             return string.Empty;
         }
@@ -74,7 +74,7 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
             if (life != null)
                 life.CurrentLife = 100;
 
-            // TODO: awake object after it is set up?
+            monster.Wake();
 
             return string.Empty;
         }

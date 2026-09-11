@@ -44,6 +44,16 @@ namespace KiwiNet.InstanceServer.WorldObjects
             Area.ObjectManager.RemoveObject(Id);
         }
 
+        public void Wake()
+        {
+            Area.ObjectManager.WakeObject(Id);
+        }
+
+        public void Sleep()
+        {
+            Area.ObjectManager.SleepObject(Id);
+        }
+
         public void Serialize(NetworkConnection connection)
         {
             connection.Write(_template.Resource.Hash);
