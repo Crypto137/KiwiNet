@@ -7,6 +7,11 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
         public ChestTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)
         {
         }
+
+        public override void GetDependencies(List<string> dependencies)
+        {
+            dependencies.Add(nameof(Positioned));
+        }
     }
 
     public sealed class ChestTemplateFactory : ComponentTemplateFactory

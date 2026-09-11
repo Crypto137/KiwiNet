@@ -7,6 +7,13 @@ namespace KiwiNet.InstanceServer.Items.Components.Templates
         public WeaponTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)
         {
         }
+
+        public override void GetDependencies(List<string> dependencies)
+        {
+            dependencies.Add(nameof(AttributeRequirements));
+            dependencies.Add(nameof(Mods));
+            dependencies.Add(nameof(LocalStats));
+        }
     }
 
     public sealed class WeaponTemplateFactory : ComponentTemplateFactory

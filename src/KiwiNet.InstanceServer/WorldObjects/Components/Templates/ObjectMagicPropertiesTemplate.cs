@@ -7,6 +7,11 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
         public ObjectMagicPropertiesTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)
         {
         }
+
+        public override void GetDependencies(List<string> dependencies)
+        {
+            dependencies.Add(nameof(Stats));
+        }
     }
 
     public sealed class ObjectMagicPropertiesTemplateFactory : ComponentTemplateFactory

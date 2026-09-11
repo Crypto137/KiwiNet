@@ -7,6 +7,12 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
         public InventoriesTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)
         {
         }
+
+        public override void GetDependencies(List<string> dependencies)
+        {
+            dependencies.Add(nameof(Player));
+            dependencies.Add(nameof(Stats));
+        }
     }
 
     public sealed class InventoriesTemplateFactory : ComponentTemplateFactory

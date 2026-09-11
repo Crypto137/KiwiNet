@@ -7,6 +7,11 @@ namespace KiwiNet.InstanceServer.Items.Components.Templates
         public ModsTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)
         {
         }
+
+        public override void GetDependencies(List<string> dependencies)
+        {
+            dependencies.Add(nameof(LocalStats));
+        }
     }
 
     public sealed class ModsTemplateFactory : ComponentTemplateFactory

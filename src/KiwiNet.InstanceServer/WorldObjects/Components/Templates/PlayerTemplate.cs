@@ -7,6 +7,12 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
         public PlayerTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)
         {
         }
+
+        public override void GetDependencies(List<string> dependencies)
+        {
+            dependencies.Add(nameof(Stats));
+            dependencies.Add(nameof(Life));
+        }
     }
 
     public sealed class PlayerTemplateFactory : ComponentTemplateFactory

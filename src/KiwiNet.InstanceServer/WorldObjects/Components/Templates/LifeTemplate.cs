@@ -7,6 +7,13 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
         public LifeTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)
         {
         }
+
+        public override void GetDependencies(List<string> dependencies)
+        {
+            dependencies.Add(nameof(Positioned));
+            dependencies.Add(nameof(Pathfinding));
+            dependencies.Add(nameof(Stats));
+        }
     }
 
     public sealed class LifeTemplateFactory : ComponentTemplateFactory

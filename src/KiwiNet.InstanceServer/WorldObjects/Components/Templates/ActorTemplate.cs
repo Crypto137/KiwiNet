@@ -118,10 +118,10 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
 
         public override void GetDependencies(List<string> dependencies)
         {
-            dependencies.Add("Pathfinding");
-            dependencies.Add("Stats");
-            dependencies.Add("Life");
-            dependencies.Add("Animated");
+            dependencies.Add(nameof(Pathfinding));
+            dependencies.Add(nameof(Stats));
+            dependencies.Add(nameof(Life));
+            dependencies.Add(nameof(Animated));
         }
     }
 

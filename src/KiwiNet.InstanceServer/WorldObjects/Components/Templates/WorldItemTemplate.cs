@@ -7,6 +7,12 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
         public WorldItemTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)
         {
         }
+
+        public override void GetDependencies(List<string> dependencies)
+        {
+            dependencies.Add(nameof(Animated));
+            dependencies.Add(nameof(Positioned));
+        }
     }
 
     public sealed class WorldItemTemplateFactory : ComponentTemplateFactory
