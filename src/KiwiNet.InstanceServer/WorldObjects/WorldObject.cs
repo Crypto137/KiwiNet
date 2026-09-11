@@ -37,11 +37,13 @@ namespace KiwiNet.InstanceServer.WorldObjects
                 component.PostInitialize();
         }
 
-        public void Destroy()
+        public override void Destroy()
         {
             Destroyed = true;
 
             Area.ObjectManager.RemoveObject(Id);
+
+            base.Destroy();
         }
 
         public void Wake()

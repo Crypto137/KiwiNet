@@ -13,6 +13,14 @@
         }
 
         /// <summary>
+        /// Called when the owner is being destroyed.
+        /// </summary>
+        public virtual void Destroy()
+        {
+            // return to component pool?
+        }
+
+        /// <summary>
         /// Called when the owner <see cref="ObjectBase"/> finishes initialization, including creating all components.
         /// </summary>
         public virtual void PostInitialize()

@@ -8,6 +8,17 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components
         public Item Item { get; set; }
         public bool FlippyAnimationPlayed { get; set; }
 
+        public override void Destroy()
+        {
+            if (Item != null)
+            {
+                Item.Destroy();
+                Item = null;
+            }
+
+            base.Destroy();
+        }
+
         public override void Serialize(NetworkConnection connection)
         {
             SerializeUpdate(connection);

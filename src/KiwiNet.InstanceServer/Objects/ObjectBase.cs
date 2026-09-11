@@ -36,5 +36,19 @@ namespace KiwiNet.InstanceServer.Objects
                 _components.Add(component);
             }
         }
+
+        public virtual void Destroy()
+        {
+            foreach (Component component in _components)
+                component.Destroy();
+
+            _components.Clear();
+
+            if (_template != null)
+            {
+                _template.DecrementRefCount();
+                _template = null;
+            }
+        }
     }
 }
