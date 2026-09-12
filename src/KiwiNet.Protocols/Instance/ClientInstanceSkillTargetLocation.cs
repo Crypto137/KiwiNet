@@ -8,11 +8,11 @@ namespace KiwiNet.Protocols.Instance
         public uint GridPositionY { get; set; }
         public ushort SkillId { get; set; }
         public short Count { get; set; }
-        public byte AttackInPlace { get; set; }
+        public SkillTargetFlags Flags { get; set; }
 
         public override string ToString()
         {
-            return $"GridPositionX={GridPositionX}, GridPositionY={GridPositionY}, SkillId=0x{SkillId:X}, Count={Count}, AttackInPlace={AttackInPlace}";
+            return $"GridPositionX={GridPositionX}, GridPositionY={GridPositionY}, SkillId=0x{SkillId:X}, Count={Count}, Flags={Flags}";
         }
 
         public override void Deserialize(NetworkConnection connection)
@@ -21,7 +21,7 @@ namespace KiwiNet.Protocols.Instance
             GridPositionY = connection.Read<uint>();
             SkillId = connection.Read<ushort>();
             Count = connection.Read<short>();
-            AttackInPlace = connection.Read<byte>();
+            Flags = (SkillTargetFlags)connection.Read<byte>();
         }
     }
 }
