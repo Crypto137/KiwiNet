@@ -31,6 +31,8 @@ namespace KiwiNet.InstanceServer.Network
 
         private readonly List<PacketSerializer> _packetSerializers;
 
+        private readonly (InventoryType, uint)[] _itemLinks = new (InventoryType, uint)[byte.MaxValue]; // TODO: there is probably a structure for this client-side as well? investigate it
+
         private TimeSpan _lastHeartbeatTime;
         private bool _isDisconnected;
 
@@ -43,6 +45,8 @@ namespace KiwiNet.InstanceServer.Network
         public RemotePlayer(Area area, NetworkConnection connection, ClientSession session)
         {
             _packetSerializers = new() { new ClientGamePacketSerializer(this) };
+
+            _itemLinks.AsSpan().Fill((InventoryType.Invalid, Inventory.InvalidEntryId));
 
             _lastHeartbeatTime = Clock.UnixTime;
 
@@ -229,6 +233,10 @@ namespace KiwiNet.InstanceServer.Network
 
             switch ((PacketId)packet.Id)
             {
+                case PacketId.ClientInstanceLinkItemPacketId:
+                    OnLinkItem(packet);
+                    break;
+
                 case PacketId.ClientInstanceChatMessagePacketId:
                     OnChatMessage(packet);
                     break;
@@ -267,13 +275,32 @@ namespace KiwiNet.InstanceServer.Network
             }
         }
 
-        private void OnChatMessage(Packet packet)
+        private void OnLinkItem(Packet packet)
         {
-            if (packet is not ClientInstanceChatMessagePacket chatMessage)
+            ClientInstanceLinkItemPacket linkItem = (ClientInstanceLinkItemPacket)packet;
+
+            int index = linkItem.LinkIndex;
+            InventoryType inventoryType = (InventoryType)linkItem.InventoryType;
+            uint entryId = linkItem.EntryId;
+
+            if (index < 0 || index >= _itemLinks.Length)
             {
-                Logger.Warn("OnChatMessage(): Invalid packet");
+                Logger.Warn("OnLinkItem(): Link index out of range");
                 return;
             }
+
+            if (inventoryType < 0 || inventoryType > InventoryType.NumTypes)
+            {
+                Logger.Warn("OnLinkItem(): Inventory type out of range");
+                return;
+            }
+
+            _itemLinks[index] = (inventoryType, entryId);
+        }
+
+        private void OnChatMessage(Packet packet)
+        {
+            ClientInstanceChatMessagePacket chatMessage = (ClientInstanceChatMessagePacket)packet;
 
             if (CommandManager.Instance.TryParseCommand(this, chatMessage.Text))
                 return;
@@ -284,6 +311,30 @@ namespace KiwiNet.InstanceServer.Network
             reply.Id = (byte)PacketId.InstanceClientChatMessagePacketId;
             reply.Name = Player.GetComponent<Player>().Name;
             reply.Text = chatMessage.Text;
+
+            if (chatMessage.ItemLinks.Count > 0)
+            {
+                Inventories inventories = Player.GetComponent<Inventories>();
+
+                for (int i = 0; i < chatMessage.ItemLinks.Count; i++)
+                {
+                    int charIndex = chatMessage.ItemLinks[i];
+                    (InventoryType inventoryType, uint entryId) = _itemLinks[i];
+
+                    Inventory inventory = inventories.GetInventory(inventoryType);
+                    if (inventory == null)
+                        continue;
+
+                    Item item = inventory.GetItem(entryId);
+                    if (item == null)
+                        continue;
+
+                    reply.Items.Add((charIndex, item));
+
+                    _itemLinks[i] = new(InventoryType.Invalid, Inventory.InvalidEntryId);
+                }
+            }
+
             Send(reply);
         }
 

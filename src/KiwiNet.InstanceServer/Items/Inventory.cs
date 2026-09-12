@@ -70,7 +70,8 @@ namespace KiwiNet.InstanceServer.Items
         TradeLocal1,
         TradeRemote1,
         InAnotherItem,
-        NumTypes,
+        Invalid,
+        NumTypes = Invalid,
     }
 
     public class Inventory
@@ -251,6 +252,14 @@ namespace KiwiNet.InstanceServer.Items
                 _addedEntries.SwapRemove(addedIndex);
 
             return item;
+        }
+
+        public Item GetItem(uint id)
+        {
+            if (_entries.TryGetValue(id, out Entry entry) == false)
+                return null;
+
+            return entry.Item;
         }
 
         public void Subscribe(IInventorySubscriber subscriber)

@@ -4,15 +4,15 @@ namespace KiwiNet.Protocols.Instance
 {
     public sealed class ClientInstanceLinkItemPacket : Packet
     {
-        public uint Field0 { get; set; }
-        public byte Field1 { get; set; }
-        public uint Field2 { get; set; }
+        public int LinkIndex { get; set; }
+        public byte InventoryType { get; set; }
+        public uint EntryId { get; set; }
 
         public override void Deserialize(NetworkConnection connection)
         {
-            Field0 = connection.Read<uint>();
-            Field1 = connection.Read<byte>();
-            Field2 = connection.Read<uint>();
+            LinkIndex = connection.Read<int>();
+            InventoryType = connection.Read<byte>();
+            EntryId = connection.Read<uint>();
         }
     }
 }
