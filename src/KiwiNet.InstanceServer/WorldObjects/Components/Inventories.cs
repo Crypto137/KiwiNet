@@ -83,6 +83,26 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components
                 inventory?.Serialize(connection);
         }
 
+        public override void SerializeUpdate(NetworkConnection connection)
+        {
+            ulong dirtyMask = 0;
+
+            for (int i = 0; i < (int)InventoryType.NumTypes; i++)
+            {
+                Inventory inventory = _inventories[i];
+                if (inventory != null && inventory.IsDirty())
+                    dirtyMask |= 1ul << i;
+            }
+
+            connection.WriteNoSwap(dirtyMask);
+
+            foreach (Inventory inventory in _inventories)
+            {
+                if (inventory != null && inventory.IsDirty())
+                    inventory.SerializeUpdate(connection);
+            }
+        }
+
         public override void ResetUpdate()
         {
             foreach (Inventory inventory in _inventories)
@@ -102,5 +122,11 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components
         }
 
         #endregion
+
+        public Inventory GetInventory(InventoryType inventoryType)
+        {
+            // TODO: this is just a placeholder, verify against the client code how getters are supposed to work
+            return _inventories[(int)inventoryType];
+        }
     }
 }

@@ -71,5 +71,24 @@ namespace KiwiNet.InstanceServer.WorldObjects
             foreach (Component component in _components)
                 ((WorldComponent)component).Serialize(connection);
         }
+
+        public void SerializeUpdate<T>(NetworkConnection connection) where T: WorldComponent
+        {
+            // It doesn't seem like components can be checked for dirtiness, therefore
+            // sending updates for all components at the same time doesn't seem quite right.
+            // So component updates should probably be triggered manually for each component?
+            // This is what we're doing for now.
+
+            if (_template.Resource.ComponentIndicesByName.TryGetValue(typeof(T).Name, out int index) == false)
+                throw new Exception($"Trying to serialize an update for component {typeof(T).Name}, but object {this} doesn't have it");
+
+            T component = (T)_components[index];
+
+            connection.Write(Id);
+            connection.Write((byte)index);
+            component.SerializeUpdate(connection);
+
+            component.ResetUpdate();
+        }
     }
 }

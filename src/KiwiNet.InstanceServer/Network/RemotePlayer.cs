@@ -5,6 +5,7 @@ using KiwiNet.Core.Network;
 using KiwiNet.Core.System;
 using KiwiNet.InstanceServer.Areas;
 using KiwiNet.InstanceServer.Commands;
+using KiwiNet.InstanceServer.Items;
 using KiwiNet.InstanceServer.Objects;
 using KiwiNet.InstanceServer.Resources;
 using KiwiNet.InstanceServer.Resources.Tables;
@@ -95,9 +96,11 @@ namespace KiwiNet.InstanceServer.Network
             Connection.Flush();
         }
 
-        public void SendWorldObjectUpdate(WorldObject worldObject)
+        public void SendWorldObjectUpdate<T>(WorldObject worldObject) where T: WorldComponent
         {
-            // TODO
+            Connection.Write((byte)WorldObjectPacketId.InstanceClientWorldObjectUpdate);
+            worldObject.SerializeUpdate<T>(Connection);
+            Connection.Flush();
         }
 
         public void SendWorldObjectRemove(WorldObject worldObject)
@@ -296,11 +299,29 @@ namespace KiwiNet.InstanceServer.Network
             if (skillTargetEntity.SkillId == 0xC266)
             {
                 WorldObject worldObject = Area.ObjectManager.GetObject(skillTargetEntity.TargetId);
-                if (worldObject != null && worldObject.GetComponent<WorldItem>() != null)
+                WorldItem worldItem = worldObject?.GetComponent<WorldItem>();
+                
+                if (worldItem != null)
                 {
-                    // TODO: add to inventory
-                    worldObject.Sleep();
-                    worldObject.Destroy();
+                    Item item = worldItem.Item;
+
+                    Inventories inventories = Player.GetComponent<Inventories>();
+                    Inventory inventory = inventories.GetInventory(InventoryType.MainInventory1);
+
+                    RectInt rect = new(0, 0, 1, 1);
+
+                    if (inventory.IsBlocked(rect, out _) == false)
+                    {
+                        uint entryId = inventory.AddItem(item, 0, 0);
+                        if (entryId != Inventory.InvalidEntryId)
+                        {
+                            worldItem.Item = null;
+                            worldObject.Sleep();
+                            worldObject.Destroy();
+
+                            SendWorldObjectUpdate<Inventories>(Player);
+                        }
+                    }
                 }
             }
         }

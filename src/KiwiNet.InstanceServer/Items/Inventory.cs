@@ -141,7 +141,7 @@ namespace KiwiNet.InstanceServer.Items
             foreach (uint addedItem in _addedEntries)
             {
                 Entry entry = _entries[addedItem];
-                connection.Write(entry.Item);
+                entry.Serialize(connection);
             }
         }
 
@@ -150,10 +150,15 @@ namespace KiwiNet.InstanceServer.Items
             _addedEntries.Clear();
             _removedEntries.Clear();
         }
-
-        private bool IsBlocked(in RectInt rect, out Entry blockedBy)
+    
+        public bool IsDirty()
         {
-            blockedBy = null;
+            return _addedEntries.Count != 0 || _removedEntries.Count != 0;
+        }
+
+        public bool IsBlocked(in RectInt rect, out Entry outExistingEntry)
+        {
+            outExistingEntry = null;
 
             if (OneItemOnly && (rect.X1 != 0 || rect.Y1 != 0))
                 return true;
@@ -168,9 +173,9 @@ namespace KiwiNet.InstanceServer.Items
                 for (int x = rect.X1; x < rect.X2; x++)
                 {
                     Entry entry = _slots[y * Width + x];
-
                     if (entry != null)
                     {
+                        // When the rect is blocked by two different entries, neither of them is returned in the out argument.
                         if (existingEntry != null && existingEntry != entry)
                             return true;
                         
@@ -181,7 +186,7 @@ namespace KiwiNet.InstanceServer.Items
 
             if (existingEntry != null)
             {
-                blockedBy = existingEntry;
+                outExistingEntry = existingEntry;
                 return true;
             }
 
@@ -304,7 +309,7 @@ namespace KiwiNet.InstanceServer.Items
                 subscriber.OnItemRemoved(this, entry.Item);
         }
 
-        private class Entry
+        public class Entry
         {
             public Item Item;
             public RectInt Rect;
@@ -318,8 +323,8 @@ namespace KiwiNet.InstanceServer.Items
             public void Serialize(NetworkConnection connection)
             {
                 connection.Write(Id);
-                connection.Write(Rect.X1);
-                connection.Write(Rect.Y1);
+                connection.Write((byte)Rect.X1);
+                connection.Write((byte)Rect.Y1);
                 connection.Write(Item);
             }
         }

@@ -1,5 +1,4 @@
 ﻿using KiwiNet.Core.Network;
-using System.Runtime.InteropServices;
 
 namespace KiwiNet.Protocols.Instance
 {
@@ -11,7 +10,7 @@ namespace KiwiNet.Protocols.Instance
 
         public void Serialize(NetworkConnection connection)
         {
-            connection.Write(MemoryMarshal.AsBytes([Field0]));  // 8 bytes, no endianness swap
+            connection.WriteNoSwap(Field0);
             connection.Write(Field1);
             connection.Write((byte)Field2.Count);
             foreach (string str in Field2)

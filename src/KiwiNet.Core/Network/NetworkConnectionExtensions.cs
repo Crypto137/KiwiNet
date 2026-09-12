@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace KiwiNet.Core.Network
@@ -65,6 +66,16 @@ namespace KiwiNet.Core.Network
         public static void Write<T>(this NetworkConnection connection, T obj) where T: INetworkSerializable
         {
             obj.Serialize(connection);
+        }
+
+        /// <summary>
+        /// Writes a <see cref="ulong"/> without doing an endianness swap.
+        /// </summary>
+        public static void WriteNoSwap(this NetworkConnection connection, ulong value)
+        {
+            Span<ulong> span = MemoryMarshal.CreateSpan(ref value, 1);
+            Span<byte> bytes = MemoryMarshal.AsBytes(span);
+            connection.Write(bytes);
         }
     }
 }
