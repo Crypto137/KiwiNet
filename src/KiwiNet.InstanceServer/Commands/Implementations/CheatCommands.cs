@@ -18,18 +18,10 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
         {
             string itemShortName = args.Length > 0 ? args[0] : string.Empty;
 
-            // Create Item
-            using ResourceHandle<ItemRegistry> itemRegistry = ResourceManager.Get<ItemRegistry>(ObjectSystem.ItemRegistryFile);
-            using ResourceHandle<ItemTemplate> itemTemplate = itemRegistry.Resource.GetTemplate(itemShortName);
-
-            if (itemTemplate == null)
+            // Generate item
+            Item item = ItemGenerator.Generate(itemShortName);
+            if (item == null)
                 return $"'{itemShortName}' is not a valid item name.";
-
-            Item item = new();
-            item.Initialize(itemTemplate);
-            Stack stack = item.GetComponent<Stack>();
-            if (stack != null)
-                stack.Quantity = 1;
 
             // Create and send WorldItem
             using ResourceHandle<WorldObjectRegistry> worldObjectTable = ResourceManager.Get<WorldObjectRegistry>(ObjectSystem.WorldObjectRegistryFile);

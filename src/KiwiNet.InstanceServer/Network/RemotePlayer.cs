@@ -129,6 +129,7 @@ namespace KiwiNet.InstanceServer.Network
             Player.Initialize(playerTemplate, Area);
             playerTemplate.DecrementRefCount();
 
+            // hardcoded initialization stuff - fixme
             Player.Positioned.SetPosition(Session.StartPosition);
             Player.GetComponent<Life>().CurrentLife = 100;
 
@@ -139,6 +140,12 @@ namespace KiwiNet.InstanceServer.Network
                 Player.GetComponent<Positioned>().Rotation = 3.14f;
                 //playerComponent.IsWashedUp = true;
             }
+
+            Inventories inventories = Player.GetComponent<Inventories>();
+            Inventory flasks = inventories.GetInventory(InventoryType.Flask1);
+            flasks.AddItem(ItemGenerator.Generate("FlaskLife1"), 0, 0);
+            flasks.AddItem(ItemGenerator.Generate("FlaskLife1"), 1, 0);
+            flasks.AddItem(ItemGenerator.Generate("FlaskMana1"), 4, 0);
 
             Player.Wake();
 
