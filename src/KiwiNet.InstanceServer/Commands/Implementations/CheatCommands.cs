@@ -1,11 +1,11 @@
 ﻿using KiwiNet.Core.Math;
 using KiwiNet.InstanceServer.Objects;
 using KiwiNet.InstanceServer.Items;
-using KiwiNet.InstanceServer.Items.Components;
 using KiwiNet.InstanceServer.Network;
 using KiwiNet.InstanceServer.Resources;
 using KiwiNet.InstanceServer.WorldObjects;
 using KiwiNet.InstanceServer.WorldObjects.Components;
+using KiwiNet.Protocols.Instance;
 
 namespace KiwiNet.InstanceServer.Commands.Implementations
 {
@@ -67,6 +67,20 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
                 life.CurrentLife = 100;
 
             monster.Wake();
+
+            return string.Empty;
+        }
+
+        [CommandHandler("openscreen")]
+        public static string OpenScreen(object invoker, ReadOnlySpan<string> args)
+        {
+            string screen = args.Length > 0 ? args[0] : string.Empty;
+
+            if (Enum.TryParse(screen, true, out ScreenType screenType) == false)
+                return $"'{screen}' is not a valid screen type.";
+
+            RemotePlayer player = (RemotePlayer)invoker;
+            player.SendOpenScreen(screenType);
 
             return string.Empty;
         }

@@ -89,6 +89,14 @@ namespace KiwiNet.InstanceServer.Network
             Connection.Flush();
         }
 
+        public void SendOpenScreen(ScreenType screenType)
+        {
+            InstanceClientOpenScreen openScreen = PacketFactory.Get<InstanceClientOpenScreen>();
+            openScreen.Id = (byte)PacketId.InstanceClientOpenScreenId;
+            openScreen.Screen = screenType;
+            Send(openScreen);
+        }
+
         public void SendWorldObjectAdd(WorldObject worldObject)
         {
             Connection.Write((byte)WorldObjectPacketId.InstanceClientWorldObjectAdd);
