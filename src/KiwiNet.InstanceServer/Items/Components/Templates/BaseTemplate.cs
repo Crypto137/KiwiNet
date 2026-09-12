@@ -4,6 +4,11 @@ namespace KiwiNet.InstanceServer.Items.Components.Templates
 {
     public sealed class BaseTemplate : ComponentTemplate<Base>
     {
+        // TODO: populate from ot/dat files
+        public int Width { get; set; } = 1;
+        public int Height { get; set; } = 1;
+        public string Name { get; set; } = string.Empty;    // this + 104
+
         public BaseTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)
         {
         }

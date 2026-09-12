@@ -20,7 +20,7 @@ namespace KiwiNet.InstanceServer.WorldObjects
 
         public override string ToString()
         {
-            return $"[{Id}] {_template.FileName}";
+            return $"[{Id}] {base.ToString()}";
         }
 
         public void Initialize(ResourceHandle<WorldObjectTemplate> templateHandle, Area area)

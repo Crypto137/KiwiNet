@@ -1,15 +1,27 @@
 ﻿using KiwiNet.InstanceServer.Resources;
+using System.Diagnostics;
 
 namespace KiwiNet.InstanceServer.Objects
 {
     public abstract class ObjectBase
     {
         protected readonly List<Component> _components = new();
+
+        public T GetComponent<T>(int index) where T: Component
+        {
+            Debug.Assert(index >= 0 && index < _components.Count);
+            return (T)_components[index];
+        }
     }
 
     public abstract class ObjectBase<TTemplate> : ObjectBase where TTemplate: ObjectTemplate, new()
     {
         protected ResourceHandle<TTemplate> _template;
+
+        public override string ToString()
+        {
+            return _template != null ? _template.FileName : "NULL";
+        }
 
         public T GetComponent<T>() where T : Component
         {

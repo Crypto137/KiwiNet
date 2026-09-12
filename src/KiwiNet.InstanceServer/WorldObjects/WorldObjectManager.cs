@@ -1,4 +1,5 @@
-﻿using KiwiNet.Core.Logging;
+﻿using KiwiNet.Core.Extensions;
+using KiwiNet.Core.Logging;
 
 namespace KiwiNet.InstanceServer.WorldObjects
 {
@@ -88,10 +89,7 @@ namespace KiwiNet.InstanceServer.WorldObjects
                 if (pendingIndex == -1)
                     throw new Exception("Tried to wake an object that wasn't asleep");
 
-                // Swap pending object with the last element to avoid moving things around
-                int lastIndex = _objectsPendingSleep.Count - 1;
-                _objectsPendingSleep[pendingIndex] = _objectsPendingSleep[lastIndex];
-                _objectsPendingSleep.RemoveAt(lastIndex);
+                _objectsPendingSleep.SwapRemove(pendingIndex);
             }
         }
 

@@ -12,5 +12,7 @@ namespace KiwiNet.InstanceServer.WorldObjects
         public virtual void SerializeUpdate(NetworkConnection connection) { }
 
         public virtual void DeserializeUpdate(NetworkConnection connection) { }
+
+        public virtual void ResetUpdate() { }
     }
 }
