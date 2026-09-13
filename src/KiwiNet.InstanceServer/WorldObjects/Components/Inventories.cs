@@ -125,7 +125,9 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components
 
         public Inventory GetInventory(InventoryType inventoryType)
         {
-            // TODO: this is just a placeholder, verify against the client code how getters are supposed to work
+            if (inventoryType < 0 || inventoryType >= InventoryType.NumTypes)
+                return null;
+
             return _inventories[(int)inventoryType];
         }
     }

@@ -157,6 +157,26 @@ namespace KiwiNet.InstanceServer.Items
             return _addedEntries.Count != 0 || _removedEntries.Count != 0;
         }
 
+        public uint GetEntryIdAtPosition(int x, int y)
+        {
+            if (x < 0 || x >= Width || y < 0 || y >= Height)
+                return InvalidEntryId;
+
+            Entry entry = _slots[y * Width + x];
+            if (entry == null)
+                return InvalidEntryId;
+
+            return entry.Id;
+        }
+
+        public Item GetItem(uint id)
+        {
+            if (_entries.TryGetValue(id, out Entry entry) == false)
+                return null;
+
+            return entry.Item;
+        }
+
         public bool IsBlocked(in RectInt rect, out Entry outExistingEntry)
         {
             outExistingEntry = null;
@@ -252,14 +272,6 @@ namespace KiwiNet.InstanceServer.Items
                 _addedEntries.SwapRemove(addedIndex);
 
             return item;
-        }
-
-        public Item GetItem(uint id)
-        {
-            if (_entries.TryGetValue(id, out Entry entry) == false)
-                return null;
-
-            return entry.Item;
         }
 
         public void Subscribe(IInventorySubscriber subscriber)
