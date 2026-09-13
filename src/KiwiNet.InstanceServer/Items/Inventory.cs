@@ -226,8 +226,8 @@ namespace KiwiNet.InstanceServer.Items
 
             BaseTemplate baseTemplate = itemBase.Template;
             
-            int x2 = x + baseTemplate.Width;
-            int y2 = y + baseTemplate.Height;
+            int x2 = x + baseTemplate.XSize;
+            int y2 = y + baseTemplate.YSize;
             
             RectInt rect = new(x, y, x2, y2);
 
@@ -239,7 +239,7 @@ namespace KiwiNet.InstanceServer.Items
 
             if (IsBlocked(rect, out _))
             {
-                Logger.Warn($"Failing to add item because the location ({x}, {y}) is blocked. Item we are trying to place is: {baseTemplate.Name}");
+                Logger.Warn($"Failing to add item because the location ({x}, {y}) is blocked. Item we are trying to place is: {baseTemplate.DescriptionText}");
                 return InvalidEntryId;
             }
 
