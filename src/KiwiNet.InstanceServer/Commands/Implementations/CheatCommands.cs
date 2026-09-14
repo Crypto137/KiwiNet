@@ -77,6 +77,22 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
 
             return string.Empty;
         }
+
+        [CommandHandler("addexp")]
+        public static string AddExp(object invoker, ReadOnlySpan<string> args)
+        {
+            string arg = args.Length > 0 ? args[0] : string.Empty;
+
+            if (int.TryParse(arg, out int amount) == false)
+                return $"'{arg}' is not a valid experience amount.";
+
+            RemotePlayer remotePlayer = (RemotePlayer)invoker;
+            WorldObject player = remotePlayer.Player;
+            player.GetComponent<Player>().AdjustExperience(amount);
+            remotePlayer.SendWorldObjectUpdate<Player>(player);
+
+            return string.Empty;
+        }
     }
 #endif
 }

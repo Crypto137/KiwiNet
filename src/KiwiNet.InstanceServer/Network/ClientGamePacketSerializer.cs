@@ -66,7 +66,7 @@ namespace KiwiNet.InstanceServer.Network
                     break;
 
                 case PacketId.ClientInstanceAllocatePassiveSkillPointPacketId:
-                    packet = PacketFactory.Get<IntPacket>();
+                    packet = PacketFactory.Get<ClientInstanceAllocatePassiveSkillPointPacket>();
                     break;
 
                 case PacketId.ClientInstanceRequestActionPacketId:
@@ -134,6 +134,7 @@ namespace KiwiNet.InstanceServer.Network
                     break;
 
                 case PacketId.ClientInstanceDoNPCChatId:
+                    packet = PacketFactory.Get<ClientInstanceDoNPCChat>();
                     break;
 
                 case PacketId.ClientInstanceFinishedNPCChatId:

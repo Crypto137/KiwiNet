@@ -513,9 +513,12 @@ namespace KiwiNet.InstanceServer.Network
 
         private void OnAllocatePassiveSkillPoint(Packet packet)
         {
-            IntPacket allocatePassiveSkillPoint = (IntPacket)packet;
+            ClientInstanceAllocatePassiveSkillPointPacket allocatePassiveSkillPoint = (ClientInstanceAllocatePassiveSkillPointPacket)packet;
 
-            Logger.Debug($"OnAllocatePassiveSkillPoint(): 0x{allocatePassiveSkillPoint.Value:X8}");
+            // TODO: load ExperienceLevels.dat, calculate level, and validate skill point amount / skill prereqs
+
+            Player.GetComponent<Player>().AllocatePassiveSkillPoint(allocatePassiveSkillPoint.PassiveSkill);
+            SendWorldObjectUpdate<Player>(Player);
         }
 
         private void OnChangeBoundSkill(Packet packet)
