@@ -1,5 +1,7 @@
 ﻿using KiwiNet.InstanceServer.Objects;
 using KiwiNet.InstanceServer.Items.Components.Templates;
+using KiwiNet.InstanceServer.Resources;
+using KiwiNet.InstanceServer.Resources.Tables;
 
 namespace KiwiNet.InstanceServer.Items
 {
@@ -33,8 +35,7 @@ namespace KiwiNet.InstanceServer.Items
             // TODO: load Data/ComponentAttributeRequirements.dat
             AttributeRequirementsFactory = new AttributeRequirementsTemplateFactory(registry);
 
-            // TODO: load Data/BaseItemTypes.dat
-            BaseFactory = new BaseTemplateFactory(registry);
+            BaseFactory = new BaseTemplateFactory(registry) { BaseItemTypes = ResourceManager.Get<BaseItemTypes>("Data/BaseItemTypes.dat") };
 
             // TODO: load Data/ComponentCharges.dat
             ChargesFactory = new ChargesTemplateFactory(registry);

@@ -1,18 +1,20 @@
 ﻿using KiwiNet.InstanceServer.Objects;
+using KiwiNet.InstanceServer.Resources;
+using KiwiNet.InstanceServer.Resources.Tables;
 
 namespace KiwiNet.InstanceServer.Items.Components.Templates
 {
     public sealed class BaseTemplate : ComponentTemplate<Base>
     {
-        public int XSize { get; set; }
-        public int YSize { get; set; }
-        public string TypeName { get; set; }
-        public string GroundItem { get; set; }
-        public int BaseLevel { get; set; }
-        public string FlavourText { get; set; }
-        public string DescriptionText { get; set; }
-        public int TemporaryWeighting { get; set; }
-        public int WorldObjectSize { get; set; }
+        public int XSize { get; private set; }
+        public int YSize { get; private set; }
+        public string TypeName { get; private set; }
+        public string GroundItem { get; private set; }
+        public int BaseLevel { get; private set; }
+        public string FlavourText { get; private set; }
+        public string DescriptionText { get; private set; }
+        public int TemporaryWeighting { get; private set; }
+        public int WorldObjectSize { get; private set; }
         public List<string> IdtFiles { get; } = new();
 
         public BaseTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)
@@ -82,10 +84,25 @@ namespace KiwiNet.InstanceServer.Items.Components.Templates
 
             return false;
         }
+
+        public void ApplyTableData(BaseItemTypes_Row row)
+        {
+            XSize = row.Width;
+            YSize = row.Height;
+            BaseLevel = row.Level;
+            //TemporaryWeighting = row.TemporaryWeighting;  // TODO
+            //WorldObjectSize = row.WorldObjectSize;        // TODO
+            TypeName = row.DisplayName;
+            IdtFiles.Add(row.IdtFile);
+            GroundItem = row.GroundItem;
+            FlavourText = row.FlavourText;
+        }
     }
 
     public sealed class BaseTemplateFactory : ComponentTemplateFactory
     {
+        public ResourceHandle<BaseItemTypes> BaseItemTypes { get; set; }
+
         public BaseTemplateFactory(ComponentTemplateRegistry registry) : base(registry)
         {
         }
@@ -102,10 +119,12 @@ namespace KiwiNet.InstanceServer.Items.Components.Templates
 
         public override void ApplyTableData(ComponentTemplate componentTemplate, string fileName)
         {
-            // TODO: load real data from .dat
+            BaseItemTypes_Row row = BaseItemTypes?.Resource.GetDataRowByKey(fileName);
+            if (row == null)
+                return;
+
             BaseTemplate baseTemplate = (BaseTemplate)componentTemplate;
-            baseTemplate.XSize = 1;
-            baseTemplate.YSize = 1;
+            baseTemplate.ApplyTableData(row);
         }
     }
 }

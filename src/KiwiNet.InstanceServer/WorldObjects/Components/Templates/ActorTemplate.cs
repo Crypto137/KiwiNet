@@ -18,11 +18,11 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
     {
         private static readonly Logger Logger = LogManager.CreateLogger();
 
-        public string Actor { get; set; }
-        public int Team { get; set; }
-        public ActorSize ActorSize { get; set; }
-        public ItemClass MainHandUnarmedType { get; set; } = ItemClass.Invalid;
-        public ItemClass OffHandUnarmedType { get; set; } = ItemClass.Invalid;
+        public string Actor { get; private set; }
+        public int Team { get; private set; }
+        public ActorSize ActorSize { get; private set; }
+        public ItemClass MainHandUnarmedType { get; private set; } = ItemClass.Invalid;
+        public ItemClass OffHandUnarmedType { get; private set; } = ItemClass.Invalid;
         public List<ushort> BasicActions { get; } = new();
 
         public ActorTemplate(ObjectTemplate objectTemplate) : base(objectTemplate)

@@ -14,8 +14,8 @@ namespace KiwiNet.InstanceServer.Resources.Tables
         public string DisplayName { get; private set; }
         public string ParentObject { get; private set; }
         public int Level { get; private set; }
-        public string Note { get; private set; }
-        public string AnimatedObject { get; private set; }
+        public string FlavourText { get; private set; }
+        public string GroundItem { get; private set; }
         // TODO: the rest of the columns
 
         public BaseItemTypes_Row()
@@ -32,8 +32,8 @@ namespace KiwiNet.InstanceServer.Resources.Tables
             DisplayName = dynamicData[stream.Read<int>()..].GetUnicodeString();
             ParentObject = dynamicData[stream.Read<int>()..].GetUnicodeString();
             Level = stream.Read<int>();
-            Note = dynamicData[stream.Read<int>()..].GetUnicodeString();
-            AnimatedObject = dynamicData[stream.Read<int>()..].GetUnicodeString();
+            FlavourText = dynamicData[stream.Read<int>()..].GetUnicodeString();
+            GroundItem = dynamicData[stream.Read<int>()..].GetUnicodeString();
 
             for (int i = 10; i < Size / 4; i++)
             {
