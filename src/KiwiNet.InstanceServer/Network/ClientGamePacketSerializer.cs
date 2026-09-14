@@ -54,15 +54,15 @@ namespace KiwiNet.InstanceServer.Network
                     break;
 
                 case PacketId.ClientInstancePlaceItemId:
-                    packet = PacketFactory.Get<ClientInstanceInventoryMovePacket>();
+                    packet = PacketFactory.Get<ClientInstancePlaceItem>();
                     break;
 
                 case PacketId.ClientInstanceLiftSocketableId:
-                    packet = PacketFactory.Get<ClientInstanceInventoryMovePacket>();
+                    packet = PacketFactory.Get<ClientInstancePlaceItem>();
                     break;
 
                 case PacketId.ClientInstancePlaceSocketableId:
-                    packet = PacketFactory.Get<ClientInstanceInventoryMovePacket>();
+                    packet = PacketFactory.Get<ClientInstancePlaceItem>();
                     break;
 
                 case PacketId.ClientInstanceAllocatePassiveSkillPointPacketId:
@@ -102,7 +102,7 @@ namespace KiwiNet.InstanceServer.Network
                     break;
 
                 case PacketId.ClientInstanceUnstackPacketId:
-                    packet = PacketFactory.Get<ClientInstanceInventoryMovePacket>();
+                    packet = PacketFactory.Get<ClientInstancePlaceItem>();
                     break;
 
                 case PacketId.ClientInstanceTerrainGenerationResultId:

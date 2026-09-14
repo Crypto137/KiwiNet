@@ -6,6 +6,8 @@ using KiwiNet.Core.System;
 using KiwiNet.InstanceServer.Areas;
 using KiwiNet.InstanceServer.Commands;
 using KiwiNet.InstanceServer.Items;
+using KiwiNet.InstanceServer.Items.Components;
+using KiwiNet.InstanceServer.Items.Components.Templates;
 using KiwiNet.InstanceServer.Objects;
 using KiwiNet.InstanceServer.Resources;
 using KiwiNet.InstanceServer.Resources.Tables;
@@ -258,6 +260,18 @@ namespace KiwiNet.InstanceServer.Network
                     OnSkillTargetLocation(packet);
                     break;
 
+                case PacketId.ClientInstanceLiftItemId:
+                    OnLiftItem(packet);
+                    break;
+
+                case PacketId.ClientInstanceDropItemId:
+                    OnDropItem(packet);
+                    break;
+
+                case PacketId.ClientInstancePlaceItemId:
+                    OnPlaceItem(packet);
+                    break;
+
                 case PacketId.ClientInstanceAllocatePassiveSkillPointPacketId:
                     OnAllocatePassiveSkillPoint(packet);
                     break;
@@ -373,22 +387,31 @@ namespace KiwiNet.InstanceServer.Network
                     Item item = worldItem.Item;
 
                     Inventories inventories = Player.GetComponent<Inventories>();
-                    Inventory inventory = inventories.GetInventory(InventoryType.MainInventory1);
 
-                    RectInt rect = new(0, 0, 1, 1);
-
-                    if (inventory.IsBlocked(rect, out _) == false)
+                    if (skillTargetEntity.Flags.HasFlag(SkillTargetFlags.InventoryOpen))
                     {
-                        uint entryId = inventory.AddItem(item, 0, 0);
-                        if (entryId != Inventory.InvalidEntryId)
-                        {
-                            worldItem.Item = null;
-                            worldObject.Sleep();
-                            worldObject.Destroy();
+                        Inventory cursorInventory = inventories.GetInventory(InventoryType.Cursor1);
+                        if (cursorInventory.GetEntryIdAtPosition(0, 0) != Inventory.InvalidEntryId)
+                            return;
 
-                            SendWorldObjectUpdate<Inventories>(Player);
-                        }
+                        uint entryId = cursorInventory.AddItem(item, 0, 0);
+                        Debug.Assert(entryId != Inventory.InvalidEntryId);
                     }
+                    else
+                    {
+                        Inventory destinationInventory = inventories.GetInventory(InventoryType.MainInventory1);
+                        if (destinationInventory.FindFreeSpace(item, out int x, out int y) == false)
+                            return;
+
+                        uint entryId = destinationInventory.AddItem(item, x, y);
+                        Debug.Assert(entryId != Inventory.InvalidEntryId);
+                    }
+
+                    worldItem.Item = null;
+                    worldObject.Sleep();
+                    worldObject.Destroy();
+
+                    SendWorldObjectUpdate<Inventories>(Player);
                 }
             }
         }
@@ -403,35 +426,108 @@ namespace KiwiNet.InstanceServer.Network
             playerPosition.SetPosition(new((int)skillTargetLocation.GridPositionX, (int)skillTargetLocation.GridPositionY));
         }
 
+        private void OnLiftItem(Packet packet)
+        {
+            ClientInstanceLiftItem liftItem = (ClientInstanceLiftItem)packet;
+
+            Inventories inventories = Player.GetComponent<Inventories>();
+
+            Inventory cursorInventory = inventories.GetInventory(InventoryType.Cursor1);
+            // TODO: swap
+            if (cursorInventory.GetEntryIdAtPosition(0, 0) != Inventory.InvalidEntryId)
+                return;
+
+            Inventory sourceInventory = inventories.GetInventory((InventoryType)liftItem.InventoryType);
+            if (sourceInventory == null)
+                return;
+
+            Item item = sourceInventory.RemoveItem(liftItem.EntryId);
+            if (item == null)
+                return;
+
+            cursorInventory.AddItem(item, 0, 0);
+
+            SendWorldObjectUpdate<Inventories>(Player);
+        }
+
+        private void OnDropItem(Packet packet)
+        {
+            Inventories inventories = Player.GetComponent<Inventories>();
+            Inventory cursorInventory = inventories.GetInventory(InventoryType.Cursor1);
+
+            uint entryId = cursorInventory.GetEntryIdAtPosition(0, 0);
+            if (entryId == Inventory.InvalidEntryId)
+                return;
+
+            Item item = cursorInventory.RemoveItem(entryId);
+            Debug.Assert(item != null);
+
+            ItemGenerator.DropItem(item, Area, Player.Positioned.GridPosition);
+
+            SendWorldObjectUpdate<Inventories>(Player);
+        }
+
+        private void OnPlaceItem(Packet packet)
+        {
+            ClientInstancePlaceItem placeItem = (ClientInstancePlaceItem)packet;
+
+            Inventories inventories = Player.GetComponent<Inventories>();
+
+            Inventory destinationInventory = inventories.GetInventory((InventoryType)placeItem.InventoryType);
+            if (destinationInventory == null)
+                return;
+
+            int x = placeItem.X;
+            int y = placeItem.Y;
+
+            Inventory cursorInventory = inventories.GetInventory(InventoryType.Cursor1);
+            uint entryId = cursorInventory.GetEntryIdAtPosition(0, 0);
+            if (entryId == Inventory.InvalidEntryId)
+                return;
+
+            Item item = cursorInventory.GetItem(entryId);
+            if (item == null)
+                return;
+
+            BaseTemplate baseTemplate = item.GetComponent<Base>().Template;
+            RectInt rect = new()
+            {
+                X1 = x,
+                Y1 = y,
+                X2 = x + baseTemplate.XSize,
+                Y2 = y + baseTemplate.YSize,
+            };
+
+            // TODO: swap
+            if (destinationInventory.IsBlocked(rect, out _))
+                return;
+
+            item = cursorInventory.RemoveItem(entryId);
+            Debug.Assert(item != null);
+
+            entryId = destinationInventory.AddItem(item, x, y);
+            Debug.Assert(entryId != Inventory.InvalidEntryId);
+
+            SendWorldObjectUpdate<Inventories>(Player);            
+        }
+
         private void OnAllocatePassiveSkillPoint(Packet packet)
         {
-            if (packet is not IntPacket allocatePassiveSkillPoint)
-            {
-                Logger.Warn("OnAllocatePassiveSkillPoint(): Invalid packet");
-                return;
-            }
+            IntPacket allocatePassiveSkillPoint = (IntPacket)packet;
 
             Logger.Debug($"OnAllocatePassiveSkillPoint(): 0x{allocatePassiveSkillPoint.Value:X8}");
         }
 
         private void OnChangeBoundSkill(Packet packet)
         {
-            if (packet is not ClientInstanceChangeBoundSkill changeBoundSkill)
-            {
-                Logger.Warn("OnChangeBoundSkill(): Invalid packet");
-                return;
-            }
+            ClientInstanceChangeBoundSkill changeBoundSkill = (ClientInstanceChangeBoundSkill)packet;
 
             Logger.Debug($"OnChangeBoundSkill(): {changeBoundSkill}");
         }
 
         private void OnTerrainGenerationResult(Packet packet)
         {
-            if (packet is not ClientInstanceTerrainGenerationResult terrainGenerationResult)
-            {
-                Logger.Warn("OnTerrainGenerationResult(): Invalid packet");
-                return;
-            }
+            ClientInstanceTerrainGenerationResult terrainGenerationResult = (ClientInstanceTerrainGenerationResult)packet;
 
             Logger.Debug($"OnTerrainGenerationResult(): {terrainGenerationResult}");
             // this is where the server disconnects the client if the hashes don't match

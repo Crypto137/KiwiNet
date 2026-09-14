@@ -147,6 +147,35 @@ namespace KiwiNet.InstanceServer.Items
             return false;
         }
 
+        public bool FindFreeSpace(Item item, out int x, out int y)
+        {
+            BaseTemplate baseTemplate = item.GetComponent<Base>().Template;
+            int itemWidth = baseTemplate.XSize;
+            int itemHeight = baseTemplate.YSize;
+
+            RectInt rect = new();
+
+            for (rect.Y1 = 0; rect.Y1 < Height; rect.Y1++)
+            {
+                for (rect.X1 = 0; rect.X1 < Width; rect.X1++)
+                {
+                    rect.X2 = rect.X1 + itemWidth;
+                    rect.Y2 = rect.Y1 + itemHeight;
+
+                    if (IsBlocked(rect, out _) == false)
+                    {
+                        x = rect.X1;
+                        y = rect.Y1;
+                        return true;
+                    }
+                }
+            }
+
+            x = -1;
+            y = -1;
+            return false;
+        }
+
         public uint AddItem(Item item, int x, int y)
         {
             Base itemBase = item.GetComponent<Base>();

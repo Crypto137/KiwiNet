@@ -2,15 +2,17 @@
 
 namespace KiwiNet.Protocols.Instance
 {
-    public sealed class ClientInstanceLiftItem : Packet
+    public sealed class ClientInstancePlaceItem : Packet
     {
-        public uint EntryId { get; set; }
         public byte InventoryType { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
 
         public override void Deserialize(NetworkConnection connection)
         {
-            EntryId = connection.Read<uint>();
             InventoryType = connection.Read<byte>();
+            X = connection.Read<int>();
+            Y = connection.Read<int>();
         }
     }
 }

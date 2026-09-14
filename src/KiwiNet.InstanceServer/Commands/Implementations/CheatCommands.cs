@@ -6,6 +6,7 @@ using KiwiNet.InstanceServer.Resources;
 using KiwiNet.InstanceServer.WorldObjects;
 using KiwiNet.InstanceServer.WorldObjects.Components;
 using KiwiNet.Protocols.Instance;
+using KiwiNet.InstanceServer.Areas;
 
 namespace KiwiNet.InstanceServer.Commands.Implementations
 {
@@ -23,19 +24,11 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
             if (item == null)
                 return $"'{itemShortName}' is not a valid item name.";
 
-            // Create and send WorldItem
-            using ResourceHandle<WorldObjectRegistry> worldObjectTable = ResourceManager.Get<WorldObjectRegistry>(ObjectSystem.WorldObjectRegistryFile);
-            using ResourceHandle<WorldObjectTemplate> worldItemTemplate = worldObjectTable.Resource.GetTemplate("WorldItem");
-
             RemotePlayer player = (RemotePlayer)invoker;
+            Area area = player.Area;
             Vector2Int position = player.Player.Positioned.GridPosition;
 
-            WorldObject worldItem = new();
-            worldItem.Initialize(worldItemTemplate, player.Area);
-            worldItem.Positioned.SetPosition(position);
-            worldItem.GetComponent<WorldItem>().Item = item;
-
-            worldItem.Wake();
+            ItemGenerator.DropItem(item, area, position);
 
             return string.Empty;
         }
