@@ -22,7 +22,11 @@ namespace KiwiNet.InstanceServer.Items.Components
             connection.Write(0);
 
             connection.Write((byte)Rarity);
+            connection.Write(1);    // has mods
             connection.Write(0);
+
+            // if has mods
+            connection.Write(string.Empty);
             connection.Write(0);
         }
     }
