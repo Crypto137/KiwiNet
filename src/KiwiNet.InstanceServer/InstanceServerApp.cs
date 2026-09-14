@@ -4,6 +4,8 @@ using KiwiNet.InstanceServer.Objects;
 using KiwiNet.InstanceServer.Network;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
+using KiwiNet.InstanceServer.Resources;
+using KiwiNet.InstanceServer.Resources.Tables;
 
 namespace KiwiNet.InstanceServer
 {
@@ -44,6 +46,9 @@ namespace KiwiNet.InstanceServer
 
             if (ObjectSystem.Initialize() == false)
                 return false;
+
+            // HACK: get WorldAreas ref without disposing to keep it loaded, replace this with proper init later
+            ResourceManager.Get<WorldAreas>("Data/WorldAreas.dat");
 
             AreaManager.Initialize();
 

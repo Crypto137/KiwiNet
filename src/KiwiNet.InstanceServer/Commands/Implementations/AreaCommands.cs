@@ -1,5 +1,6 @@
 ﻿using KiwiNet.Core.Math;
 using KiwiNet.InstanceServer.Network;
+using KiwiNet.InstanceServer.Resources;
 using KiwiNet.InstanceServer.Resources.Tables;
 
 namespace KiwiNet.InstanceServer.Commands.Implementations
@@ -17,7 +18,8 @@ namespace KiwiNet.InstanceServer.Commands.Implementations
                 return "Please provide a valid world area id";
 
             string worldAreaId = args[0];
-            if (WorldAreaTable.IsValidAreaId(worldAreaId) == false)
+            using ResourceHandle<WorldAreas> worldAreas = ResourceManager.Get<WorldAreas>("Data/WorldAreas.dat");
+            if (worldAreas.Resource.GetDataRowByKey(worldAreaId) == null)
                 return $"'{worldAreaId}' is not a valid world area id.";
 
             Vector2Int startPosition = default;

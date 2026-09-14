@@ -174,7 +174,8 @@ namespace KiwiNet.InstanceServer.Network
 
         public bool BeginAreaTransfer(string areaId, Vector2Int startOverride = default)
         {
-            if (WorldAreaTable.IsValidAreaId(areaId) == false)
+            using ResourceHandle<WorldAreas> worldAreas = ResourceManager.Get<WorldAreas>("Data/WorldAreas.dat");
+            if (worldAreas.Resource.GetDataRowByKey(areaId) == null)
                 return false;
 
             Session.WorldAreaId = areaId;

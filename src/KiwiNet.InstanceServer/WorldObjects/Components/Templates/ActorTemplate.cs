@@ -1,5 +1,6 @@
 ﻿using KiwiNet.Core.Logging;
 using KiwiNet.Core.Utils;
+using KiwiNet.InstanceServer.Items;
 using KiwiNet.InstanceServer.Objects;
 using KiwiNet.InstanceServer.Resources;
 
@@ -11,43 +12,6 @@ namespace KiwiNet.InstanceServer.WorldObjects.Components.Templates
         Medium,
         Large,
         Epic,
-    }
-
-    public enum ItemClass
-    {
-        LifeFlask = 1,
-        ManaFlask,
-        HybridFlask,
-        Currency,
-        Amulet,
-        Ring,
-        Claw,
-        Dagger,
-        Wand,
-        One_Hand_Sword,
-        Thrusting_One_Hand_Sword,
-        One_Hand_Axe,
-        One_Hand_Mace,
-        Bow,
-        Staff,
-        Two_Hand_Sword,
-        Two_Hand_Axe,
-        Two_Hand_Mace,
-        Active_Skill_Gem,
-        Support_Skill_Gem,
-        Quiver,
-        Belt,
-        Gloves,
-        Boots,
-        Body_Armour,
-        Helmet,
-        Shield,
-        SmallRelic,
-        MediumRelic,
-        LargeRelic,
-        StackableCurrency,
-        QuestItem,
-        Invalid,
     }
 
     public sealed class ActorTemplate : ComponentTemplate<Actor>
