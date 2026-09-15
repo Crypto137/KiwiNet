@@ -58,11 +58,11 @@ namespace KiwiNet.InstanceServer.Network
                     break;
 
                 case PacketId.ClientInstanceLiftSocketableId:
-                    packet = PacketFactory.Get<ClientInstancePlaceItem>();
+                    packet = PacketFactory.Get<ClientInstanceLiftSocketable>();
                     break;
 
                 case PacketId.ClientInstancePlaceSocketableId:
-                    packet = PacketFactory.Get<ClientInstancePlaceItem>();
+                    packet = PacketFactory.Get<ClientInstancePlaceSocketable>();
                     break;
 
                 case PacketId.ClientInstanceAllocatePassiveSkillPointPacketId:

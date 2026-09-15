@@ -236,6 +236,19 @@ namespace KiwiNet.InstanceServer.Items
             return item;
         }
 
+        public void FlagItemDirty(uint entryId)
+        {
+            // this feels like a hack, is there a way to infer from the client how it's supposed to work?
+            if (_entries.ContainsKey(entryId) == false)
+                return;
+
+            if (_removedEntries.Contains(entryId) || _addedEntries.Contains(entryId))
+                return;
+
+            _removedEntries.Add(entryId);
+            _addedEntries.Add(entryId);
+        }
+
         public void Subscribe(IInventorySubscriber subscriber)
         {
             _subscribers.Add(subscriber);

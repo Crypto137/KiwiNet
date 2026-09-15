@@ -31,6 +31,15 @@ namespace KiwiNet.InstanceServer.Items
             if (charges != null)
                 charges.Count = 30; // this is a hack to initialize flask charges
 
+            Sockets sockets = item.GetComponent<Sockets>();
+            if (sockets != null)
+            {
+                sockets.SocketList.Add(new() { Color = SocketColor.White });
+                sockets.SocketList.Add(new() { Color = SocketColor.White });
+                sockets.SocketList.Add(new() { Color = SocketColor.White });
+                sockets.LinkCounts.Add(3);
+            }
+
             return item;
         }
 

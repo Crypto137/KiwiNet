@@ -145,7 +145,9 @@ namespace KiwiNet.InstanceServer.Network
 
             // hardcoded initialization stuff - fixme
             Player.Positioned.SetPosition(Session.StartPosition);
-            Player.GetComponent<Life>().CurrentLife = 100;
+            Life life = Player.GetComponent<Life>();
+            life.CurrentLife = 100;
+            life.Mana = 30;
 
             Player playerComponent = Player.GetComponent<Player>();
             playerComponent.Name = Session.CharacterName;
@@ -160,6 +162,7 @@ namespace KiwiNet.InstanceServer.Network
             flasks.AddItem(ItemGenerator.Generate("FlaskLife1"), 0, 0);
             flasks.AddItem(ItemGenerator.Generate("FlaskLife1"), 1, 0);
             flasks.AddItem(ItemGenerator.Generate("FlaskMana1"), 4, 0);
+            inventories.ResetUpdate();
 
             Player.Wake();
 
@@ -272,6 +275,14 @@ namespace KiwiNet.InstanceServer.Network
                     OnPlaceItem(packet);
                     break;
 
+                case PacketId.ClientInstanceLiftSocketableId:
+                    OnLiftSocketable(packet);
+                    break;
+
+                case PacketId.ClientInstancePlaceSocketableId:
+                    OnPlaceSocketable(packet);
+                    break;
+
                 case PacketId.ClientInstanceAllocatePassiveSkillPointPacketId:
                     OnAllocatePassiveSkillPoint(packet);
                     break;
@@ -375,7 +386,7 @@ namespace KiwiNet.InstanceServer.Network
         {
             ClientInstanceSkillTargetEntity skillTargetEntity = (ClientInstanceSkillTargetEntity)packet;
 
-            Logger.Debug($"OnSkillTargetEntity(): {packet}");
+            //Logger.Debug($"OnSkillTargetEntity(): {packet}");
 
             if (skillTargetEntity.SkillId == 0xC266)
             {
@@ -420,10 +431,13 @@ namespace KiwiNet.InstanceServer.Network
         {
             ClientInstanceSkillTargetLocation skillTargetLocation = (ClientInstanceSkillTargetLocation)packet;
 
-            Logger.Debug($"OnSkillTargetLocation(): {skillTargetLocation}");
+            //Logger.Debug($"OnSkillTargetLocation(): {skillTargetLocation}");
 
-            Positioned playerPosition = Player.GetComponent<Positioned>();
-            playerPosition.SetPosition(new((int)skillTargetLocation.GridPositionX, (int)skillTargetLocation.GridPositionY));
+            if (skillTargetLocation.SkillId == 0x2909)
+            {
+                Positioned playerPosition = Player.GetComponent<Positioned>();
+                playerPosition.SetPosition(new((int)skillTargetLocation.GridPositionX, (int)skillTargetLocation.GridPositionY));
+            }
         }
 
         private void OnLiftItem(Packet packet)
@@ -509,6 +523,85 @@ namespace KiwiNet.InstanceServer.Network
             Debug.Assert(entryId != Inventory.InvalidEntryId);
 
             SendWorldObjectUpdate<Inventories>(Player);            
+        }
+
+        private void OnLiftSocketable(Packet packet)
+        {
+            ClientInstanceLiftSocketable liftSocketable = (ClientInstanceLiftSocketable)packet;
+
+            Inventories inventories = Player.GetComponent<Inventories>();
+
+            Inventory cursorInventory = inventories.GetInventory(InventoryType.Cursor1);
+            if (cursorInventory.GetEntryIdAtPosition(0, 0) != Inventory.InvalidEntryId)
+                return;
+
+            Inventory sourceInventory = inventories.GetInventory((InventoryType)liftSocketable.InventoryType);
+            if (sourceInventory == null)
+                return;
+
+            uint sourceEntryId = liftSocketable.EntryId;
+            Item sourceItem = sourceInventory.GetItem(sourceEntryId);
+            if (sourceItem == null)
+                return;
+
+            Sockets sockets = sourceItem.GetComponent<Sockets>();
+            if (sockets == null)
+                return;
+
+            SocketData socket = sockets.GetSocket(liftSocketable.SocketIndex);
+            if (socket == null || socket.Item == null)
+                return;
+
+            Item socketable = socket.Item;
+            socket.Item = null;
+
+            uint cursorEntryId = cursorInventory.AddItem(socketable, 0, 0);
+            Debug.Assert(cursorEntryId != Inventory.InvalidEntryId);
+
+            sourceInventory.FlagItemDirty(sourceEntryId);
+            SendWorldObjectUpdate<Inventories>(Player);
+        }
+
+        private void OnPlaceSocketable(Packet packet)
+        {
+            ClientInstancePlaceSocketable placeSocketable = (ClientInstancePlaceSocketable)packet;
+
+            Inventories inventories = Player.GetComponent<Inventories>();
+
+            Inventory cursorInventory = inventories.GetInventory(InventoryType.Cursor1);
+            uint socketableEntryId = cursorInventory.GetEntryIdAtPosition(0, 0);
+            if (socketableEntryId == Inventory.InvalidEntryId)
+                return;
+
+            Item socketable = cursorInventory.GetItem(socketableEntryId);
+            if (socketable.GetComponent<SkillGem>() == null)
+                return;
+
+            Inventory destinationInventory = inventories.GetInventory((InventoryType)placeSocketable.InventoryType);
+            if (destinationInventory == null)
+                return;
+
+            uint destinationEntryId = placeSocketable.EntryId;
+            Item destinationItem = destinationInventory.GetItem(destinationEntryId);
+            if (destinationItem == null)
+                return;
+
+            Sockets sockets = destinationItem.GetComponent<Sockets>();
+            if (sockets == null)
+                return;
+
+            SocketData socket = sockets.GetSocket(placeSocketable.SocketIndex);
+            if (socket == null || socket.Item != null)  // TODO: swap
+                return;
+
+            socketable = cursorInventory.RemoveItem(socketableEntryId);
+            Debug.Assert(socketable != null);
+
+            socket.Item = socketable;
+
+            destinationInventory.FlagItemDirty(placeSocketable.EntryId);
+
+            SendWorldObjectUpdate<Inventories>(Player);
         }
 
         private void OnAllocatePassiveSkillPoint(Packet packet)
