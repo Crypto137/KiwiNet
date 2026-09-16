@@ -8,24 +8,42 @@ Feel free to join the [Discord server](https://discord.gg/YNPnrYw2CJ) if you wan
 
 ## Features
 
-This is still very far from being "playable".
+This is currently in very early state with basic sandbox functionality implemented.
 
-- Basic login server functionality works: authentication, creating accounts, changing password, creating and deleting characters, sending instance server details.
+- Basic login server functionality: authentication, creating and deleting characters, etc.
 
-- Early instance server functionality: entering and exploring areas.
+- Entering and exploring areas.
 
-## Notes
+- Monster and item spawning.
 
-- The 0.8.8 client ISO is available on Archive.org as "Path Of Exile PAX 2011 Closed Beta".
+- Inventory management.
 
-- Launch `Client.exe` with the `--nopatch` argument to bypass the patcher.
+## Setup
 
-- The archived client's GGPK file is missing the `Art\Textures\Interface` folder. The missing files can be added to the client directory without modifying the GGPK. `.mat` placeholders can be extracted from the GGPK with [VisualGGPK2](https://github.com/aianlinb/VisualGGPK2) and other tools, `.dds` and `.png` files can be substituted with arbitrary images.
+These instructions are for Windows.
 
-- The instance server requires `Data` and `Metadata` folders from the client's GGPK. They need to be extracted and placed in the instance server directory.
+1. Acquire a copy of the 0.8.8 client. It is available on Archive.org as "Path Of Exile PAX 2011 Closed Beta". 
 
-- If the client freezes at the login screen, you need to block access to the `tyypo.com` domain.
-  
-  - You can do this on Windows by adding `127.0.0.1 tyypo.com` to `C:\Windows\System32\drivers\etc\hosts`.
-  
-  - This is because the 0.8.8 client is hardcoded to load news from `tyypo.com/production_motd.txt`, and it doesn't handle errors very well.
+2. Build the server source code.
+   
+   1. Install the [.NET SDK](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-8.0.425-windows-x64-installer).
+   
+   2. Run the `dotnet build KiwiNet.sln -c Debug` command. `KiwiNet.sln` is located in the `src` folder of this repository.
+
+3. Extract `Data` and `Metadata` folders from the client's GGPK archive with [VisualGGPK2](https://github.com/aianlinb/VisualGGPK2) and place them in the instance server build directory (`KiwiNet/src/KiwiNet.InstanceServer/bin/Debug/net8.0`).
+
+4. Download and extract [interface textures](https://drive.google.com/file/d/13Hu-F3O1sYXO0Ns8ISbAmfFd1ORFotX2/view) to the client directory.
+
+5. Block access to `tyypo.com` by adding `127.0.0.1 tyypo.com` to `C:\Windows\System32\drivers\etc\hosts`.
+
+## Running
+
+1. Run `KiwiNet.LoginServer.exe`.
+
+2. Run `KiwiNet.InstanceServer.exe`.
+
+3. Run `Client.exe` with the `--nopatch` argument.
+
+4. Enter `localhost` in the Realm field on the login screen.
+
+5. Log in with any email and password. An account is automatically created when you log in for the first time with a specific email.
